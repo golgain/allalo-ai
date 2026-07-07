@@ -206,18 +206,13 @@
 
         // 🧠 মেগা লং-ক্যাপাসিটি গ্লোবাল ডিকশনারি
         const dictionary = {
-            // 🤖 Autonomous & Agentic Frameworks
             "ai agent": ["devin", "bolt.new", "crewai", "autogen", "agentops", "agent", "autonomous", "swarm", "multi-agent"],
             "ai swarm": ["crewai", "autogen", "swarm", "chatdev", "multi-agent", "coordination"],
             "multi agent": ["crewai", "autogen", "swarm", "chatdev", "agents"],
             "autonomous agent": ["devin", "crewai", "autogen", "agent", "autonomous"],
-            
-            // 🔒 Local, Edge & Offline Setup
             "local ai": ["ollama", "lm studio", "llama.cpp", "jan", "anythingllm", "offline", "private", "local", "edge"],
             "offline ai": ["ollama", "lm studio", "offline", "private", "local", "no internet"],
             "run ai locally": ["ollama", "lm studio", "local", "offline", "private"],
-
-            // 🎵 Audio, Music & Voice Long Keywords
             "audio maker": ["audio", "music", "voice", "speech", "sound", "song", "suno", "udio", "vocal", "tts", "clone", "generation"],
             "audio generator": ["audio", "sound", "voice", "speech", "vocal", "tts", "podcast", "noise"],
             "music generator": ["music", "song", "suno", "udio", "track", "beat", "instrumental", "melody"],
@@ -226,39 +221,29 @@
             "text to speech": ["tts", "speech", "voice", "elevenlabs", "read text", "vocal"],
             "ai voice generation": ["voice", "tts", "speech", "elevenlabs", "dubbing"],
             "make a song": ["music", "song", "suno", "udio", "beat", "track"],
-
-            // 🎥 Video, Animation & Reels Generation
             "video maker": ["video", "anim", "movie", "clip", "sora", "runway", "pika", "avatar", "generator", "editing", "reel", "tiktok"],
             "video generator": ["video", "generate", "sora", "runway", "pika", "luma", "kling", "text to video"],
             "video editor": ["editor", "editing", "cut", "crop", "trim", "subtitle", "caption", "enhance"],
             "text to video": ["video", "sora", "runway", "pika", "generate video", "movie"],
             "make short video": ["video", "clip", "reel", "tiktok", "shorts", "scripai"],
             "animation maker": ["anim", "animation", "3d", "avatar", "character", "motion"],
-
-            // ✍️ Content Writing, Scripting & SEO Blogs
             "writer": ["write", "writer", "script", "content", "blog", "text", "scripai", "article", "copywriting", "seo", "essay"],
             "script writer": ["script", "youtube script", "video script", "viral", "hook", "storyboard"],
             "content generator": ["content", "blog", "article", "post", "social media", "caption", "copy"],
             "seo article writer": ["seo", "keyword", "ranking", "blog", "article", "optimization"],
             "blog post generator": ["blog", "article", "write", "content", "writer"],
             "essay writer": ["essay", "write", "writer", "paper", "academic", "text"],
-
-            // 🖼️ Image, Graphic Design & Logo Assets
             "image generator": ["image", "art", "photo", "midjourney", "dall-e", "stable diffusion", "flux", "generate", "picture", "draw"],
             "photo editor": ["editor", "enhance", "upscale", "remove background", "bg", "retouch", "fix", "filter"],
             "text to image": ["image", "midjourney", "dall-e", "stable diffusion", "flux", "generate art"],
             "logo maker": ["logo", "brand", "design", "vector", "icon", "favicon"],
             "background remover": ["remove background", "bg", "remove bg", "transparent", "cutout"],
             "graphic design tool": ["design", "ui", "ux", "banner", "poster", "thumbnail", "canva"],
-
-            // 💻 Full-stack Coding, Development & Apps
             "coding": ["code", "coder", "programming", "github", "copilot", "developer", "html", "css", "js", "python", "fix bug"],
             "website builder": ["website", "build", "landing page", "wordpress", "framer", "v0", "bolt"],
             "app generator": ["app", "application", "mobile app", "ios", "android", "build app"],
             "bug fixer": ["bug", "error", "debug", "fix", "code analysis", "refactor"],
             "html css generator": ["code", "html", "css", "website", "frontend"],
-
-            // 📚 Education, Chatbots & PDF Smart Engines
             "chatbot builder": ["chat", "chatbot", "gpt", "assistant", "support", "customer", "agent"],
             "pdf analyzer": ["pdf", "research", "paper", "analyze", "summary", "read pdf"],
             "language translator": ["translate", "language", "bilingual", "english", "bangla", "dictionary"],
@@ -379,4 +364,39 @@
                                         name: lines[i],
                                         link: lines[i + 3] || lines[i + 1],
                                         logo: lines[i + 2],
-                                        status: lines
+                                        status: lines[i + 4] === 'OK' ? 'Active' : lines[i + 4],
+                                        task: lines[i + 5],
+                                        short_description: lines[i + 6]
+                                    });
+                                    textCount++;
+                                }
+                            }
+                        }
+                        logToConsole(`Pipe #${idx + 1} Success: Re-indexed ${textCount} databases using raw column mapping.`, "success");
+                    }
+                }
+
+                // ⚡ ডাটা স্ট্যান্ডার্ডাইজেশন (লিংক ফিল্টার ও ৩০০০ এজেন্ট ব্যাকআপ ফ্রেন্ডলি আপডেটেড)
+                const standardizedTools = combinedTools.map(tool => {
+                    let taskName = tool.task || tool.category || 'General AI';
+                    const nameLower = (tool.name || '').toLowerCase();
+                    const descLower = (tool.short_description || tool['short description'] || tool.shortDescription || '').toLowerCase();
+                    
+                    // 🔗 スマート লিংক সিলেকশন লজিক
+                    let finalLink = tool.website || tool.link;
+                    if (!finalLink || finalLink.includes('aitoolbuzz.com/assets') || finalLink === 'https://aitoolbuzz.com' || finalLink === 'https://aitoolbuzz.com/') {
+                        finalLink = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                    }
+
+                    // 🤖 অটো ক্যাটাগরি ম্যাপিং লজিক
+                    if (nameLower.includes('crewai') || nameLower.includes('autogen') || nameLower.includes('swarm') || nameLower.includes('chatdev')) {
+                        taskName = 'AI Swarm';
+                    } else if (nameLower.includes('ollama') || nameLower.includes('lm studio') || nameLower.includes('jan') || nameLower.includes('local') || descLower.includes('offline')) {
+                        taskName = 'Local AI';
+                    } else if (taskName.toLowerCase().includes('agent') || nameLower.includes('agent') || descLower.includes('agent') || (tool.tags && tool.tags.toLowerCase().includes('agent'))) {
+                        taskName = 'AI Agent';
+                    }
+
+                    return {
+                        name: tool.name,
+                        link:
