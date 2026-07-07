@@ -13,6 +13,7 @@
 
     <link rel="icon" type="image/png" href="favicon.png">
 	
+    <!-- 🎨 Premium English Font - Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -68,16 +69,19 @@
 <body class="bg-gray-50 text-gray-800 font-sans min-h-screen">
 
     <div class="max-w-4xl mx-auto pt-16 px-4 text-center">
+        <!-- 🎨 লোগো ইমেজ ও নাম একসাথে সংযোজন -->
         <div class="flex items-center justify-center gap-3 mb-2">
             <img src="favicon.svg" alt="allalo AI Logo" class="w-14 h-14 drop-shadow-md">
             <h1 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">allalo AI</h1>
         </div>
         <p class="text-gray-500 text-sm md:text-base mb-8">🔥 Total AI Tools Indexed: <span class="font-bold text-gray-800">47,000+</span> | Status: Live & Updated</p>
         
+        <!-- স্মার্ট সার্চ বার উইথ ভয়েস সাপোর্ট -->
         <div class="relative max-w-2xl mx-auto shadow-xs rounded-full bg-white border border-gray-200 focus-within:shadow-md focus-within:border-blue-400 transition-all">
             <input type="text" id="searchInput" placeholder="Search 47,000+ AI tools, agents, or tasks (e.g. video maker, crewai, offline...)"  
                    class="w-full pl-5 pr-20 py-4 rounded-full outline-none text-gray-700 bg-transparent placeholder-gray-400 text-xs md:text-sm">
             
+            <!-- 🎤 ভয়েস সার্চ বাটন -->
             <button id="voiceBtn" onclick="startVoiceSearch()" class="absolute right-12 top-3.5 text-gray-400 hover:text-blue-600 text-lg cursor-pointer p-1 transition-colors" title="Voice Search">
                 🎙️
             </button>
@@ -290,94 +294,99 @@
                     const url = activeUrls[idx];
                     logToConsole(`Crawling Pipe #${idx + 1}: Fetching resources from source network...`, "info");
                     
-                    const response = await fetch(url);
-                    const rawText = await response.text();
-                    
-                    // 💡 ফরম্যাট ১: জেসন (.json) ফাইল
-                    if (url.endsWith('.json') || rawText.trim().startsWith('[') || rawText.trim().startsWith('{')) {
-                        try {
-                            const jsonData = JSON.parse(rawText);
-                            if (Array.isArray(jsonData)) {
-                                const mappedJsonData = jsonData.map(tool => {
-                                    // 💡 ৩ নম্বর ১৯,০০০ ডাটার কাস্টম ফরম্যাট নোড হ্যান্ডলিং
-                                    if (tool.handle || tool.description) {
-                                        return {
-                                            name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
-                                            link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
-                                            logo: "",
-                                            status: 'Active',
-                                            task: 'General AI',
-                                            short_description: tool.description || 'Advanced Artificial Intelligence Tool.'
-                                        };
-                                    }
-                                    // ১ ও ২ নম্বর ফাইলের ম্যাপ নোড হ্যান্ডলিং
-                                    if (tool.shortDescription || tool.category) { 
-                                        return {
-                                            name: tool.name,
-                                            link: tool.website || tool.link,
-                                            logo: tool.logo,
-                                            status: tool.status || 'Active',
-                                            task: tool.category || 'AI Agent',
-                                            short_description: tool.shortDescription || tool.longDescription || 'Autonomous AI Agent Framework.'
-                                        };
-                                    }
-                                    return tool;
-                                });
-                                combinedTools = combinedTools.concat(mappedJsonData);
-                                logToConsole(`Pipe #${idx + 1} Success: Parsed structured JSON matrix.`, "success");
-                            }
-                        } catch(e) { logToConsole(`Pipe #${idx + 1} Error: JSON Schema mismatched.`, "error"); }
-                    } 
-                    // 💡 ফরম্যাট ২: গিটহাবের মার্কডাউন (- [Name](URL))
-                    else if (rawText.includes('- [') && rawText.includes('](')) {
-                        let mdCount = 0;
-                        const lines = rawText.split('\n');
-                        lines.forEach(line => {
-                            const match = line.match(/-\s*\[(.*?)\]\((.*?)\)(.*)/);
-                            if (match) {
-                                const name = match[1].trim();
-                                const link = match[2].trim();
-                                let desc = match[3] ? match[3].replace(/`.*?`/g, "").replace(/[\[\]]/g, "").trim() : "";
-                                if(desc.startsWith('-')) desc = desc.substring(1).trim();
-
-                                combinedTools.push({
-                                    name: name, link: link, logo: "", status: "Active", task: "AI Agent", short_description: desc
-                                });
-                                mdCount++;
-                            }
-                        });
-                        logToConsole(`Pipe #${idx + 1} Success: Parsed ${mdCount} objects from Markdown stream.`, "success");
-                    } 
-                    // 💡 ফরম্যাট ৩: র টেক্সট কলাম-ভিত্তিক ফরম্যাট
-                    else if (rawText.includes('ChatGPT') || rawText.includes('Google Gemini')) {
-                        let textCount = 0;
-                        const lines = rawText.split('\n').map(line => line.trim()).filter(line => line !== "");
-                        let startIndex = -1;
-                        for (let i = 0; i < lines.length; i++) {
-                            if (lines[i].toLowerCase() === 'chatgpt') { startIndex = i; break; }
-                        }
-
-                        if (startIndex >= 0) {
-                            for (let i = startIndex; i < lines.length; i += 7) {
-                                if (i + 6 < lines.length) {
-                                    combinedTools.push({
-                                        name: lines[i],
-                                        link: lines[i + 3] || lines[i + 1],
-                                        logo: lines[i + 2],
-                                        status: lines[i + 4] === 'OK' ? 'Active' : lines[i + 4],
-                                        task: lines[i + 5],
-                                        short_description: lines[i + 6]
+                    try {
+                        const response = await fetch(url);
+                        const rawText = await response.text();
+                        
+                        // 💡 ফরম্যাট ১: জেসন (.json) ফাইল
+                        if (url.endsWith('.json') || rawText.trim().startsWith('[') || rawText.trim().startsWith('{')) {
+                            try {
+                                const jsonData = JSON.parse(rawText);
+                                if (Array.isArray(jsonData)) {
+                                    const mappedJsonData = jsonData.map(tool => {
+                                        // ৩ নম্বর ফাইলের কাস্টম ফরম্যাট নোড হ্যান্ডলিং
+                                        if (tool.handle || tool.description) {
+                                            return {
+                                                name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
+                                                link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
+                                                logo: "",
+                                                status: 'Active',
+                                                task: 'General AI',
+                                                short_description: tool.description || 'Advanced Artificial Intelligence Tool.'
+                                            };
+                                        }
+                                        // ১ ও ২ নম্বর ফাইলের ম্যাপ নোড হ্যান্ডলিং
+                                        if (tool.shortDescription || tool.category) { 
+                                            return {
+                                                name: tool.name,
+                                                link: tool.website || tool.link,
+                                                logo: tool.logo,
+                                                status: tool.status || 'Active',
+                                                task: tool.category || 'AI Agent',
+                                                short_description: tool.shortDescription || tool.longDescription || 'Autonomous AI Agent Framework.'
+                                            };
+                                        }
+                                        return tool;
                                     });
-                                    textCount++;
+                                    combinedTools = combinedTools.concat(mappedJsonData);
+                                    logToConsole(`Pipe #${idx + 1} Success: Parsed structured JSON matrix.`, "success");
+                                }
+                            } catch(e) { logToConsole(`Pipe #${idx + 1} Error: JSON Schema mismatched.`, "error"); }
+                        } 
+                        // 💡 ফরম্যাট ২: গিটহাবের মার্কডাউন (- [Name](URL))
+                        else if (rawText.includes('- [') && rawText.includes('](')) {
+                            let mdCount = 0;
+                            const lines = rawText.split('\n');
+                            lines.forEach(line => {
+                                const match = line.match(/-\s*\[(.*?)\]\((.*?)\)(.*)/);
+                                if (match) {
+                                    const name = match[1].trim();
+                                    const link = match[2].trim();
+                                    let desc = match[3] ? match[3].replace(/`.*?`/g, "").replace(/[\[\]]/g, "").trim() : "";
+                                    if(desc.startsWith('-')) desc = desc.substring(1).trim();
+
+                                    combinedTools.push({
+                                        name: name, link: link, logo: "", status: "Active", task: "AI Agent", short_description: desc
+                                    });
+                                    mdCount++;
+                                }
+                            });
+                            logToConsole(`Pipe #${idx + 1} Success: Parsed ${mdCount} objects from Markdown stream.`, "success");
+                        } 
+                        // 💡 ফরম্যাট ৩: র টেক্সট কলাম-ভিত্তিক ফরম্যাট
+                        else if (rawText.includes('ChatGPT') || rawText.includes('Google Gemini')) {
+                            let textCount = 0;
+                            const lines = rawText.split('\n').map(line => line.trim()).filter(line => line !== "");
+                            let startIndex = -1;
+                            for (let i = 0; i < lines.length; i++) {
+                                if (lines[i].toLowerCase() === 'chatgpt') { startIndex = i; break; }
+                            }
+
+                            if (startIndex >= 0) {
+                                for (let i = startIndex; i < lines.length; i += 7) {
+                                    if (i + 6 < lines.length) {
+                                        combinedTools.push({
+                                            name: lines[i],
+                                            link: lines[i + 3] || lines[i + 1],
+                                            logo: lines[i + 2],
+                                            status: lines[i + 4] === 'OK' ? 'Active' : lines[i + 4],
+                                            task: lines[i + 5],
+                                            short_description: lines[i + 6]
+                                        });
+                                        textCount++;
+                                    }
                                 }
                             }
+                            logToConsole(`Pipe #${idx + 1} Success: Re-indexed ${textCount} databases using raw column mapping.`, "success");
                         }
-                        logToConsole(`Pipe #${idx + 1} Success: Re-indexed ${textCount} databases using raw column mapping.`, "success");
+                    } catch (pipeError) {
+                        logToConsole(`Pipe #${idx + 1} Skipped due to network timeout or error.`, "warn");
                     }
                 }
 
                 // ⚡ ডাটা স্ট্যান্ডার্ডাইজেশন (লিংক ফিল্টার ও ৩০০০ এজেন্ট ব্যাকআপ ফ্রেন্ডলি আপডেটেড)
                 const standardizedTools = combinedTools.map(tool => {
+                    if (!tool) return null;
                     let taskName = tool.task || tool.category || 'General AI';
                     const nameLower = (tool.name || '').toLowerCase();
                     const descLower = (tool.short_description || tool['short description'] || tool.shortDescription || '').toLowerCase();
@@ -385,7 +394,7 @@
                     // 🔗 スマート লিংক সিলেকশন লজিক
                     let finalLink = tool.website || tool.link;
                     if (!finalLink || finalLink.includes('aitoolbuzz.com/assets') || finalLink === 'https://aitoolbuzz.com' || finalLink === 'https://aitoolbuzz.com/') {
-                        finalLink = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        finalLink = `https://www.google.com/search?q=${encodeURIComponent((tool.name || 'AI') + ' AI Tool')}`;
                     }
 
                     // 🤖 অটো ক্যাটাগরি ম্যাপিং লজিক
@@ -398,5 +407,236 @@
                     }
 
                     return {
-                        name: tool.name,
-                        link:
+                        name: tool.name || 'AI Tool',
+                        link: finalLink, 
+                        logo: tool.logo || '', 
+                        status: tool.status || 'Active',
+                        task: taskName,
+                        short_description: tool.short_description || 'Advanced Artificial Intelligence Tool.'
+                    };
+                }).filter(t => t !== null);
+
+                // 🧼 ডুপ্লিকেট রিমুভার
+                const uniqueMap = new Map();
+                standardizedTools.forEach(tool => {
+                    const toolName = (tool.name || '').trim().toLowerCase();
+                    if (toolName && !uniqueMap.has(toolName)) {
+                        uniqueMap.set(toolName, tool);
+                    }
+                });
+
+                allTools = Array.from(uniqueMap.values());
+
+                // ⭐ সুপারস্টার র‍্যাংকিং সর্টিং
+                allTools.sort((a, b) => {
+                    const aName = (a.name || '').toLowerCase();
+                    const bName = (b.name || '').toLowerCase();
+                    const aIsSuper = superstarTools.some(t => aName.includes(t)) ? 1 : 0;
+                    const bIsSuper = superstarTools.some(t => bName.includes(t)) ? 1 : 0;
+                    return bIsSuper - aIsSuper;
+                });
+
+                logToConsole(`Total entities processed: ${combinedTools.length}. Cleansed records: ${allTools.length}`, "info");
+                logToConsole("Indexing Request complete. Mega Database Node status: 200 OK.", "success");
+
+                filteredTools = [...allTools];
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('toolsGrid').classList.remove('hidden');
+                
+                renderNextBatch();
+            } catch (error) {
+                console.error("মেগা ডেটাবেজ লোড এরর:", error);
+                logToConsole("Critical Core Crash: Process terminated due to exception.", "error");
+                document.getElementById('loading').innerText = "Sorry, database sync failed. Please review pipeline link formats.";
+            }
+        }
+
+        // স্ক্রিনে ৩০টি করে কার্ড রেন্ডার করা
+        function renderNextBatch() {
+            const grid = document.getElementById('toolsGrid');
+            const batch = filteredTools.slice(offset, offset + limit);
+
+            if (batch.length === 0 && offset === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center text-gray-400 py-12 text-sm">🚫 No AI Tools found matching your search term. Try another keyword.</div>`;
+                return;
+            }
+
+            batch.forEach(tool => {
+                let toolUrl = tool.link || '#';
+                let primaryLogo = tool.logo;
+
+                if (!primaryLogo || primaryLogo.trim() === "" || primaryLogo.includes('placeholder')) {
+                    primaryLogo = `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
+                }
+
+                const card = `
+                    <div class="tool-card bg-white p-5 rounded-2xl shadow-xs border border-gray-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <img src="${primaryLogo}" alt="${tool.name}" class="w-12 h-12 rounded-xl object-cover border border-gray-50" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}';">
+                                <span class="text-[10px] font-black px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 tracking-wider uppercase">${tool.status || 'Active'}</span>
+                            </div>
+                            <h3 class="text-base font-bold text-gray-900 mb-1">${tool.name || 'AI Tool'}</h3>
+                            <p class="text-[11px] text-indigo-600 font-bold tracking-wide uppercase mb-2">${tool.task || 'General'}</p>
+                            <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-3">${tool.short_description || 'No description available.'}</p>
+                        </div>
+                        <a href="${toolUrl}" target="_blank" class="w-full text-center bg-gray-950 hover:bg-blue-600 text-white font-semibold py-2.5 rounded-xl text-xs transition-colors cursor-pointer">
+                            Try Now 🚀
+                        </a>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+
+            offset += limit;
+            document.getElementById('loadMoreContainer').classList.toggle('hidden', offset >= filteredTools.length);
+        }
+
+        // ⚡ চূড়ান্ত ক্র্যাশ-প্রুফ গ্লোবাল সার্চ লজিক
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+
+            // যদি সার্চ বক্স ফাঁকা থাকে, সব টুল দেখাবে
+            if (query === "") {
+                filteredTools = currentCategory === 'All' ? [...allTools] : allTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
+                renderNextBatch();
+                return;
+            }
+
+            let dictionaryKeywords = [];
+
+            // ডিকশনারির ম্যাপ চেক
+            for (const key in dictionary) {
+                if (query.includes(key) || key.includes(query)) {
+                    dictionaryKeywords = dictionaryKeywords.concat(dictionary[key]);
+                }
+            }
+
+            // কুয়েরি টোকেনাইজেশন (আলাদা শব্দে ভাগ করা)
+            const queryWords = query.split(/\s+/).filter(w => w !== "");
+
+            filteredTools = allTools.filter(tool => {
+                const name = (tool.name || '').toLowerCase();
+                const desc = (tool.short_description || '').toLowerCase();
+                const task = (tool.task || '').toLowerCase();
+
+                // ১. সাবস্ট্রিং বা ডিরেক্ট টেক্সট সার্চ
+                let isMatch = name.includes(query) || desc.includes(query) || task.includes(query);
+
+                // ২. ডিকশনারি সিনোনিম ম্যাচ
+                if (!isMatch && dictionaryKeywords.length > 0) {
+                    isMatch = dictionaryKeywords.some(kw => name.includes(kw) || desc.includes(kw));
+                }
+
+                // ৩. লং-টেইল আলাদা আলাদা শব্দ ম্যাচ
+                if (!isMatch && queryWords.length > 0) {
+                    isMatch = queryWords.every(word => name.includes(word) || desc.includes(word) || task.includes(word));
+                }
+
+                if (currentCategory === 'All') return isMatch;
+                return isMatch && task.includes(currentCategory.toLowerCase());
+            });
+
+            renderNextBatch();
+        });
+
+        // ক্যাটাগরি বাটন ফিল্টারিং
+        function filterByCategory(category) {
+            currentCategory = category;
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+
+            ['All', 'AI Agent', 'AI Swarm', 'Local AI'].forEach(cat => {
+                const btn = document.getElementById(`btn-${cat.replace(' ', '')}`);
+                if (cat === category) {
+                    btn.className = "px-4 py-2 rounded-full bg-gray-950 text-white text-xs font-bold cursor-pointer transition-all shadow-xs";
+                } else {
+                    btn.className = "px-4 py-2 rounded-full bg-white text-gray-600 hover:bg-gray-100 text-xs font-bold border border-gray-200 cursor-pointer transition-all";
+                }
+            });
+
+            if (category === 'All') {
+                filteredTools = [...allTools];
+            } else {
+                filteredTools = allTools.filter(tool => (tool.task || '').toLowerCase().includes(category.toLowerCase()));
+            }
+
+            renderNextBatch();
+        }
+
+        // 🎤 ভয়েস সার্চ লজিক
+        function startVoiceSearch() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Your browser does not support voice search functionality. Please try using Google Chrome.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            const voiceBtn = document.getElementById('voiceBtn');
+            const searchInput = document.getElementById('searchInput');
+
+            recognition.lang = 'en-US'; 
+            recognition.interimResults = false;
+
+            voiceBtn.innerText = "🛑";
+            voiceBtn.classList.add("animate-pulse", "text-red-500");
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                let text = event.results[0][0].transcript.replace(/[।.]/g, "").trim();
+                searchInput.value = text;
+                searchInput.dispatchEvent(new Event('input'));
+            };
+
+            recognition.onspeechend = function() { recognition.stop(); resetMic(); };
+            recognition.onerror = function() { resetMic(); };
+
+            function resetMic() {
+                voiceBtn.innerText = "🎙️";
+                voiceBtn.classList.remove("animate-pulse", "text-red-500");
+            }
+        }
+
+        // 📊 সার্চ কনসোল মডাল ফাংশনস
+        function openConsoleModal() {
+            document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + "+";
+            document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join('');
+            document.getElementById('consoleModalOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeConsoleModal() {
+            document.getElementById('consoleModalOverlay').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 📄 লিগ্যাল মডাল ডাটাবেস
+        const legalData = {
+            privacyModal: `<h2 class="text-xl font-black text-gray-950 mb-4">Privacy Policy</h2><p>We do not store or track personal identifiers. Standard CDN cookies are handled client-side for rapid caching response speed.</p>`,
+            termsModal: `<h2 class="text-xl font-black text-gray-950 mb-4">Terms & Conditions</h2><p>Data available here is compiled for public index learning. Bulk automated platform crawling without authentication is constrained.</p>`,
+            dmcaModal: `<h2 class="text-xl font-black text-red-600 mb-4">DMCA / Takedown Request</h2><p>We honor copyright content. For target listing deletion or index modifier updates, please drop an email directly at <strong>contact.yourdomain@gmail.com</strong>.</p>`,
+            contactModal: `<h2 class="text-xl font-black text-gray-950 mb-4">Contact</h2><p>For custom promotions or platform feature indexing support, reach us via: <br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
+        };
+
+        function openModal(id) {
+            if (legalData[id]) {
+                document.getElementById('modalContent').innerHTML = legalData[id];
+                document.getElementById('modalOverlay').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
+        document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+
+        // ইনিশিয়েট ডাটাবেস
+        loadMegaDatabase();
+    </script>
+</body>
+</html>
