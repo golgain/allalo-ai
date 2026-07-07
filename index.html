@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30000+ New AI Tools & Apps Today (Free AI Search Engine)</title>
-    <meta name="description" content="Explore 30,000+ verified AI tools and autonomous agents instantly in our smart mega directory with Google-speed filtering.">
+    <title>47000+ New AI Tools & Apps Today (Free AI Search Engine)</title>
+    <meta name="description" content="Explore 47,000+ verified AI tools and autonomous agents instantly in our smart mega directory with Google-speed filtering.">
     <meta name="keywords" content="ai tools list, free ai directory, artificial intelligence apps, ai agents, crewai, ollama, best ai websites, free chatgpt">
     <meta name="author" content="Jasim Uddin">
     <meta name="robots" content="index, follow">
 
     <link rel="canonical" href="https://ai.allalo.com/">
 
-    <!-- 🎨 Premium SVG Dynamic Favicon -->
-	<link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
 	
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,8 +19,8 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ai.allalo.com/">
-    <meta property="og:title" content="30000+ New AI Tools & Apps Today (Free AI Search Engine)">
-    <meta property="og:description" content="Find the best and latest AI tools instantly from our massive, updated database of 30,000+ tools.">
+    <meta property="og:title" content="47000+ New AI Tools & Apps Today (Free AI Search Engine)">
+    <meta property="og:description" content="Find the best and latest AI tools instantly from our massive, updated database of 47,000+ tools.">
     <meta property="og:image" content="og-image.jpg"> 
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -35,7 +34,7 @@
           "@id": "https://ai.allalo.com/#website",
           "url": "https://ai.allalo.com/",
           "name": "Mega AI Search Engine",
-          "description": "Explore 30,000+ verified AI tools and applications instantly.",
+          "description": "Explore 47,000+ verified AI tools and applications instantly.",
           "potentialAction": [{
             "@type": "SearchAction",
             "target": {
@@ -56,7 +55,7 @@
         letter-spacing: -0.025em; 
     }
     
-    /* ✨ এআই টুলের কার্ড হোভার অ্যানিমেশন */
+    /* ✨ এআই টুলেরカード হোভার অ্যানিমেশন */
     .tool-card { transition: all 0.2s ease-in-out; }
     .tool-card:hover { transform: translateY(-2px); }
     
@@ -70,13 +69,13 @@
 
     <div class="max-w-4xl mx-auto pt-16 px-4 text-center">
         <div class="flex items-center justify-center gap-3 mb-2">
-		<img src="favicon.svg" alt="allalo AI Logo" class="w-14 h-14 drop-shadow-md">
-		<h1 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">allalo AI</h1>
-		</div>
-        <p class="text-gray-500 text-sm md:text-base mb-8">🔥 Total AI Tools Indexed: <span class="font-bold text-gray-800">30,000+</span> | Status: Live & Updated</p>
+            <img src="favicon.svg" alt="allalo AI Logo" class="w-14 h-14 drop-shadow-md">
+            <h1 class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">allalo AI</h1>
+        </div>
+        <p class="text-gray-500 text-sm md:text-base mb-8">🔥 Total AI Tools Indexed: <span class="font-bold text-gray-800">47,000+</span> | Status: Live & Updated</p>
         
         <div class="relative max-w-2xl mx-auto shadow-xs rounded-full bg-white border border-gray-200 focus-within:shadow-md focus-within:border-blue-400 transition-all">
-            <input type="text" id="searchInput" placeholder="Search 30,000+ AI tools, agents, or tasks (e.g. video maker, crewai, offline...)"  
+            <input type="text" id="searchInput" placeholder="Search 47,000+ AI tools, agents, or tasks (e.g. video maker, crewai, offline...)"  
                    class="w-full pl-5 pr-20 py-4 rounded-full outline-none text-gray-700 bg-transparent placeholder-gray-400 text-xs md:text-sm">
             
             <button id="voiceBtn" onclick="startVoiceSearch()" class="absolute right-12 top-3.5 text-gray-400 hover:text-blue-600 text-lg cursor-pointer p-1 transition-colors" title="Voice Search">
@@ -98,7 +97,7 @@
     </div>
 
     <div class="max-w-6xl mx-auto px-4 py-8">
-        <div id="loading" class="text-center text-gray-500 text-lg font-medium py-12">মেগা এআই ডাটাবেজ লোড হচ্ছে, দয়া করে ১ সেকেন্ড অপেক্ষা করুন...</div>
+        <div id="loading" class="text-center text-gray-500 text-lg font-medium py-12">Mega AI Database is sync-loading, please wait a second...</div>
         <div id="toolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 hidden"></div>
         
         <div class="text-center mt-12 hidden" id="loadMoreContainer">
@@ -186,14 +185,14 @@
     </div>
 
     <script>
-        // 🔗 ডাইনামিক ৬টি ডাটাবেজ লিংক কনফিগারেশন (গিটহাবের RAW লিংকগুলো এখানে বসাবেন)
+        // 🔗 আপনার ৩টি গিটহাব RAW ডাটা লিংক এখানে কনফিগার করা হলো
         const DATA_URLS = [
-            'YOUR_JSON_LINK_1_HERE', // ১. মেইন ২৫,০০৪টি টুলের ডাটা
-            'YOUR_JSON_LINK_2_HERE', // ২. নতুন ৩০০০ এআই এজেন্টের ব্যাকআপ ডাটা
-            'YOUR_JSON_LINK_3_HERE', // ৩. ভবিষ্যতের ডাটা সেট ৩
-            'YOUR_JSON_LINK_4_HERE', // ৪. ভবিষ্যতের ডাটা সেট ৪
-            'YOUR_JSON_LINK_5_HERE', // ৫. ভবিষ্যতের ডাটা সেট ৫
-            'YOUR_JSON_LINK_6_HERE'  // ৬. ভবিষ্যতের ডাটা সেট ৬
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_ag_25k.json', 
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_3k.json', 
+            'https://raw.githubusercontent.com/golgain/AI-Tools-List/refs/heads/main/AIToolsList.json', 
+            'YOUR_JSON_LINK_4_HERE', 
+            'YOUR_JSON_LINK_5_HERE', 
+            'YOUR_JSON_LINK_6_HERE'  
         ];
 
         let allTools = [];
@@ -229,7 +228,7 @@
         function updateDynamicSEO() {
             const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             const currentDate = new Date();
-            document.title = `30000+ New AI Tools & Apps Today (${months[currentDate.getMonth()]} ${currentDate.getFullYear()}) - Free AI Search Engine`;
+            document.title = `47000+ New AI Tools & Apps Today (${months[currentDate.getMonth()]} ${currentDate.getFullYear()}) - Free AI Search Engine`;
         }
 
         // 🚀 ইউনিভার্সাল মাল্টি-ফরম্যাট ডাটা লোডার ও পার্সার ইঞ্জিন
@@ -242,7 +241,7 @@
                 logToConsole("Discovered active data pipelines. Syncing data feeds...", "info");
 
                 if (activeUrls.length === 0) {
-                    document.getElementById('loading').innerText = "কোনো বৈধ ডাটা লিংক পাওয়া যায়নি! অনুগ্রহ করে কোড এডিট করে লিংক বসান।";
+                    document.getElementById('loading').innerText = "No active data links discovered! Check configuration URLs.";
                     logToConsole("Crawler Error: No active URL streams found.", "error");
                     return;
                 }
@@ -262,10 +261,22 @@
                             const jsonData = JSON.parse(rawText);
                             if (Array.isArray(jsonData)) {
                                 const mappedJsonData = jsonData.map(tool => {
+                                    // 💡 ৩ নম্বর ১৯,০০০ ডাটার কাস্টম ফরম্যাট নোড হ্যান্ডলিং
+                                    if (tool.handle || tool.description) {
+                                        return {
+                                            name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
+                                            link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
+                                            logo: "",
+                                            status: 'Active',
+                                            task: 'General AI',
+                                            short_description: tool.description || 'Advanced Artificial Intelligence Tool.'
+                                        };
+                                    }
+                                    // ১ ও ২ নম্বর ফাইলের ম্যাপ নোড হ্যান্ডলিং
                                     if (tool.shortDescription || tool.category) { 
                                         return {
                                             name: tool.name,
-                                            link: tool.website || tool.link || `https://github.com/search?q=${encodeURIComponent(tool.name)}`,
+                                            link: tool.website || tool.link,
                                             logo: tool.logo,
                                             status: tool.status || 'Active',
                                             task: tool.category || 'AI Agent',
@@ -333,7 +344,7 @@
                     const nameLower = (tool.name || '').toLowerCase();
                     const descLower = (tool.short_description || tool['short description'] || tool.shortDescription || '').toLowerCase();
                     
-                    // 🔗 スマート লিংক সিলেকশন লজিক
+                    // 🔗 স্মার্ট লিংক সিলেকশন লজিক
                     let finalLink = tool.website || tool.link;
                     if (!finalLink || finalLink.includes('aitoolbuzz.com/assets') || finalLink === 'https://aitoolbuzz.com' || finalLink === 'https://aitoolbuzz.com/') {
                         finalLink = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
@@ -390,7 +401,7 @@
             } catch (error) {
                 console.error("মেগা ডেটাবেজ লোড এরর:", error);
                 logToConsole("Critical Core Crash: Process terminated due to network exception.", "error");
-                document.getElementById('loading').innerText = "দুঃখিত, ডাটাবেজ লোড করা যায়নি। লিংকগুলো চেক করুন।";
+                document.getElementById('loading').innerText = "Sorry, database sync failed. Please review pipeline link formats.";
             }
         }
 
@@ -487,7 +498,7 @@
         function startVoiceSearch() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                alert("আপনার ব্রাউজারে ভয়েস সার্চ সাপোর্ট করছে না। গুগল ক্রোম ট্রাই করুন।");
+                alert("Your browser does not support voice search functionality. Please try using Google Chrome.");
                 return;
             }
 
@@ -495,7 +506,7 @@
             const voiceBtn = document.getElementById('voiceBtn');
             const searchInput = document.getElementById('searchInput');
 
-            recognition.lang = 'bn-BD';
+            recognition.lang = 'en-US'; // গ্লোবাল সার্চের জন্য ভয়েস ল্যাঙ্গুয়েজ ইংলিশ করা হলো
             recognition.interimResults = false;
 
             voiceBtn.innerText = "🛑";
