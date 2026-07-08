@@ -303,31 +303,49 @@
                             try {
                                 const jsonData = JSON.parse(rawText);
                                 if (Array.isArray(jsonData)) {
-                                    const mappedJsonData = jsonData.map(tool => {
-    if (!tool) return null;
-
-    // 💡 ৩ নম্বর ১৯,০০০ ডাটার কাস্টম ফরম্যাট নোড হ্যান্ডলিং
-    if (tool.handle || (tool.description && !tool.name && !tool.shortDescription)) {
-        return {
-            name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
-            link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
-            logo: "",
-            status: 'Active',
-            task: 'General AI',
-            short_description: tool.description || 'Advanced Artificial Intelligence Tool.'
-        };
-    }
-    
-    // 💡 ১ ও ২ নম্বর মেইন ফাইলের ম্যাপ নোড হ্যান্ডলিং (এরর প্রুফ করা হলো)
-    return {
-        name: tool.name || tool.toolName || 'AI Tool',
-        link: tool.website || tool.link || tool.toolLink || '',
-        logo: tool.logo || tool.toolLogo || '',
-        status: tool.status || 'Active',
-        task: tool.task || tool.category || tool.toolCategory || 'General AI',
-        short_description: tool.shortDescription || tool.short_description || tool.longDescription || tool.toolDesc || tool.description || 'Autonomous AI Agent Framework.'
-    };
-}).filter(t => t !== null && t.name !== 'AI Tool');
+                                   const mappedJsonData = jsonData.map(tool => {
+										    if (!tool) return null;
+										
+										    // 💡 ৩ নম্বর ১৯,০০০ ডাটার কাস্টম ফরম্যাট নোড হ্যান্ডলিং
+										    if (tool.handle || (tool.description && !tool.name && !tool.shortDescription)) {
+										        return {
+										            name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
+										            link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
+										            logo: "",
+										            status: 'Active',
+										            task: 'General AI',
+										            short_description: tool.description || 'Advanced Artificial Intelligence Tool.'
+										        };
+										    }
+										    
+										    // 💡 ১ ও ২ নম্বর মেইন ফাইলের ম্যাপ নোড হ্যান্ডলিং (এরর প্রুফ করা হলো)
+										    return {
+										        name: tool.name || tool.toolName || 'AI Tool',
+										        link: tool.website || tool.link || tool.toolLink || '',
+										        logo: tool.logo || tool.toolLogo || '',
+										        status: tool.status || 'Active',
+										        task: tool.task || tool.category || tool.toolCategory || 'General AI',
+										        short_description: tool.shortDescription || tool.short_description || tool.longDescription || tool.toolDesc || tool.description || 'Autonomous AI Agent Framework.'
+										    };
+										}).filter(t => t !== null && t.name !== 'AI Tool');
+                                        // ১ ও ২ নম্বর ফাইলের ম্যাপ নোড হ্যান্ডলিং
+                                        if (tool.shortDescription || tool.category) { 
+                                            return {
+                                                name: tool.name,
+                                                link: tool.website || tool.link,
+                                                logo: tool.logo,
+                                                status: tool.status || 'Active',
+                                                task: tool.category || 'AI Agent',
+                                                short_description: tool.shortDescription || tool.longDescription || 'Autonomous AI Agent Framework.'
+                                            };
+                                        }
+                                        return tool;
+                                    });
+                                    combinedTools = combinedTools.concat(mappedJsonData);
+                                    logToConsole(`Pipe #${idx + 1} Success: Parsed structured JSON matrix.`, "success");
+                                }
+                            } catch(e) { logToConsole(`Pipe #${idx + 1} Error: JSON Schema mismatched.`, "error"); }
+                        } 
                         // 💡 ফরম্যাট ২: গিটহাবের মার্কডাউন (- [Name](URL))
                         else if (rawText.includes('- [') && rawText.includes('](')) {
                             let mdCount = 0;
