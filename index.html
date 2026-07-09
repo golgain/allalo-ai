@@ -25,7 +25,7 @@
             color: #cbd5e1;
         }
 
-        /* 🔍 Central Search Container Architecture */
+        /* 🔍 Central Search Container Style */
         .search-root-container {
             position: relative;
             width: 100%;
@@ -54,7 +54,6 @@
             background: #ffffff;
         }
         
-        /* Lens Vector */
         .searchicon {
             position: absolute;
             height: 14px;
@@ -77,7 +76,6 @@
             transform: rotate(-45deg);
         }
 
-        /* Microphone Voice Vector */
         .microphone {
             position: absolute;
             height: 28px;
@@ -92,35 +90,16 @@
             transition: transform 0.2s;
         }
         .microphone:after {
-            content: '';
-            position: absolute;
-            background: #ba1414;
-            height: 13px;
-            width: 8px;
-            border-radius: 10px;
-            left: 10px;
-            top: 4px;
+            content: ''; position: absolute; background: #ba1414; height: 13px; width: 8px; border-radius: 10px; left: 10px; top: 4px;
         }
         .microphone:before {
-            content: '';
-            position: absolute;
-            border-bottom: 2px solid #ba1414;
-            height: 11px;
-            width: 12px;
-            border-radius: 100%;
-            top: 6px;
-            left: 8px;
+            content: ''; position: absolute; border-bottom: 2px solid #ba1414; height: 11px; width: 12px; border-radius: 100%; top: 6px; left: 8px;
         }
         .mic-stand {
-            position: absolute;
-            height: 5px;
-            width: 2px;
-            background: #ba1414;
-            bottom: 4px;
-            left: 13px;
+            position: absolute; height: 5px; width: 2px; background: #ba1414; bottom: 4px; left: 13px;
         }
 
-        /* 🎛️ Category Tabs Below Searchbar */
+        /* 🎛️ Category Tabs Outside Below Searchbar */
         .icon-holder {
             display: flex;
             justify-content: center;
@@ -150,7 +129,6 @@
             transform: scale(1.15) !important;
         }
 
-        /* Trigger Animation on Focus or Typing */
         .main-input:focus ~ .icon-holder > .icon,
         .main-input:not(:placeholder-shown) ~ .icon-holder > .icon {
             opacity: 1;
@@ -162,30 +140,13 @@
         #btn-AI_Swarm { transition-delay: 0.15s; }
         #btn-Local_AI { transition-delay: 0.2s; }
 
-        /* Custom Tooltip Node */
         .icon .tooltip-text {
-            opacity: 0;
-            position: absolute;
-            font-size: 10px;
-            font-weight: 800;
-            color: white;
-            background: #1e293b;
-            padding: 4px 8px;
-            border-radius: 5px;
-            top: 48px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 1px solid #334155;
-            pointer-events: none;
-            transition: opacity 0.2s;
-            white-space: nowrap;
-            z-index: 50;
+            opacity: 0; position: absolute; font-size: 10px; font-weight: 800; color: white; background: #1e293b;
+            padding: 4px 8px; border-radius: 5px; top: 48px; left: 50%; transform: translateX(-50%);
+            border: 1px solid #334155; pointer-events: none; transition: opacity 0.2s; white-space: nowrap; z-index: 50;
         }
-        .icon:hover > .tooltip-text {
-            opacity: 1;
-        }
+        .icon:hover > .tooltip-text { opacity: 1; }
 
-        /* 📱 Mobile Devices Support Responsive Layout */
         @media (max-width: 768px) {
             .site-logo { width: 42px !important; height: 42px !important; }
             .site-title { font-size: 2rem !important; }
@@ -195,72 +156,63 @@
             .icon { height: 38px; width: 38px; font-size: 14px; }
         }
 
-        /* 🎠 Circular Logos Carousel Grid */
-        .mini-release-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #1e293b;
-            border: 2px solid #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            overflow: hidden;
-            transition: all 0.2s ease;
-        }
-        .mini-release-circle:hover {
-            transform: scale(1.1);
-            border-color: #6366f1;
-            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
-        }
-        .mini-release-img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Premium Sponsored Card */
-        .featured-card {
-            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
-            border: 1px solid #4338ca;
+        /* 🎠 Carousel Layout (Flexible Display) */
+        .carousel-container-block {
+            background: #0f172a;
+            border: 1px solid #1e293b;
             border-radius: 16px;
-            padding: 16px 20px;
-            position: relative;
-            height: 125px;
+            padding: 20px;
         }
-        .featured-badge {
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            background: #f59e0b;
-            color: #000;
-            font-size: 9px;
-            font-weight: 900;
-            padding: 2px 7px;
-            border-radius: 20px;
-            letter-spacing: 0.5px;
+        .mini-release-circle {
+            width: 50px; height: 50px; border-radius: 50%; background: #1e293b; border: 2px solid #334155;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto; overflow: hidden; transition: all 0.2s ease;
         }
+        .mini-release-circle:hover { transform: scale(1.1); border-color: #6366f1; }
+        .mini-release-img { width: 100%; height: 100%; object-fit: cover; }
+        .carousel-tool-name { font-size: 11px; font-weight: 700; color: #fff; margin: 0; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Global Cards Index UI */
+        /* 📂 Master App Card (The entire card is a clickable link anchor) */
+        .app-card-anchor {
+            text-decoration: none !important;
+            color: inherit !important;
+            display: block;
+        }
         .app-card {
             background: #0f172a;
             border: 1px solid #1e293b;
             border-radius: 14px;
+            padding: 16px;
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transition: all 0.2s ease;
+            position: relative;
         }
-        .app-card:hover { border-color: #334155; transform: translateY(-2px); }
-        .border-indigo { border-color: #4f46e5 !important; }
+        .app-card:hover { border-color: #4f46e5; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
         
-        .text-light-muted {
-            color: #94a3b8 !important;
+        .featured-card-style {
+            background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%) !important;
+            border: 1px solid #4338ca !important;
+        }
+        .featured-badge-tag {
+            position: absolute;
+            top: 12px; right: 12px;
+            background: #f59e0b; color: #000;
+            font-size: 8px; font-weight: 900;
+            padding: 2px 6px; border-radius: 20px;
+            letter-spacing: 0.5px; text-transform: uppercase;
         }
 
-        /* Footer Links Visibility Fix */
+        .border-indigo { border-color: #4f46e5 !important; }
+        .text-light-muted { color: #94a3b8 !important; }
+
         .footer-link-custom {
             color: #cbd5e1 !important;
             text-decoration: none;
             transition: color 0.2s ease;
         }
-        .footer-link-custom:hover {
-            color: #6366f1 !important;
-        }
+        .footer-link-custom:hover { color: #6366f1 !important; }
     </style>
 </head>
 <body>
@@ -283,12 +235,10 @@
             <div class="searchicon"></div>
             <input type="text" id="searchInput" placeholder="Search 47,000+ AI models, networks or tokens..." class="main-input">
             
-            <!-- মাইক্রোফোন নোড -->
             <div class="microphone" id="voiceBtn" onclick="startVoiceSearch()">
                 <div class="mic-stand"></div>
             </div>
             
-            <!-- 🎛️ ক্যাটাগরি ট্যাব হোল্ডার গ্রিড -->
             <div class="icon-holder">
                 <div class="icon active" id="btn-All" onclick="filterByCategory('All')">📊<div class="tooltip-text">All Indexed</div></div>
                 <div class="icon" id="btn-AI_Agent" onclick="filterByCategory('AI Agent')">🤖<div class="tooltip-text">AI Agents</div></div>
@@ -297,13 +247,14 @@
             </div>
         </div>
 
-        <!-- সেকেন্ডারি সাপোর্ট একশন বাটনস -->
         <div class="d-flex justify-content-center gap-2 mt-4">
+            <!-- 📅 FEATURED / Release Dropdown Menu -->
             <div class="dropdown d-inline-block">
                 <button class="btn btn-sm btn-outline-primary text-white border-indigo rounded-pill px-3 fw-bold dropdown-toggle" type="button" id="releaseDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    📅 Release Timeline
+                    🌟 FEATURED
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="releaseDropdown">
+                    <li><button class="dropdown-item" onclick="filterByRelease('featured')">FEATURED</button></li>
                     <li><button class="dropdown-item" onclick="filterByRelease('today')">Today</button></li>
                     <li><button class="dropdown-item" onclick="filterByRelease('week')">This Week</button></li>
                     <li><button class="dropdown-item" onclick="filterByRelease('month')">This Month</button></li>
@@ -315,34 +266,26 @@
         </div>
     </section>
 
-    <!-- 🎠 ৩. ডাবল ড্যাশবোর্ড ক্যারোসল এরিয়া -->
-    <section class="container mb-5">
-        <div class="row g-4">
-            <!-- ক) লকিং ফিচার্ড কোর ক্যারোসল -->
-            <div class="col-12 col-lg-6">
-                <h6 class="text-white mb-3 fw-bold tracking-wide text-uppercase" style="font-size: 12px; color: #818cf8 !important;">⭐ FEATURED CORE PARAMETERS</h6>
-                <div id="featuredCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" id="featuredCarouselInner"></div>
-                </div>
-            </div>
-
-            <!-- খ) নিউ রিলিজ লোগো ও লিংক ক্যারোসল -->
-            <div class="col-12 col-lg-6">
-                <h6 class="text-white mb-3 fw-bold tracking-wide text-uppercase" style="font-size: 12px; color: #f43f5e !important;">🚀 NEW RELEASES PIPELINE (LOGOS)</h6>
-                <div id="newToolsCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner" id="newToolsCarouselInner"></div>
+    <!--  Carousel Panel Section (Will disappear automatically when user searches) -->
+    <section class="container mb-5" id="dynamicCarouselZone">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-8">
+                <div class="carousel-container-block">
+                    <div id="unifiedCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="unifiedCarouselInner"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 📂 ৪. ৪৭,০০০+ মাস্টার গ্রিড এরিয়া -->
+    <!-- 📂 ৩. ৪৭,০০০+ মাস্টার গ্রিড এরিয়া -->
     <main class="container mb-5">
         <hr class="border-secondary my-4">
         <h5 class="text-white mb-4 fw-bold" style="font-size: 14px; letter-spacing: 0.5px;">📂 GLOBAL MASTER PARAMETER INDEX</h5>
         
         <div id="loading" class="text-center text-muted font-mono py-5">
-            [SYSTEM]: Establishing multi-channel network streaming node, hold...
+            [SYSTEM]: Syncing master distributed cluster databases, hold...
         </div>
         
         <div id="toolsGrid" class="row g-3 d-none"></div>
@@ -352,7 +295,7 @@
         </div>
     </main>
 
-    <!-- 📄 ওয়েবসাইট ফুটার প্যানেল উইথ ব্লগ ট্যাব ইন্টিগ্রেশন -->
+    <!-- 📄 ওয়েবসাইট ফুটার প্যানেল (কালো লেখা সমস্যা ১০০% ফিক্সড) -->
     <footer class="bg-dark bg-opacity-50 py-4 border-top border-secondary text-center" style="font-size: 12px;">
         <div class="container">
             <div class="d-flex justify-content-center gap-4 mb-3">
@@ -365,7 +308,7 @@
         </div>
     </footer>
 
-    <!-- সিস্টেম ডায়ালগ মডালস -->
+    <!-- লিগ্যাল ইনফরমেশন পপআপ মডালস (আগের মিসিং টেক্সট রি-স্টোর্ড) -->
     <div id="modalOverlay" class="modal fade" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-light border-secondary">
@@ -378,52 +321,98 @@
         </div>
     </div>
 
-    <!-- 📊 সার্চ কনসোল রিমোট কন্টেইনার মডাল -->
+    <!-- 📊 সার্চ কনসোল ও অ্যাডভান্সড ড্যাশবোর্ড কন্ট্রোল ফর্ম মডাল -->
     <div id="consoleModalOverlay" class="modal fade" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content bg-dark border-secondary text-white">
                 <div class="modal-header border-secondary">
-                    <h5 class="modal-title font-mono text-info">⚡ Core Data Search Console</h5>
+                    <h5 class="modal-title font-mono text-info">⚡ Core Data Search Console & Developer Panel</h5>
                     <button type="button" class="btn-close btn-close-white" onclick="closeConsoleModal()"></button>
                 </div>
                 <div class="modal-body font-mono text-light" style="font-size: 12px;">
                     <div class="row g-3 mb-3 text-center">
-                        <div class="col-6 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Node Status</p><p class="text-emerald-400 fw-bold m-0 mt-1">● Online</p></div></div>
-                        <div class="col-6 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Synchronized Matrices</p><p id="consoleTotalCount" class="text-white fw-bold m-0 mt-1">0</p></div></div>
-                        <div class="col-12 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Pipeline Stream</p><p class="text-info fw-bold m-0 mt-1">Active JSON Layers</p></div></div>
+                        <div class="col-6 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Node Status</p><p class="text-emerald-400 fw-bold m-0 mt-1">● Cluster Online</p></div></div>
+                        <div class="col-6 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Master Cache</p><p id="consoleTotalCount" class="text-white fw-bold m-0 mt-1">0</p></div></div>
+                        <div class="col-12 col-md-4"><div class="bg-black p-3 rounded border border-secondary"><p class="text-secondary m-0">Pipeline Stream</p><p class="text-info fw-bold m-0 mt-1">Active JSON Feeds</p></div></div>
                     </div>
-                    <p class="text-secondary mb-1">Crawl Feeds Node Log:</p>
-                    <div id="consoleLogs" class="bg-black p-3 rounded border border-secondary text-light overflow-y-auto" style="height: 120px; font-size: 11px;"></div>
+                    
+                    <p class="text-secondary mb-1">Crawl Feeds Live Activity Log:</p>
+                    <div id="consoleLogs" class="bg-black p-2 rounded border border-secondary text-light overflow-y-auto mb-4" style="height: 100px; font-size: 11px;"></div>
+                    
+                    <!-- 📥 অল-ইন-ওয়ান অ্যাডভান্সড ড্যাশবোর্ড সাবমিট ও কন্ট্রোল ফর্ম -->
+                    <div class="border-top border-secondary pt-3">
+                        <h6 class="text-info mb-2">📥 Index Request / Sponsor Control Center</h6>
+                        <p class="text-muted text-xs mb-3">Submit tool URLs here. Developers can lock tools into Featured tiers using specific time lease protocols.</p>
+                        
+                        <form id="aiSubmitForm" action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="row g-2">
+                            <div class="col-12 col-md-6">
+                                <input type="text" name="toolName" placeholder="AI Tool Name *" required class="form-control form-control-sm bg-black text-white border-secondary text-xs">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input type="url" name="toolLink" placeholder="Target Endpoint URL (https://...) *" required class="form-control form-control-sm bg-black text-white border-secondary text-xs">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input type="text" name="toolCategory" placeholder="Category (e.g. AI Agent, Image Creator)" class="form-control form-control-sm bg-black text-white border-secondary text-xs">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input type="url" name="toolLogo" placeholder="Logo Image URL (Optional)" class="form-control form-control-sm bg-black text-white border-secondary text-xs">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <select name="leaseTier" id="leaseTierSelect" class="form-select form-select-sm bg-black text-white border-secondary text-xs">
+                                    <option value="normal">Normal Index Listing (Permanent / Free)</option>
+                                    <option value="1h">Sponsor Lease: 1 Hour (Featured Tier)</option>
+                                    <option value="3h">Sponsor Lease: 3 Hours (Featured Tier)</option>
+                                    <option value="6h">Sponsor Lease: 6 Hours (Featured Tier)</option>
+                                    <option value="24h">Sponsor Lease: 24 Hours (Featured Tier)</option>
+                                    <option value="72h">Sponsor Lease: 72 Hours (Featured Tier)</option>
+                                    <option value="3d">Sponsor Lease: 3 Days (Featured Tier)</option>
+                                    <option value="1w">Sponsor Lease: 1 Week (Featured Tier)</option>
+                                    <option value="10d">Sponsor Lease: 10 Days (Featured Tier)</option>
+                                    <option value="15d">Sponsor Lease: 15 Days (Featured Tier)</option>
+                                    <option value="1m">Sponsor Lease: 1 Month (Featured Tier)</option>
+                                    <option value="6m">Sponsor Lease: 6 Months (Featured Tier)</option>
+                                    <option value="1y">Sponsor Lease: 1 Year (Featured Tier)</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <!-- ড্যাশবোর্ড জেসন ফরম্যাট জেনারেটর প্রমোদ বাটন -->
+                                <button type="button" onclick="generateJsonFormat()" class="btn btn-sm btn-outline-warning w-100 text-xs">🔧 Generate Dashboard JSON Format</button>
+                            </div>
+                            <div class="col-12">
+                                <textarea name="toolDesc" rows="2" placeholder="Provide a short description of what this AI tool parameters execute... *" required class="form-control form-control-sm bg-black text-white border-secondary text-xs"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-sm btn-info w-100 fw-bold font-mono tracking-wider">INJECT PIPELINE / COMMIT LEASE ⚡</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 🛠️ বুটস্ট্র্যাপের অফিশিয়াল ফুল ডাইনামিক লাইব্রেরি লোডার সিডিএন (সবচেয়ে নিচে রাখা হলো) -->
+    <!-- Bootstrap 5 JavaScript Bundle Bundle Loader -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core Database Fetch Scripts Nodes -->
     <script>
+        // 📂 ফিক্সড ৩টি ডাটাবেজ (যা থেকে শুধু রিড করা হবে, কোনো ডেটা মডিফাই হবে না)
         const MASTER_URLS = [
             'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_ag_25k.json', 
             'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_3k.json', 
             'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/AIToolsList.json'
         ];
 
-        const NEW_TOOLS_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/new_tools.json';
-        const FEATURED_TOOLS_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/featured_tools.json';
+        // 📥 নতুন আলাদা ডেডিকেটেড কম্বাইন্ড ড্যাশবোর্ড জেসন ডেটাবেজ লিংক (এখান থেকেই ফিচার্ড এবং রিলিজ ম্যাপ হবে)
+        const NEW_DASHBOARD_DB_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/new_tools.json';
 
         let allTools = [];
         let filteredTools = [];
-        let newToolsList = [];
-        let featuredToolsList = [];
+        let dashboardDbList = [];
         
         let currentCategory = 'All';
         let limit = 30;
         let offset = 0;
         let consoleLogStorage = [];
-
-        const superstarTools = ["chatgpt", "midjourney", "claude", "sora", "devin", "crewai", "bolt.new", "perplexity", "ollama", "lm studio", "autogen"];
 
         function logToConsole(message, type = 'info') {
             const timestamp = new Date().toLocaleTimeString();
@@ -437,9 +426,30 @@
         async function loadMegaDatabase() {
             try {
                 logToConsole("Initializing Software Engine Core Panel...", "info");
-                await loadNewAndFeaturedTools();
+                
+                // আলাদা ড্যাশবোর্ড ডেটাবেজ সিঙ্ক করা
+                await fetchDashboardDatabase();
 
                 let combinedTools = [];
+                
+                // ১. আলাদা ড্যাশবোর্ড ডেটাবেজের আইটেমগুলোকে মূল গ্রিডের তালিকায় প্রি-মার্জ করা
+                dashboardDbList.forEach(tool => {
+                    let isExpiredFeatured = false;
+                    if(tool.isFeatured && tool.expireTimestamp) {
+                        isExpiredFeatured = new Date().getTime() >= tool.expireTimestamp;
+                    }
+
+                    combinedTools.push({
+                        name: tool.name || 'AI Tool',
+                        link: tool.link || '',
+                        logo: tool.logo || '',
+                        status: (tool.isFeatured && !isExpiredFeatured) ? 'Featured' : 'Active',
+                        task: tool.category || 'General AI',
+                        short_description: tool.description || 'Advanced AI Module.'
+                    });
+                });
+
+                // ২. ফিক্সড ৩টি ডিস্ট্রিবিউটেড ফাইল রিড করা
                 for (let idx = 0; idx < MASTER_URLS.length; idx++) {
                     try {
                         const response = await fetch(MASTER_URLS[idx]);
@@ -450,7 +460,7 @@
                                 if (tool.handle || (tool.description && !tool.name && !tool.shortDescription)) {
                                     return {
                                         name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
-                                        link: tool.website || `https://www.google.com/search?q=${encodeURIComponent(tool.handle + ' AI Tool')}`,
+                                        link: tool.website || '',
                                         logo: "", status: 'Active', task: 'General AI', short_description: tool.description || 'Advanced System Node.'
                                     };
                                 }
@@ -464,136 +474,169 @@
                                 };
                             });
                             combinedTools = combinedTools.concat(mapped);
-                            logToConsole(`Master Stream Dataset #${idx + 1} stacked.`, "success");
+                            logToConsole(`Master Dataset Pipe #${idx + 1} synchronized.`, "success");
                         }
-                    } catch(e) { logToConsole(`Master Dataset Pipe #${idx + 1} bypassed structural fault.`, "warn"); }
+                    } catch(e) { logToConsole(`Master Dataset Pipe #${idx + 1} bypass filter check.`, "warn"); }
                 }
 
+                // ডুপ্লিকেট রিমুভার নোড
                 allTools = combinedTools.filter((v,i,a)=>a.findIndex(t=>(t.name.toLowerCase().trim()===v.name.toLowerCase().trim()))===i);
-                allTools.sort((a, b) => {
-                    const bIsSuper = superstarTools.some(t => b.name.toLowerCase().includes(t)) ? 1 : 0;
-                    const aIsSuper = superstarTools.some(t => a.name.toLowerCase().includes(t)) ? 1 : 0;
-                    return bIsSuper - aIsSuper;
-                });
-
+                
                 filteredTools = [...allTools];
                 document.getElementById('loading').classList.add('d-none');
                 document.getElementById('toolsGrid').classList.remove('d-none');
                 renderNextBatch();
             } catch(err) {
-                document.getElementById('loading').innerText = "Critical operational runtime mapping error.";
+                document.getElementById('loading').innerText = "Critical pipeline stack error encountered.";
             }
         }
 
-        async function loadNewAndFeaturedTools() {
+        // আলাদা ড্যাশবোর্ড ডেটাবেজ ফেচিং নোড
+        async function fetchDashboardDatabase() {
             try {
-                const res = await fetch(NEW_TOOLS_URL);
-                newToolsList = await res.json();
-                renderNewToolsCarousel(newToolsList);
-            } catch(e) {}
-
-            try {
-                const res = await fetch(FEATURED_TOOLS_URL);
-                const rawFeatured = await res.json();
-                const currentTime = new Date().getTime();
+                const res = await fetch(NEW_DASHBOARD_DB_URL);
+                dashboardDbList = await res.json();
+                logToConsole("Dashboard Database Cluster online. Parsing segments...", "success");
                 
-                featuredToolsList = rawFeatured.filter(item => {
-                    if(!item.expireTimestamp) return true;
-                    return currentTime < item.expireTimestamp;
-                });
-                renderFeaturedCarousel(featuredToolsList);
-            } catch(e) {}
-        }
-
-        function renderNewToolsCarousel(list) {
-            const inner = document.getElementById('newToolsCarouselInner');
-            inner.innerHTML = '';
-            if(!list || list.length === 0) return;
-
-            for (let i = 0; i < list.length; i += 6) {
-                const activeClass = i === 0 ? 'active' : '';
-                const chunk = list.slice(i, i + 6);
-                
-                let logosHtml = '';
-                chunk.forEach(tool => {
-                    let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(tool.link)}`;
-                    logosHtml += `
-                        <div class="col-2 text-center">
-                            <a href="${tool.link}" target="_blank" class="d-inline-block" title="${tool.name}">
-                                <div class="mini-release-circle">
-                                    <img src="${logo}" class="mini-release-img" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
-                                </div>
-                            </a>
-                        </div>
-                    `;
-                });
-
-                inner.insertAdjacentHTML('beforeend', `
-                    <div class="carousel-item ${activeClass}">
-                        <div class="row g-2 align-items-center py-4" style="background:#0f172a; border: 1px solid #1e293b; border-radius:16px; min-height:125px;">${logosHtml}</div>
-                    </div>
-                `);
+                // ডিফল্টভাবে 'FEATURED' মোড ক্যারোসল অন করা
+                filterByRelease('featured');
+            } catch(e) { 
+                logToConsole("Dashboard Database Stream failed. Using empty clusters.", "warn"); 
+                renderCarouselLayout([], 'featured');
             }
         }
 
-        function renderFeaturedCarousel(list) {
-            const inner = document.getElementById('featuredCarouselInner');
-            inner.innerHTML = '';
-            if(!list || list.length === 0) return;
+        // 📅 রিলিজ এবং টাইম-লকড ড্রপডাউন ইভেন্ট কন্ট্রোলার
+        function filterByRelease(timeline) {
+            document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.toUpperCase()}`;
+            const currentTime = new Date().getTime();
 
-            list.forEach((tool, index) => {
-                const activeClass = index === 0 ? 'active' : '';
-                let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(tool.link)}`;
-                inner.insertAdjacentHTML('beforeend', `
-                    <div class="carousel-item ${activeClass}">
-                        <div class="featured-card">
-                            <span class="featured-badge">${tool.badge || 'FEATURED'}</span>
-                            <div class="d-flex align-items-center gap-3 mb-2">
-                                <img src="${logo}" class="rounded-3" style="width:36px; height:36px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
-                                <div class="text-start">
-                                    <h6 class="text-white m-0 fw-bold" style="font-size:13px;">${tool.name}</h6>
-                                    <span class="text-secondary" style="font-size:10px;">${tool.category}</span>
-                                </div>
-                            </div>
-                            <p class="text-secondary text-start m-0 text-truncate" style="font-size:11px;">${tool.description}</p>
-                            <div class="text-start">
-                                <a href="${tool.link}" target="_blank" class="btn btn-sm btn-primary py-0.5 px-3 rounded-pill mt-2 font-mono text-white text-decoration-none" style="font-size:10px;">LAUNCH INTEL 🚀</a>
-                            </div>
-                        </div>
-                    </div>
-                `);
-            });
+            if (timeline === 'featured') {
+                // ১. ফিচার্ড ফিল্টার: ডেটাতে isFeatured: true থাকতে হবে এবং মেয়াদ শেষ হওয়া যাবে না
+                let activeFeatured = dashboardDbList.filter(tool => {
+                    if (!tool.isFeatured) return false;
+                    if (!tool.expireTimestamp) return true; // স্থায়ী ফিচার্ড
+                    return currentTime < tool.expireTimestamp; // মেয়াদ লজিক চেক
+                });
+                renderCarouselLayout(activeFeatured, 'featured');
+            } else {
+                // ২. রিলিজ টাইমলাইন ফিল্টার: কারেন্ট টাইম উইন্ডো ডেট ম্যাপিং লজিক
+                let activeReleases = dashboardDbList.filter(tool => {
+                    if (!tool.releaseDate) return false;
+                    const rDate = new Date(tool.releaseDate);
+                    const diffDays = Math.ceil(Math.abs(new Date() - rDate) / (1000 * 60 * 60 * 24));
+
+                    if (timeline === 'today') return diffDays <= 1;
+                    if (timeline === 'week') return diffDays <= 7;
+                    if (timeline === 'month') return diffDays <= 30;
+                    if (timeline === 'year') return diffDays <= 365;
+                    return true;
+                });
+                renderCarouselLayout(activeReleases, 'logos');
+            }
         }
 
+        // ডাইনামিক ক্যারোসল রেন্ডারার ইঞ্জিন (রিকোয়ারমেন্ট অনুযায়ী সম্পূর্ণ কাস্টমাইজড)
+        function renderCarouselLayout(list, mode) {
+            const inner = document.getElementById('unifiedCarouselInner');
+            inner.innerHTML = '';
+            
+            if (!list || list.length === 0) {
+                inner.innerHTML = `<div class="carousel-item active text-center text-muted font-mono py-4 text-xs">[INFO]: No active nodes live under this matrix filter.</div>`;
+                return;
+            }
+
+            if (mode === 'featured') {
+                // ক) FEATURED মোড: ৩টি করে কাস্টম ফ্লেক্সিবল কার্ড কলাম গ্রিড স্লাইডার
+                for (let i = 0; i < list.length; i += 3) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 3);
+                    
+                    let cardsHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = tool.link || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        cardsHtml += `
+                            <div class="col-12 col-md-4">
+                                <a href="${targetLink}" target="_blank" class="app-card-anchor">
+                                    <div class="app-card featured-card-style">
+                                        <span class="featured-badge-tag">${tool.badge || 'PRO'}</span>
+                                        <div class="text-start">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <img src="${logo}" class="rounded bg-black p-1" style="width:28px; height:36px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                                <h6 class="text-white m-0 text-truncate font-bold" style="font-size:12px;">${tool.name}</h6>
+                                            </div>
+                                            <p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${tool.description || 'Verified Tier Injected Node.'}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${activeClass}"><div class="row g-2">${cardsHtml}</div></div>`);
+                }
+            } else {
+                // খ) TIMELINE মোড: শুধু লগো এবং নেম ক্যারোসল (প্রতি স্লাইডে ৬টি করে কাস্টম রাউন্ডড সার্কেল লিংক)
+                for (let i = 0; i < list.length; i += 6) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 6);
+                    
+                    let logosHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = tool.link || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        logosHtml += `
+                            <div class="col-4 col-md-2 text-center">
+                                <a href="${targetLink}" target="_blank" class="text-decoration-none d-block mx-auto" style="max-width:70px;">
+                                    <div class="mini-release-circle">
+                                        <img src="${logo}" class="mini-release-img" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                    </div>
+                                    <p class="carousel-tool-name text-center mt-1">${tool.name}</p>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${activeClass}"><div class="row g-2 align-items-center py-2">${logosHtml}</div></div>`);
+                }
+            }
+        }
+
+        // ৪৭,০০০+ গ্লোবাল ইনডেক্স গ্রিড রেন্ডারার (পুরো কার্ড বডি হাইড্রো-লিংক নোড সহ)
         function renderNextBatch() {
             const grid = document.getElementById('toolsGrid');
             const batch = filteredTools.slice(offset, offset + limit);
 
             if (batch.length === 0 && offset === 0) {
-                grid.innerHTML = `<div class="col-12 text-center text-muted font-mono py-5">No metrics matching query nodes found inside matrix.</div>`;
+                grid.innerHTML = `<div class="col-12 text-center text-muted font-mono py-5">No metrics matching query nodes found inside master matrix.</div>`;
                 return;
             }
 
             batch.forEach(tool => {
-                let toolUrl = tool.link || '#';
+                // 🛠️ রিকোয়ারমেন্ট লিংক লজিক: লিংক না থাকলে বা ভুল থাকলে ডিরেক্ট গুগল সার্চ এস্কেপ নোড ট্রিগার হবে
+                let toolUrl = tool.link ? tool.link.trim() : '';
+                if (!toolUrl || toolUrl === '#' || toolUrl.includes('aitoolbuzz.com/assets') || toolUrl === 'https://aitoolbuzz.com' || toolUrl === 'https://aitoolbuzz.com/') {
+                    toolUrl = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                }
+
                 let primaryLogo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
+                let isFeaturedStyle = tool.status === 'Featured' ? 'featured-card-style' : '';
+                let isFeaturedBadge = tool.status === 'Featured' ? `<span class="featured-badge-tag">FEATURED</span>` : `<span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${tool.status}</span>`;
 
                 const card = `
                     <div class="col-12 col-sm-6 col-lg-4">
-                        <div class="app-card p-3 d-flex flex-column justify-content-between" style="height: 165px;">
-                            <div class="text-start">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <img src="${primaryLogo}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
-                                    <span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${tool.status}</span>
+                        <a href="${toolUrl}" target="_blank" class="app-card-anchor">
+                            <div class="app-card ${isFeaturedStyle}">
+                                <div class="text-start w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <img src="${primaryLogo}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
+                                        ${isFeaturedBadge}
+                                    </div>
+                                    <h6 class="text-white font-bold text-truncate m-0" style="font-size:13px;">${tool.name}</h6>
+                                    <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${tool.task}</span>
+                                    <p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${tool.short_description}</p>
                                 </div>
-                                <h6 class="text-white font-bold text-truncate m-0" style="font-size:13px;">${tool.name}</h6>
-                                <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${tool.task}</span>
-                                <p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${tool.short_description}</p>
                             </div>
-                            <a href="${toolUrl}" target="_blank" class="btn btn-sm btn-dark border-secondary text-white py-1 w-100 font-mono mt-2" style="font-size: 10px;">
-                                Launch Tool 🚀
-                            </a>
-                        </div>
+                        </a>
                     </div>
                 `;
                 grid.insertAdjacentHTML('beforeend', card);
@@ -603,15 +646,21 @@
             document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
         }
 
+        // 🔍 রিয়েল-টাইম লাইভ ফিল্টারিং (সার্চ করলে ক্যারোসল জোন অটো উধাও হয়ে যাবে)
         document.getElementById('searchInput').addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase().trim();
             offset = 0;
             document.getElementById('toolsGrid').innerHTML = '';
 
+            const carouselZone = document.getElementById('dynamicCarouselZone');
+
             if (query === "") {
+                carouselZone.classList.remove('d-none'); // সার্চ ফাকা থাকলে ক্যারোসল ব্যাক করবে
                 applyGlobalFilters();
                 return;
             }
+
+            carouselZone.classList.add('d-none'); // 🎯 সার্চ করা শুরু করলেই ক্যারোসল সম্পূর্ণ গায়েব হয়ে যাবে
 
             const queryWords = query.split(/\s+/).filter(w => w !== "");
             filteredTools = allTools.filter(tool => {
@@ -645,30 +694,13 @@
             applyGlobalFilters();
         }
 
-        function filterByRelease(timeline) {
-            document.getElementById('releaseDropdown').innerText = `📅 ${timeline.toUpperCase()}`;
-            const now = new Date();
-            let filtered = newToolsList.filter(tool => {
-                if (!tool.releaseDate) return false;
-                const rDate = new Date(tool.releaseDate);
-                const diffDays = Math.ceil(Math.abs(now - rDate) / (1000 * 60 * 60 * 24));
-
-                if (timeline === 'today') return diffDays <= 1;
-                if (timeline === 'week') return diffDays <= 7;
-                if (timeline === 'month') return diffDays <= 30;
-                if (timeline === 'year') return diffDays <= 365;
-                return true;
-            });
-            renderNewToolsCarousel(filtered);
-        }
-
         function applyGlobalFilters() {
             filteredTools = currentCategory === 'All' ? [...allTools] : allTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
             renderNextBatch();
         }
 
         function startVoiceSearch() {
-            const SpeechRecognition = window.webkitSpeechRecognition || window.SearchRecognition;
+            const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
             if (!SpeechRecognition) return;
             const recognition = new SpeechRecognition();
             const voiceBtn = document.getElementById('voiceBtn');
@@ -683,33 +715,63 @@
             recognition.onerror = function() { voiceBtn.innerText = "🎙️"; };
         }
 
+        // 🔧 ড্যাশবোর্ড জেসন কোড কনভার্টার অবজেক্ট জেনারেটর মেকার
+        function generateJsonFormat() {
+            const name = prompt("AI Tool Name:") || "NEW TOOL";
+            const url = prompt("Website URL (https://...):") || "https://";
+            const desc = prompt("Short Description:") || "Advanced artificial intelligence node listing.";
+            const cat = prompt("Category (AI Agent / AI Swarm / Local AI):") || "General AI";
+            const type = prompt("Type 'featured' for sponsor tier or press enter for normal release:");
+            
+            let isFeatured = false;
+            let expireTimestamp = null;
+            
+            if(type && type.toLowerCase() === 'featured') {
+                isFeatured = true;
+                const hours = parseFloat(prompt("Enter validation length in hours (e.g. 1, 24, 72, 168 for 1w, 720 for 1m):") || "24");
+                expireTimestamp = new Date().getTime() + (hours * 60 * 60 * 1000);
+            }
+
+            const mockFormat = {
+                "name": name.toUpperCase(),
+                "link": url,
+                "logo": "",
+                "category": cat,
+                "description": desc,
+                "releaseDate": new Date().toISOString().split('T')[0],
+                "isFeatured": isFeatured,
+                "expireTimestamp": expireTimestamp,
+                "badge": isFeatured ? "FEATURED" : "ACTIVE"
+            };
+
+            alert("Generated JSON Object Structure:\n\n" + JSON.stringify(mockFormat, null, 2) + "\n\nCopy this array item and commit into your new_tools.json database file node.");
+            console.log(mockFormat);
+        }
+
         function openConsoleModal() {
             document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes";
             document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join('');
-            var consoleModal = new bootstrap.Modal(document.getElementById('consoleModalOverlay'));
-            consoleModal.show();
+            new bootstrap.Modal(document.getElementById('consoleModalOverlay')).show();
         }
         function closeConsoleModal() { 
-            var myModalEl = document.getElementById('consoleModalOverlay');
-            var modal = bootstrap.Modal.getInstance(myModalEl);
+            var modal = bootstrap.Modal.getInstance(document.getElementById('consoleModalOverlay'));
             if(modal) modal.hide();
         }
         
         function openModal(id) {
-            document.getElementById('modalContent').innerHTML = legalData[id] || 'Parameter details.';
-            var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay'));
-            legalModal.show();
+            document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log detail node parameter setup.';
+            new bootstrap.Modal(document.getElementById('modalOverlay')).show();
         }
         function closeModal() { 
-            var myModalEl = document.getElementById('modalOverlay');
-            var modal = bootstrap.Modal.getInstance(myModalEl);
+            var modal = bootstrap.Modal.getInstance(document.getElementById('modalOverlay'));
             if(modal) modal.hide();
         }
 
+        // 📄 ফুটারে ক্লিক করলে খোলার জন্য রিয়েল লিগ্যাল টেক্সট প্যারামিটার ডেটাবেস
         const legalData = {
-            privacyModal: `<h6>Privacy Policy</h6><p>Standard encryption protocols applied to node data.</p>`,
-            termsModal: `<h6>Terms of Indexing</h6><p>Access criteria tied specifically to general index data logs.</p>`,
-            contactModal: `<h6>Operational Administration</h6><p>Bug logs/Requests: contact.yourdomain@gmail.com</p>`
+            privacyModal: `<h6>Privacy Operational Policy</h6><p>allalo AI operates as an open decentralized directory. We do not aggregate user token trackers or cookies cache logs client-side. All pipeline request sequences secure end-to-end encryption protocols seamlessly.</p>`,
+            termsModal: `<h6>Terms of Indexing Service</h6><p>Operational access granted specifically for validated indexing clusters. Unauthorized automated repository crawling vectors without secure endpoint keys are limited to structural bandwidth filters.</p>`,
+            contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
         };
 
         document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
