@@ -25,7 +25,7 @@
             color: #cbd5e1;
         }
 
-        /* 🔍 Central Search Container Style (Responsive Fixed) */
+        /* 🔍 Responsive Search Box Architecture (Fixed Mobile Leaning) */
         .search-root-container {
             position: relative;
             width: 100%;
@@ -72,7 +72,7 @@
             width: 3px;
             bottom: -5px;
             right: -3px;
-            transform: rotate(-45deg);
+            transform: rotate(-45deg) ;
         }
 
         .microphone {
@@ -98,7 +98,7 @@
             position: absolute; height: 5px; width: 2px; background: #ba1414; bottom: 4px; left: 13px;
         }
 
-        /* 🎛️ Responsive Text Tabs Below Searchbar */
+        /* 🎛️ Dynamic Text Tabs Below Searchbar */
         .icon-holder {
             display: flex;
             justify-content: center;
@@ -148,6 +148,7 @@
             .searchicon { left: 24px; top: 17px; }
             .microphone { right: 22px; top: 10px; }
             .icon-text-tab { padding: 6px 12px; font-size: 11px; opacity: 1; transform: none; }
+            .icon-holder { opacity: 1; }
         }
 
         /* Carousel Panel Container */
@@ -219,7 +220,7 @@
         </div>
 
         <div class="d-flex justify-content-center gap-2 mt-4">
-            <!-- 📅 🛠️ ড্রপডাউন ডাটা ইন্টিগ্রেশন এট্রিবিউট ফিক্সড -->
+            <!-- 📅 ড্রপডাউন ডাটা ইন্টিগ্রেশন এট্রিবিউট ফিক্সড -->
             <div class="dropdown d-inline-block">
                 <button class="btn btn-sm btn-outline-primary text-white border-indigo rounded-pill px-3 fw-bold dropdown-toggle" type="button" id="releaseDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                     🌟 Featured
@@ -251,7 +252,7 @@
         </div>
     </section>
 
-    <!-- 📂 ৩. গ্লোবাল মাস্টার ডাটাবেজ ইনডেক্স গ্রিড -->
+    <!-- 📂 ৩. গলোবাল মাস্টার ডাটাবেজ ইনডেক্স গ্রিড -->
     <main class="container mb-5">
         <hr class="border-secondary my-4">
         <h5 class="text-white mb-4 fw-bold" style="font-size: 14px; letter-spacing: 0.5px;">📂 GLOBAL MASTER PARAMETER INDEX</h5>
@@ -281,7 +282,7 @@
         </div>
     </footer>
 
-    <!-- 📄 গ্লোবাল বুটস্ট্র্যাপ মডাল উইন্ডো নোড (সব ফুটার ডাটা এখানে খুলবে) -->
+    <!-- 📄 গলোবাল বুটস্ট্র্যাপ মডাল উইন্ডো নোড (ফুটার ডাটা এখানে খুলবে) -->
     <div id="modalOverlay" class="modal fade" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-light border-secondary">
@@ -294,7 +295,7 @@
         </div>
     </div>
 
-    <!-- 📊 ৪. সার্চ কনসোল ও ডুয়াল কন্ট্রোল ড্যাশবোর্ড মডাল উইন্ডো -->
+    <!-- 📊 ৪. সার্চ কনসোল ও ডুয়াল কন্ট্রোল ড্যাশবোর্ড মডাল উইন্ডো -->
     <div id="consoleModalOverlay" class="modal fade" tabindex="-1" aria-labelledby="consoleModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content bg-dark border-secondary text-white">
