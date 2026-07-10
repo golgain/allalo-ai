@@ -394,4 +394,427 @@
                                     </div>
                                     <div class="col-12">
                                         <label class="text-secondary d-block mb-1">Matrix Core Parameters Log Statement</label>
-                                        <textarea id
+                                        <textarea id="admDesc" rows="2" placeholder="Enter node log description metadata parameters..." class="form-control form-control-sm bg-black text-white border-secondary text-xs"></textarea>
+                                    </div>
+                                    <div class="col-12 mt-3 d-flex gap-2">
+                                        <button type="button" onclick="generateAdminJson()" class="btn btn-sm btn-success flex-grow-1 font-mono fw-bold">⚡ GENERATE ADMISSION OBJECT</button>
+                                        <button type="button" onclick="clearAdminFields()" class="btn btn-sm btn-outline-danger font-mono">RESET</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="adminLockedState" class="text-center py-4">
+                                <p class="text-danger m-0">[SYSTEM LOCKED]: Secure authorization protocol required.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const MASTER_URLS = [
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_ag_25k.json', 
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_3k.json', 
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/AIToolsList.json'
+        ];
+
+        const NEW_DASHBOARD_DB_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/new_tools.json';
+
+        let allTools = [];
+        let filteredTools = [];
+        let dashboardDbList = [];
+        
+        let currentCategory = 'All';
+        let limit = 30;
+        let offset = 0;
+        let consoleLogStorage = [];
+
+        const superstarTools = ["chatgpt", "midjourney", "claude", "sora", "devin", "crewai", "bolt.new", "perplexity", "ollama", "lm studio", "autogen"];
+
+        function logToConsole(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            let colorClass = 'text-secondary';
+            if (type === 'success') colorClass = 'text-success fw-bold';
+            if (type === 'warn') colorClass = 'text-warning';
+            if (type === 'error') colorClass = 'text-danger fw-bold';
+            consoleLogStorage.push(`<div class="${colorClass}">[${timestamp}] ${message}</div>`);
+            
+            // অটো আপডেট টার্মিনাল উইন্ডো যদি খোলা থাকে
+            const logDiv = document.getElementById('consoleLogs');
+            if(logDiv) {
+                logDiv.innerHTML = consoleLogStorage.join('');
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
+        }
+
+        async function loadMegaDatabase() {
+            try {
+                logToConsole("Initializing Software Engine Core Panel...", "info");
+                await fetchDashboardDatabase();
+
+                let combinedTools = [];
+                
+                dashboardDbList.forEach(tool => {
+                    let isExpiredFeatured = false;
+                    if(tool.isFeatured && tool.expireTimestamp) {
+                        isExpiredFeatured = new Date().getTime() >= tool.expireTimestamp;
+                    }
+
+                    combinedTools.push({
+                        name: tool.name || 'AI Tool',
+                        link: tool.link || '',
+                        logo: tool.logo || '',
+                        status: (tool.isFeatured && !isExpiredFeatured) ? 'Featured' : 'Active',
+                        task: tool.category || 'General AI',
+                        short_description: tool.description || 'Advanced AI Module.'
+                    });
+                });
+
+                for (let idx = 0; idx < MASTER_URLS.length; idx++) {
+                    try {
+                        const response = await fetch(MASTER_URLS[idx]);
+                        const jsonData = await response.json();
+                        if (Array.isArray(jsonData)) {
+                            const mapped = jsonData.map(tool => {
+                                if (!tool) return null;
+                                if (tool.handle || (tool.description && !tool.name && !tool.shortDescription)) {
+                                    return {
+                                        name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
+                                        link: tool.website || '', logo: "", status: 'Active', task: 'General AI', short_description: tool.description || 'Advanced System Node.'
+                                    };
+                                }
+                                return {
+                                    name: tool.name || 'AI Tool',
+                                    link: tool.website || tool.link || '',
+                                    logo: tool.logo || '', status: tool.status || 'Active',
+                                    task: tool.task || tool.category || 'General AI',
+                                    short_description: tool.shortDescription || tool.short_description || 'Autonomous Framework Node.'
+                                };
+                            });
+                            combinedTools = combinedTools.concat(mapped);
+                            logToConsole(`Master Dataset Pipe #${idx + 1} synchronized.`, "success");
+                        }
+                    } catch(e) { logToConsole(`Master Dataset Pipe #${idx + 1} bypassed structural fault.`, "warn"); }
+                }
+
+                allTools = combinedTools.filter((v,i,a)=>a.findIndex(t=>(t.name.toLowerCase().trim()===v.name.toLowerCase().trim()))===i);
+                allTools.sort((a, b) => {
+                    const bIsSuper = superstarTools.some(t => b.name.toLowerCase().includes(t)) ? 1 : 0;
+                    const aIsSuper = superstarTools.some(t => a.name.toLowerCase().includes(t)) ? 1 : 0;
+                    return bIsSuper - aIsSuper;
+                });
+
+                filteredTools = [...allTools];
+                document.getElementById('loading').classList.add('d-none');
+                document.getElementById('toolsGrid').classList.remove('d-none');
+                
+                // সার্চ কনসোল কাউন্টার জোন আপডেট
+                const countDiv = document.getElementById('consoleTotalCount');
+                if(countDiv) countDiv.innerText = allTools.length.toLocaleString() + " nodes";
+                
+                renderNextBatch();
+            } catch(err) {
+                document.getElementById('loading').innerText = "Critical operational runtime mapping error.";
+            }
+        }
+
+        async function fetchDashboardDatabase() {
+            try {
+                const res = await fetch(NEW_DASHBOARD_DB_URL);
+                dashboardDbList = await res.json();
+                logToConsole("Dashboard Database Cluster online.", "success");
+                filterByRelease('featured');
+            } catch(e) { 
+                logToConsole("Dashboard Database Stream offline.", "warn"); 
+                renderCarouselLayout(null, 'featured');
+            }
+        }
+
+        function filterByRelease(timeline) {
+            document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
+            const currentTime = new Date().getTime();
+
+            if (timeline === 'featured') {
+                let activeFeatured = dashboardDbList.filter(tool => {
+                    if (!tool.isFeatured) return false;
+                    if (!tool.expireTimestamp) return true;
+                    return currentTime < tool.expireTimestamp;
+                });
+                renderCarouselLayout(activeFeatured, 'featured');
+            } else {
+                let activeReleases = dashboardDbList.filter(tool => {
+                    if (!tool.releaseDate) return false;
+                    const rDate = new Date(tool.releaseDate);
+                    const diffDays = Math.ceil(Math.abs(new Date() - rDate) / (1000 * 60 * 60 * 24));
+
+                    if (timeline === 'today') return diffDays <= 1;
+                    if (timeline === 'week') return diffDays <= 7;
+                    if (timeline === 'month') return diffDays <= 30;
+                    if (timeline === 'year') return diffDays <= 365;
+                    return true;
+                });
+                renderCarouselLayout(activeReleases, 'logos');
+            }
+        }
+
+        function renderCarouselLayout(list, mode) {
+            const inner = document.getElementById('unifiedCarouselInner');
+            inner.innerHTML = '';
+            
+            if (!list || list.length === 0) {
+                inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: No active parameters stored under this node filter.</div>`;
+                return;
+            }
+
+            if (mode === 'featured') {
+                for (let i = 0; i < list.length; i += 3) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 3);
+                    
+                    let cardsHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = tool.link || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        cardsHtml += `
+                            <div class="col-12 col-md-4">
+                                <a href="${targetLink}" target="_blank" class="app-card-anchor">
+                                    <div class="app-card featured-card-style">
+                                        <span class="featured-badge-tag">${tool.badge || 'PRO'}</span>
+                                        <div class="text-start">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <img src="${logo}" class="rounded bg-black p-1" style="width:28px; height:28px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                                <h6 class="text-white m-0 text-truncate font-bold" style="font-size:12px;">${tool.name}</h6>
+                                            </div>
+                                            <p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${tool.description || 'Verified Sponsor Injected Matrix Node.'}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${activeClass}"><div class="row g-2">${cardsHtml}</div></div>`);
+                }
+            } else {
+                for (let i = 0; i < list.length; i += 6) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 6);
+                    
+                    let logosHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = tool.link || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        logosHtml += `
+                            <div class="col-4 col-md-2 text-center">
+                                <a href="${targetLink}" target="_blank" class="text-decoration-none d-block mx-auto" style="max-width:70px;">
+                                    <div class="mini-release-circle">
+                                        <img src="${logo}" class="mini-release-img" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                    </div>
+                                    <p class="carousel-tool-name text-center mt-1">${tool.name}</p>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `
+                        <div class="carousel-item ${activeClass}">
+                            <div class="row g-2 align-items-center py-3 bg-dark bg-opacity-20 border border-secondary border-opacity-20 rounded-4">${logosHtml}</div>
+                        </div>`
+                    );
+                }
+            }
+        }
+
+        function renderNextBatch() {
+            const grid = document.getElementById('toolsGrid');
+            const batch = filteredTools.slice(offset, offset + limit);
+
+            if (batch.length === 0 && offset === 0) {
+                grid.innerHTML = `<div class="col-12 text-center text-muted font-mono py-5">No metrics matching query nodes found inside master matrix.</div>`;
+                return;
+            }
+
+            batch.forEach(tool => {
+                let toolUrl = tool.link ? tool.link.trim() : '';
+                if (!toolUrl || toolUrl === '#' || toolUrl.includes('aitoolbuzz.com/assets') || toolUrl === 'https://aitoolbuzz.com' || toolUrl === 'https://aitoolbuzz.com/') {
+                    toolUrl = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                }
+
+                let primaryLogo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
+                let isFeaturedStyle = tool.status === 'Featured' ? 'featured-card-style' : '';
+                let isFeaturedBadge = tool.status === 'Featured' ? `<span class="featured-badge-tag">FEATURED</span>` : `<span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${tool.status}</span>`;
+
+                const card = `
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="${toolUrl}" target="_blank" class="app-card-anchor">
+                            <div class="app-card ${isFeaturedStyle}">
+                                <div class="text-start w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <img src="${primaryLogo}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
+                                        ${isFeaturedBadge}
+                                    </div>
+                                    <h6 class="text-white font-bold text-truncate m-0" style="font-size:13px;">${tool.name}</h6>
+                                    <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${tool.task}</span>
+                                    <p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${tool.short_description}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
+            });
+
+            offset += limit;
+            document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+            const carouselZone = document.getElementById('dynamicCarouselZone');
+
+            if (query === "") {
+                carouselZone.classList.remove('d-none');
+                applyGlobalFilters();
+                return;
+            }
+
+            carouselZone.classList.add('d-none');
+
+            const queryWords = query.split(/\s+/).filter(w => w !== "");
+            filteredTools = allTools.filter(tool => {
+                const name = tool.name.toLowerCase();
+                const desc = tool.short_description.toLowerCase();
+                const task = tool.task.toLowerCase();
+
+                let isMatch = name.includes(query) || desc.includes(query) || task.includes(query);
+                if (!isMatch && queryWords.length > 0) {
+                    isMatch = queryWords.every(word => name.includes(word) || desc.includes(word) || task.includes(word));
+                }
+                return isMatch;
+            });
+
+            if (currentCategory !== 'All') {
+                filteredTools = filteredTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
+            }
+            renderNextBatch();
+        });
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+
+            ['All', 'AI_Agent', 'AI_Swarm', 'Local_AI'].forEach(cat => {
+                const btn = document.getElementById(`btn-${cat}`);
+                if (btn) btn.classList.toggle('active', cat.replace('_', ' ') === category);
+            });
+
+            applyGlobalFilters();
+        }
+
+        function applyGlobalFilters() {
+            filteredTools = currentCategory === 'All' ? [...allTools] : allTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
+            renderNextBatch();
+        }
+
+        function unlockAdminPanel() {
+            const state = document.getElementById('adminAccessState');
+            const lockMessage = document.getElementById('adminLockedState');
+            
+            if(!state.classList.contains('d-none')) return; 
+
+            const pin = prompt("Enter Master Admin Security Key [PIN]:");
+            if (pin === "2026") {
+                state.classList.remove('d-none');
+                lockMessage.classList.add('d-none');
+                logToConsole("Admin terminal workspace unlocked successfully.", "success");
+            } else {
+                alert("🚨 Access Violation: Security pin code mismatch!");
+                bootstrap.Tab.getInstance(document.getElementById('dev-tab')).show();
+            }
+        }
+
+        function generateAdminJson() {
+            const name = document.getElementById('admName').value.trim();
+            const link = document.getElementById('admLink').value.trim();
+            const category = document.getElementById('admCat').value;
+            const lease = document.getElementById('admLease').value;
+            const description = document.getElementById('admDesc').value.trim();
+
+            if(!name || !link || !description) {
+                alert("Please fill in Name, Link and Description fields before generation.");
+                return;
+            }
+
+            let isFeatured = lease !== 'normal';
+            let expireTimestamp = null;
+            if(isFeatured) {
+                expireTimestamp = new Date().getTime() + (parseFloat(lease) * 60 * 60 * 1000);
+            }
+
+            const masterOutput = {
+                "name": name.toUpperCase(),
+                "link": link,
+                "logo": "",
+                "category": category,
+                "description": description,
+                "releaseDate": new Date().toISOString().split('T')[0],
+                "isFeatured": isFeatured,
+                "expireTimestamp": expireTimestamp,
+                "badge": isFeatured ? "FEATURED" : "ACTIVE"
+            };
+
+            alert("Generated Admin Database Object:\n\n" + JSON.stringify(masterOutput, null, 2) + "\n\nCopy this block and commit safely inside your new_tools.json repository array stack.");
+            console.log(masterOutput);
+        }
+
+        function clearAdminFields() {
+            document.getElementById('admName').value = '';
+            document.getElementById('admLink').value = '';
+            document.getElementById('admDesc').value = '';
+        }
+
+        function startVoiceSearch() {
+            const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+            if (!SpeechRecognition) return;
+            const recognition = new SpeechRecognition();
+            const voiceBtn = document.getElementById('voiceBtn');
+            recognition.lang = 'en-US';
+            voiceBtn.innerText = "🛑";
+            recognition.start();
+            recognition.onresult = function(e) {
+                document.getElementById('searchInput').value = e.results[0][0].transcript;
+                document.getElementById('searchInput').dispatchEvent(new Event('input'));
+            };
+            recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎙️"; };
+            recognition.onerror = function() { voiceBtn.innerText = "🎙️"; };
+        }
+
+        function openConsoleModal() {
+            if(allTools.length > 0) {
+                document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes";
+            }
+            document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join('');
+        }
+        
+        function openModal(id) {
+            document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details online.';
+            var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay'));
+            legalModal.show();
+        }
+
+        const legalData = {
+            aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 47,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide. Powered by structured data streaming architectures, we enable real-time discovery of next-gen AI swarms and frameworks effortlessly.</p>`,
+            privacyModal: `<h6>Privacy Operational Policy</h6><p>allalo AI operates as an open decentralized directory. We do not aggregate user token trackers or cookies cache logs client-side. All pipeline request sequences secure end-to-end encryption protocols seamlessly.</p>`,
+            termsModal: `<h6>Terms of Indexing Service</h6><p>Operational access granted specifically for validated indexing clusters. Unauthorized automated repository crawling vectors without secure endpoint keys are limited to structural bandwidth filters.</p>`,
+            contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
+        };
+
+        document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
+        loadMegaDatabase();
+    </script>
+</body>
+</html>
