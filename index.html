@@ -28,7 +28,6 @@
             --top-counter-color: #ffffff;
         }
 
-        /* ☀️ Light Mode Theme Fixes */
         body.light-mode {
             --bg-color: #f8fafc;
             --card-bg: #ffffff;
@@ -37,7 +36,7 @@
             --title-color: #0f172a;
             --tab-bg: #e2e8f0;
             --tab-text: #64748b;
-            --top-counter-color: #0f172a; /* Fixed visibility in Light Mode */
+            --top-counter-color: #0f172a;
         }
 
         body, p, input, button, select, textarea, span, div, a { 
@@ -60,13 +59,20 @@
             position: fixed; top: 20px; right: 20px; z-index: 999; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--title-color); padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* 🎯 Fixed Text & Heading Typographies (Made Sleek and Smart) */
+        /* 🎯 Fixed Small Professional Typography Matrix */
         .site-title {
-            font-size: clamp(1.8rem, 4vw + 0.5rem, 2.5rem) !important; /* Decreased size for professional look */
-            letter-spacing: -0.03em;
+            font-size: 28px !important; /* Fixed compact premium size */
+            letter-spacing: -0.02em;
+            color: var(--title-color) !important;
+        }
+        .site-subtitle {
+            font-size: 11px !important; /* Decreased size for better alignment */
+            letter-spacing: 1.2px;
+            font-weight: 700;
+            color: #818cf8 !important;
         }
         .global-index-heading {
-            font-size: 15px !important; /* Standard balanced sizing */
+            font-size: 13px !important; /* Small smart fit */
             letter-spacing: 0.5px;
             color: var(--title-color) !important;
         }
@@ -75,30 +81,33 @@
             font-weight: 800;
         }
 
-        /* 🔍 Unified Input Layout */
-        .search-root-container { width: 100%; max-width: 540px; margin: 0 auto; padding: 0 15px; }
-        .main-input-wrapper { position: relative; width: 100%; height: 54px; }
+        /* 🔍 Stable Input System */
+        .search-root-container { width: 100%; max-width: 540px; margin: 0 auto; padding: 0 15px; position: relative; }
+        .main-input-wrapper { position: relative; width: 100%; height: 52px; z-index: 10; }
         .main-input {
-            width: 100%; height: 100%; border: 2px solid var(--primary-two); background: var(--primary-one); border-radius: 50px; padding-left: 52px; padding-right: 85px; font-size: 15px; color: #111 !important; font-weight: 600; outline: none; transition: all 0.3s ease;
+            width: 100%; height: 100%; border: 2px solid var(--primary-two); background: var(--primary-one); border-radius: 50px; padding-left: 52px; padding-right: 85px; font-size: 14px; color: #111 !important; font-weight: 600; outline: none; transition: all 0.3s ease;
         }
         .main-input:focus { box-shadow: 0 0 20px rgba(95, 143, 164, 0.4); background: #ffffff; }
         
         .searchicon {
-            position: absolute; height: 16px; width: 16px; background: transparent; border: 3px solid var(--primary-two); left: 22px; top: 19px; border-radius: 100%; z-index: 5; pointer-events: none;
+            position: absolute; height: 16px; width: 16px; background: transparent; border: 3px solid var(--primary-two); left: 22px; top: 18px; border-radius: 100%; z-index: 15; pointer-events: none;
         }
-        .searchicon:after { content: ''; position: absolute; background: var(--primary-two); height: 8px; width: 3px; bottom: -6px; right: -4px; transform: rotate(-45deg); }
+        .searchicon:after { content: ''; position: absolute; background: var(--primary-two); height: 7px; width: 3px; bottom: -5px; right: -3px; transform: rotate(-45deg); }
+        
         .clear-search-btn {
-            position: absolute; right: 58px; top: 15px; background: transparent; border: 0; color: #475569; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 6; display: none; line-height: 1;
+            position: absolute; right: 58px; top: 14px; background: transparent; border: 0; color: #475569; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 15; display: none; line-height: 1;
         }
+        .clear-search-btn:hover { color: #ef4444; }
         .microphone {
-            position: absolute; height: 32px; width: 38px; background: var(--primary-three); right: 12px; top: 11px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 14px;
+            position: absolute; height: 30px; width: 36px; background: var(--primary-three); right: 12px; top: 11px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 15; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 13px;
         }
 
+        /* 🎛️ Category Tabs Layout Matrix (Zero Space Gaps) */
         .icon-holder { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; width: 100%; }
         .search-root-container.focused .icon-holder, .search-root-container.has-content .icon-holder { display: flex !important; }
 
         .icon-text-tab {
-            background: var(--tab-bg); border: 1px solid var(--border-color); color: var(--tab-text) !important; padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
+            background: var(--tab-bg); border: 1px solid var(--border-color); color: var(--tab-text) !important; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
         }
         .icon-text-tab:hover, .icon-text-tab.active { background: #4f46e5; border-color: #6366f1; color: #fff !important; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
         .tab-counter-badge { font-size: 10px; opacity: 0.8; font-weight: 500; }
@@ -112,7 +121,7 @@
             .icon-text-tab { padding: 6px 12px; font-size: 11px; }
         }
 
-        /* Carousel Panels */
+        /* Carousel Panel */
         .carousel-container-block { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; }
         .mini-release-circle {
             width: 52px; height: 52px; border-radius: 50%; background: var(--bg-color); border: 2px solid var(--border-color); display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto; overflow: hidden;
@@ -133,7 +142,7 @@
         }
 
         .border-indigo { border-color: #4f46e5 !important; }
-        .footer-link-custom { color: var(--text-color) !important; text-decoration: none; cursor: pointer; }
+        .footer-link-custom { color: var(--text-color) !important; text-decoration: none; cursor: pointer; font-size: 13px; }
         .footer-link-custom:hover { color: #6366f1 !important; }
         
         .console-terminal {
@@ -146,15 +155,15 @@
     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleThemeMode()">🌙 Dark</button>
 
     <!-- 🌐 ১. হেডার ব্র্যান্ড জোন -->
-    <header class="container text-center pt-5 pb-4">
-        <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
-            <img src="favicon.svg" alt="allalo AI Logo" class="site-logo" style="width: 54px; height: 54px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=ai.allalo.com'">
+    <header class="container text-center pt-5 pb-3">
+        <div class="d-flex align-items-center justify-content-center gap-3 mb-1">
+            <img src="favicon.svg" alt="allalo AI Logo" class="site-logo" style="width: 42px; height: 44px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=ai.allalo.com'">
             <div class="text-start">
                 <h1 class="site-title m-0 tracking-tight">allalo AI</h1>
-                <p class="site-subtitle text-indigo-400 fw-bold uppercase m-0">The Ultimate Smart AI Directory</p>
+                <p class="site-subtitle uppercase m-0">The Ultimate Smart AI Directory</p>
             </div>
         </div>
-        <p class="text-light-muted small">Total AI Tools Indexed: <span class="top-counter-txt" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
+        <p class="text-light-muted small m-0" style="font-size: 12px;">Total AI Tools Indexed: <span class="top-counter-txt" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
     </header>
 
     <!-- 🔍 ২. কাস্টম টেক্সটড ট্যাব সার্চ ইঞ্জিন সেকশন -->
@@ -177,7 +186,7 @@
 
         <div class="d-flex justify-content-center gap-2 mt-4">
             <div class="dropdown d-inline-block">
-                <button class="btn btn-sm btn-outline-primary border-indigo rounded-pill px-3 fw-bold dropdown-toggle" type="button" id="releaseDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--title-color) !important;">
+                <button class="btn btn-sm btn-outline-primary border-indigo rounded-pill px-3 fw-bold dropdown-toggle" type="button" id="releaseDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--title-color) !important; background: var(--card-bg);">
                     🌟 Featured
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="releaseDropdown">
@@ -216,21 +225,21 @@
         <div id="toolsGrid" class="row g-3 d-none"></div>
         
         <div class="text-center mt-4 pb-5 d-none" id="loadMoreContainer">
-            <button id="loadMoreBtn" class="btn btn-sm btn-outline-secondary px-4 py-2 rounded-pill fw-bold" style="color: var(--title-color) !important; border-color: var(--border-color) !important;">Load Next Wave ⬇</button>
+            <button id="loadMoreBtn" class="btn btn-sm btn-outline-secondary px-4 py-2 rounded-pill fw-bold" style="color: var(--title-color) !important; border-color: var(--border-color) !important; background: var(--card-bg);">Load Next Wave ⬇</button>
         </div>
     </main>
 
     <!-- 📄 ওয়েবসাইট ফুটার প্যানেল -->
-    <footer class="bg-dark bg-opacity-10 py-4 border-top border-secondary text-center" style="font-size: 12px;">
+    <footer class="bg-dark bg-opacity-10 py-4 border-top border-secondary text-center">
         <div class="container">
             <div class="d-flex justify-content-center flex-wrap gap-4 mb-3">
-                <a onclick="openModal('aboutModal')" class="footer-link-custom fw-bold">ℹ About Us</a>
-                <a href="/blog" class="footer-link-custom fw-bold">✍ Blog</a> 
-                <a onclick="openModal('privacyModal')" class="footer-link-custom">🛡 Privacy Policy</a>
-                <a onclick="openModal('termsModal')" class="footer-link-custom">📄 Terms & Conditions</a>
-                <a onclick="openModal('contactModal')" class="footer-link-custom">📧 Contact Us</a>
+                <span onclick="openModal('aboutModal')" class="footer-link-custom fw-bold">ℹ About Us</span>
+                <a href="/blog" class="footer-link-custom fw-bold" style="text-decoration: none;">✍ Blog</a> 
+                <span onclick="openModal('privacyModal')" class="footer-link-custom">🛡 Privacy Policy</span>
+                <span onclick="openModal('termsModal')" class="footer-link-custom">📄 Terms & Conditions</span>
+                <span onclick="openModal('contactModal')" class="footer-link-custom">📧 Contact Us</span>
             </div>
-            <p class="m-0 text-secondary">&copy; 2026 Allalo AI Search Engine. Developed by Jasim Uddin. All rights reserved.</p>
+            <p class="m-0 text-secondary" style="font-size: 11px;">&copy; 2026 Allalo AI Search Engine. Developed by Jasim Uddin. All rights reserved.</p>
         </div>
     </footer>
 
@@ -243,34 +252,26 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body font-mono text-light" style="font-size: 12px; overflow-y: auto;">
-                    
-                    <!-- Progress Bar Component -->
                     <div class="mb-3">
                         <div class="d-flex justify-content-between text-secondary mb-1" style="font-size: 9px;"><span>CLUSTER DATA SYNCHRONIZATION</span><span id="progressPercent">0%</span></div>
                         <div class="progress bg-black border border-secondary" style="height: 6px;"><div id="indexingBar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 0%"></div></div>
                     </div>
-
-                    <!-- Metrics Stats (Mobile Grid Optimized) -->
                     <div class="row g-2 mb-3 text-center">
                         <div class="col-4"><div class="bg-black border border-secondary p-2 rounded"><span class="text-secondary d-block" style="font-size: 8px;">INDEXED METRICS</span><span id="consoleTotalCount" class="text-white fw-bold" style="font-size: 11px;">0 nodes</span></div></div>
                         <div class="col-4"><div class="bg-black border border-secondary p-2 rounded"><span class="text-secondary d-block" style="font-size: 8px;">CORE PIPELINES</span><span class="text-success fw-bold" style="font-size: 11px;">3 Active</span></div></div>
                         <div class="col-4"><div class="bg-black border border-secondary p-2 rounded"><span class="text-secondary d-block" style="font-size: 8px;">STREAM STATUS</span><span class="text-info fw-bold" style="font-size: 11px;">Synchronized</span></div></div>
                     </div>
-
                     <div class="mb-3"><label class="text-info d-block mb-1" style="font-size: 10px;">📟 Real-Time Indexing Logs:</label><div id="consoleLogs" class="console-terminal"></div></div>
                     
-                    <!-- Dashboard Workspace Navigation Tabs -->
                     <ul class="nav nav-tabs border-secondary mb-3 flex-nowrap" id="dashboardTab" role="tablist">
                         <li class="nav-item flex-grow-1 text-center"><button class="nav-link active text-white bg-transparent border-0 w-100 py-2" id="dev-tab" data-bs-toggle="tab" data-bs-target="#devPanel" type="button" style="font-size: 11px;">📥 Developer Submission</button></li>
                         <li class="nav-item flex-grow-1 text-center"><button class="nav-link text-warning bg-transparent border-0 w-100 py-2" id="admin-tab" data-bs-toggle="tab" data-bs-target="#adminPanel" type="button" onclick="unlockAdminPanel()" style="font-size: 11px;">🔒 Admin Control</button></li>
                     </ul>
 
                     <div class="tab-content text-xs" id="dashboardTabContent">
-                        
-                        <!-- 📥 ক) কাস্টম ফিচার টাইমটেবিল সহ ডেভলপার ওয়ার্কস্পেস -->
                         <div class="tab-pane fade show active" id="devPanel" role="tabpanel">
                             <div class="alert alert-info bg-opacity-10 border-info text-info p-2 mb-3" style="font-size: 11px; line-height: 1.4;">
-                                📢 <strong>Paid Featured Promo Campaign:</strong> আপনার টুলটি স্পনসরড ক্যাটাগরিতে প্রমোট করতে চান? নিচে থেকে কাঙ্ক্ষিত প্ল্যান সিলেক্ট করে ফর্মটি পূরণ করুন। সাবমিট করার পর আমাদের অ্যাডমিন টিম ইমেইলের মাধ্যমে সরাসরি যোগাযোগ করে ভেরিফিকেশন ও পেমেন্ট ক্লিয়ার করে দেবে।
+                                📢 <strong>Paid Featured Promo Campaign:</strong> আপনার টুলটি স্পনসরড ক্যাটাগরিতে প্রমোট করতে চান? নিচে থেকে প্ল্যান সিলেক্ট করে সাবমিট করুন। অ্যাডমিন টিম ইমেইলের মাধ্যমে সরাসরি যোগাযোগ করে পেমেন্ট ক্লিয়ার করে দেবে।
                             </div>
                             <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="row g-2">
                                 <div class="col-12 col-md-6"><input type="text" name="devName" placeholder="Your Name / Organization *" required class="form-control form-control-sm bg-black text-white border-secondary"></div>
@@ -278,7 +279,6 @@
                                 <div class="col-12 col-md-6"><input type="text" name="toolName" placeholder="AI Tool Title *" required class="form-control form-control-sm bg-black text-white border-secondary"></div>
                                 <div class="col-12 col-md-6"><input type="url" name="toolLink" placeholder="Target Endpoint URL *" required class="form-control form-control-sm bg-black text-white border-secondary"></div>
                                 <div class="col-12">
-                                    <label class="text-secondary mb-1 d-block" style="font-size: 10px;">Select Promotion Time Lease Plan:</label>
                                     <select name="promoLeasePlan" required class="form-select form-select-sm bg-black text-white border-secondary">
                                         <option value="Regular Free Submission">Standard Free Release (Regular Grid Index)</option>
                                         <option value="Paid Promo: 1 Day Campaign">Featured Tier: 1 Day Promo Campaign (Paid)</option>
@@ -291,13 +291,8 @@
                                 <div class="col-12"><button type="submit" class="btn btn-sm btn-primary w-100 fw-bold">REQUEST ADMISSION STREAM 🚀</button></div>
                             </form>
                         </div>
-
-                        <!-- 🔒 খ) অটো-টাইমলক লিজ সহ অ্যাডমিন কমান্ড সেন্টার -->
                         <div class="tab-pane fade" id="adminPanel" role="tabpanel">
                             <div id="adminAccessState" class="d-none">
-                                <div class="alert alert-warning bg-opacity-10 border-warning text-warning p-2 mb-3" style="font-size: 10px;">
-                                    [AUTHORIZED]: সিস্টেম এখানে লিঙ্কের মেয়াদ লক করতে পারবে। মেয়াদ শেষ হলে স্বয়ংক্রিয়ভাবে মেইন ইনডেক্সে শিফট হবে।
-                                </div>
                                 <div class="row g-2">
                                     <div class="col-12 col-md-6"><label class="text-secondary d-block mb-1" style="font-size: 10px;">Target Action Node</label><input type="text" id="admName" placeholder="E.g. DEVIN AI" class="form-control form-control-sm bg-black text-white border-secondary"></div>
                                     <div class="col-12 col-md-6"><label class="text-secondary d-block mb-1" style="font-size: 10px;">Redirection URL</label><input type="url" id="admLink" placeholder="https://..." class="form-control form-control-sm bg-black text-white border-secondary"></div>
@@ -336,7 +331,7 @@
         </div>
     </div>
 
-    <!-- 📄 বুটস্ট্র্যাপ মডাল নোড -->
+    <!-- 📄 বুটস্ট্র্যাপ লিগ্যাল পেজ ডাইনামিক মডাল নোড -->
     <div id="modalOverlay" class="modal fade" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content bg-dark text-light border-secondary">
@@ -389,24 +384,18 @@
                 updateProgressBar(40);
 
                 let combinedTools = [];
-                
-                // 🧠 🚀 অ্যাডমিন প্যানেল অটো-টাইমলক লিজ মেকানিজম (Featured মেয়াদ শেষ হলে ডাইনামিক্যালি নরমাল বা একটিভ টুলে কনভার্ট হবে)
                 const currentTimeStamp = new Date().getTime();
+                
                 dashboardDbList.forEach(tool => {
                     if (tool.approvalStatus === "Pending") return;
-
                     let isLeaseExpired = false;
                     if(tool.isFeatured && tool.expireTimestamp) {
-                        isLeaseExpired = currentTimeStamp >= tool.expireTimestamp; // স্বয়ংক্রিয় মেয়াদোত্তীর্ণ যাচাইকরণ
+                        isLeaseExpired = currentTimeStamp >= tool.expireTimestamp;
                     }
-
                     combinedTools.push({
-                        name: tool.name || 'AI Tool', 
-                        link: tool.link || '', 
-                        logo: tool.logo || '',
-                        status: (tool.isFeatured && !isLeaseExpired) ? 'Featured' : 'Active', // মেয়াদ শেষ হলে স্ট্যাটাস 'Active' হয়ে নিচে চলে যাবে
-                        task: tool.category || 'General AI', 
-                        short_description: tool.description || 'Advanced AI Module.'
+                        name: tool.name || 'AI Tool', link: tool.link || '', logo: tool.logo || '',
+                        status: (tool.isFeatured && !isLeaseExpired) ? 'Featured' : 'Active',
+                        task: tool.category || 'General AI', short_description: tool.description || 'Advanced AI Module.'
                     });
                 });
 
@@ -454,7 +443,7 @@
                 const res = await fetch(NEW_DASHBOARD_DB_URL);
                 dashboardDbList = await res.json();
                 filterByRelease('featured');
-            } catch(e) { renderCarouselLayout(null, 'featured'); }
+            } catch(e) { renderCarouselLayout(null); }
         }
 
         function filterByRelease(timeline) {
@@ -463,7 +452,7 @@
             let list = dashboardDbList.filter(tool => {
                 if (timeline === 'featured') {
                     if(!tool.isFeatured) return false;
-                    if(tool.expireTimestamp && currentTimeStamp >= tool.expireTimestamp) return false; // ক্যারোসল থেকেও মেয়াদোত্তীর্ণ টুল সরে যাবে
+                    if(tool.expireTimestamp && currentTimeStamp >= tool.expireTimestamp) return false;
                     return true;
                 }
                 return true;
@@ -479,13 +468,12 @@
             for (let i = 0; i < list.length; i += 3) {
                 const chunk = list.slice(i, i + 3);
                 let cards = chunk.map(t => {
-                    // 🧠 🚀 লোগো এবং গুগল সার্চ রেডিরেক্ট আর্কিটেকচার রিস্টোরেশন
                     let targetUrl = t.link ? t.link.trim() : '';
                     if (!targetUrl || targetUrl === '#' || targetUrl.includes('aitoolbuzz.com')) {
                         targetUrl = `https://www.google.com/search?q=${encodeURIComponent(t.name + ' AI Tool')}`;
                     }
                     let logoUrl = t.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetUrl)}`;
-                    return `<div class="col-12 col-md-4"><a href="${targetUrl}" target="_blank" class="app-card-anchor"><div class="app-card featured-card-style"><span class="featured-badge-tag">PRO</span><div class="text-start"><div class="d-flex align-items-center gap-2 mb-2"><img src="${logoUrl}" class="rounded bg-black p-1" style="width:28px;height:28px;" onerror="this.src='favicon.svg'"> <h6 class="m-0 text-truncate font-bold" style="font-size:12px; color: var(--title-color);">${t.name}</h6></div><p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${t.description}</p></div></div></a></div>`;
+                    return `<div class="col-12 col-md-4"><a href="${targetUrl}" target="_blank" class="app-card-anchor"><div class="app-card featured-card-style"><span class="featured-badge-tag">PRO</span><div class="text-start"><div class="d-flex align-items-center gap-2 mb-2"><img src="${logoUrl}" class="rounded bg-black p-1" style="width:28px;height:28px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'"> <h6 class="m-0 text-truncate font-bold" style="font-size:12px; color: var(--title-color);">${t.name}</h6></div><p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${t.description}</p></div></div></a></div>`;
                 }).join('');
                 inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${i===0?'active':''}"><div class="row g-2">${cards}</div></div>`);
             }
@@ -497,42 +485,51 @@
             
             batch.forEach(tool => {
                 let toolUrl = tool.link ? tool.link.trim() : '';
-                // 🧠 🚀 যদি টুল লিংক না থাকে, তবে স্বয়ংক্রিয়ভাবে গুগল সার্চে যাবে, লিংক পেলে অরিজিনাল সাইটে যাবে
                 if (!toolUrl || toolUrl === '#' || toolUrl.includes('aitoolbuzz.com')) {
                     toolUrl = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
                 }
-
-                // গুগল গ্লোবাল ফেভিকন এপিআই এর মাধ্যমে আসল লোগো রি-ম্যাপড
                 let logoSrc = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
 
-                const card = `<div class="col-12 col-sm-6 col-lg-4"><a href="${toolUrl}" target="_blank" class="app-card-anchor"><div class="app-card ${tool.status==='Featured'?'featured-card-style':''}"><div class="text-start w-100"><div class="d-flex justify-content-between align-items-center mb-2"><img src="${logoSrc}" class="rounded-2 object-cover bg-black p-1" style="width:32px;height:32px;" onerror="this.src='favicon.svg'"> ${tool.status==='Featured'?'<span class="featured-badge-tag">FEATURED</span>':`<span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">ACTIVE</span>`}</div><h6 class="font-bold text-truncate m-0" style="font-size:13px; color: var(--title-color);">${tool.name}</h6><span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${tool.task}</span><p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${tool.short_description}</p></div></div></a></div>`;
+                const card = `<div class="col-12 col-sm-6 col-lg-4"><a href="${toolUrl}" target="_blank" class="app-card-anchor"><div class="app-card ${tool.status==='Featured'?'featured-card-style':''}"><div class="text-start w-100"><div class="d-flex justify-content-between align-items-center mb-2"><img src="${logoSrc}" class="rounded-2 object-cover bg-black p-1" style="width:32px;height:32px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'"> ${tool.status==='Featured'?'<span class="featured-badge-tag">FEATURED</span>':`<span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">ACTIVE</span>`}</div><h6 class="font-bold text-truncate m-0" style="font-size:13px; color: var(--title-color);">${tool.name}</h6><span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${tool.task}</span><p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${tool.short_description}</p></div></div></a></div>`;
                 grid.insertAdjacentHTML('beforeend', card);
             });
             offset += limit;
             document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
         }
 
-        document.getElementById('searchInput').addEventListener('input', function(e) {
+        // Search inputs dynamic triggers setup
+        const searchInput = document.getElementById('searchInput');
+        const searchWrapper = document.getElementById('searchWrapper');
+        const clearSearchBtn = document.getElementById('clearSearchBtn');
+
+        searchInput.addEventListener('focus', () => { searchWrapper.classList.add('focused'); });
+        searchInput.addEventListener('blur', () => { if(searchInput.value.trim() === "") searchWrapper.classList.remove('focused'); });
+
+        searchInput.addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase().trim();
             offset = 0; document.getElementById('toolsGrid').innerHTML = '';
             const carouselZone = document.getElementById('dynamicCarouselZone');
 
             if (query === "") {
-                clearSearchBtnEl.style.display = 'none'; searchWrapperEl.classList.remove('has-content'); carouselZone.classList.remove('d-none'); applyGlobalFilters(); return;
+                clearSearchBtn.style.display = 'none'; searchWrapper.classList.remove('has-content'); carouselZone.classList.remove('d-none'); applyGlobalFilters(); return;
             }
-            clearSearchBtnEl.style.display = 'block'; searchWrapperEl.classList.add('has-content'); carouselZone.classList.add('d-none');
+            clearSearchBtn.style.display = 'block'; searchWrapper.classList.add('has-content'); carouselZone.classList.add('d-none');
 
             filteredTools = allTools.filter(tool => tool.name.toLowerCase().includes(query) || tool.short_description.toLowerCase().includes(query));
             renderNextBatch();
         });
 
         function clearSearchField() {
-            searchInputEl.value = ""; clearSearchBtnEl.style.display = 'none'; searchWrapperEl.classList.remove('has-content');
+            searchInput.value = ""; clearSearchBtn.style.display = 'none'; searchWrapper.classList.remove('has-content');
+            searchWrapper.classList.remove('focused');
             document.getElementById('dynamicCarouselZone').classList.remove('d-none'); offset = 0; document.getElementById('toolsGrid').innerHTML = ''; applyGlobalFilters();
         }
 
         function filterByCategory(category) {
             currentCategory = category; offset = 0; document.getElementById('toolsGrid').innerHTML = '';
+            ['All', 'AI_Agent', 'AI_Swarm', 'Local_AI'].forEach(cat => {
+                const btn = document.getElementById(`btn-${cat}`); if (btn) btn.classList.toggle('active', cat.replace('_', ' ') === category);
+            });
             applyGlobalFilters();
         }
 
@@ -551,32 +548,31 @@
         function generateAdminJson() {
             let leaseVal = document.getElementById('admLease').value;
             let isFeatured = leaseVal !== 'normal';
-            let calculatedExpiry = null;
-            if(isFeatured) {
-                calculatedExpiry = new Date().getTime() + (parseFloat(leaseVal) * 60 * 60 * 1000); // মিলি-সেকেন্ডে ফিউচার টাইমস্ট্যাম্প গণনা
-            }
+            let calculatedExpiry = isFeatured ? new Date().getTime() + (parseFloat(leaseVal) * 60 * 60 * 1000) : null;
 
             const masterOutput = { 
-                "name": document.getElementById('admName').value.toUpperCase(), 
-                "link": document.getElementById('admLink').value, 
-                "logo": "", 
-                "category": document.getElementById('admCat').value, 
-                "description": document.getElementById('admDesc').value, 
-                "releaseDate": new Date().toISOString().split('T')[0], 
-                "isFeatured": isFeatured, 
-                "expireTimestamp": calculatedExpiry, 
-                "badge": isFeatured ? "FEATURED" : "ACTIVE", 
-                "approvalStatus": document.getElementById('admStatus').value 
+                "name": document.getElementById('admName').value.toUpperCase(), "link": document.getElementById('admLink').value, "logo": "", "category": document.getElementById('admCat').value, "description": document.getElementById('admDesc').value, "releaseDate": new Date().toISOString().split('T')[0], "isFeatured": isFeatured, "expireTimestamp": calculatedExpiry, "badge": isFeatured ? "FEATURED" : "ACTIVE", "approvalStatus": document.getElementById('admStatus').value 
             };
-            alert("Generated! Object saved inside dashboard engine array matrix.\n\n" + JSON.stringify(masterOutput, null, 2));
-            console.log(masterOutput);
+            alert("Generated! Object array compiled. Check terminal console."); console.log(masterOutput);
         }
 
         function clearAdminFields() { document.getElementById('admName').value = ''; document.getElementById('admLink').value = ''; document.getElementById('admDesc').value = ''; }
-        function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SearchRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎤"; }; }
-        function openConsoleModal() { document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join(''); }
-        function openModal(id) { document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details.'; var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay')); legalModal.show(); }
-        const legalData = { aboutModal: `<h6>About allalo AI</h6><p>Smart AI directory designed to map 47,000+ framework nodes seamlessly.</p>`, privacyModal: `<h6>Privacy Operational Policy</h6><p>E2E encryption protocols active.</p>`, termsModal: `<h6>Terms of Indexing Service</h6><p>Validated indexing clusters only.</p>`, contactModal: `<h6>System Operations Grid</h6><p>Email: contact.yourdomain@gmail.com</p>` };
+        function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎤"; }; }
+        function openConsoleModal() { if(allTools.length > 0) document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes"; document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join(''); }
+        
+        function openModal(id) { 
+            document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details.'; 
+            var myModal = new bootstrap.Modal(document.getElementById('modalOverlay')); 
+            myModal.show(); 
+        }
+        
+        const legalData = { 
+            aboutModal: `<h6>About allalo AI</h6><p>Smart AI directory designed to map 47,000+ framework nodes seamlessly.</p>`, 
+            privacyModal: `<h6>Privacy Operational Policy</h6><p>E2E encryption protocols active. Secure server architecture operational.</p>`, 
+            termsModal: `<h6>Terms of Indexing Service</h6><p>Validated indexing clusters only. Automated scraping limited.</p>`, 
+            contactModal: `<h6>System Operations Grid</h6><p>For immediate lease modifications or query adjustments, email:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>` 
+        };
+        
         document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
         loadMegaDatabase();
     </script>
