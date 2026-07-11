@@ -59,6 +59,7 @@
             position: fixed; top: 20px; right: 20px; z-index: 999; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--title-color); padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
+        /* 🎯 Fixed Small Professional Typography Matrix */
         .site-title {
             font-size: 28px !important;
             letter-spacing: -0.02em;
@@ -150,6 +151,9 @@
     </style>
 </head>
 <body>
+
+    <!-- Bootstrap 5 Bundle JS Cdn WITH Popper (Crucial for Dropdowns and Modals) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleThemeMode()">🌙 Dark</button>
 
@@ -269,8 +273,9 @@
 
                     <div class="tab-content text-xs" id="dashboardTabContent">
                         <div class="tab-pane fade show active" id="devPanel" role="tabpanel">
+                            <!-- 🌐 🧠 Notice Converted to English Node Stack -->
                             <div class="alert alert-info bg-opacity-10 border-info text-info p-2 mb-3" style="font-size: 11px; line-height: 1.4;">
-                                📢 <strong>Paid Featured Promo Campaign:</strong> আপনারツールটি স্পনসরড ক্যাটাগরিতে প্রমোট করতে চান? নিচে থেকে প্ল্যান সিলেক্ট করে সাবমিট করুন। অ্যাডমিন টিম ইমেইলের মাধ্যমে সরাসরি যোগাযোগ করে পেমেন্ট ক্লিয়ার করে দেবে।
+                                📢 <strong>Paid Featured Promo Campaign:</strong> Want to promote your tool in the sponsored category? Select your desired plan below and submit the form. Our admin team will contact you directly via email to verify and clear the payment.
                             </div>
                             <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="row g-2">
                                 <div class="col-12 col-md-6"><input type="text" name="devName" placeholder="Your Name / Organization *" required class="form-control form-control-sm bg-black text-white border-secondary"></div>
@@ -319,7 +324,7 @@
                                         </select>
                                     </div>
                                     <div class="col-12"><label class="text-secondary d-block mb-1" style="font-size: 10px;">Matrix Core Parameters Log Statement</label><textarea id="admDesc" rows="2" placeholder="Metadata elements..." class="form-control form-control-sm bg-black text-white border-secondary"></textarea></div>
-                                    <div class="col-12 mt-2 d-flex gap-2"><button type="button" onclick="generateAdminJson()" class="btn btn-sm btn-success flex-grow-1 fw-bold">⚡ GENERATE ADMISSION OBJECT</button><button type="button" onclick="clearAdminFields()" class="btn btn-sm btn-outline-danger">RESET</button></div>
+                                    <div class="col-12 mt-3 d-flex gap-2"><button type="button" onclick="generateAdminJson()" class="btn btn-sm btn-success flex-grow-1 fw-bold">⚡ GENERATE ADMISSION OBJECT</button><button type="button" onclick="clearAdminFields()" class="btn btn-sm btn-outline-danger">RESET</button></div>
                                 </div>
                             </div>
                             <div id="adminLockedState" class="text-center py-4"><p class="text-danger m-0">[SYSTEM LOCKED]: Secure authorization protocol required.</p></div>
@@ -339,9 +344,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap 5 Bundle WITH Popper (Very Important for Modals & Dropdowns) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const MASTER_URLS = [
@@ -382,6 +384,7 @@
         async function loadMegaDatabase() {
             try {
                 updateProgressBar(15);
+                logToConsole("Initializing Software Engine Core Panel...", "info");
                 await fetchDashboardDatabase();
                 updateProgressBar(40);
 
@@ -414,9 +417,11 @@
                                 return { name: tool.name || 'AI Tool', link: tool.website || tool.link || '', logo: tool.logo || '', status: 'Active', task: tool.task || tool.category || 'General AI', short_description: tool.shortDescription || tool.short_description || 'Framework Node.' };
                             });
                             combinedTools = combinedTools.concat(mapped);
-                            updateProgressBar(40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55));
+                            let progressStep = 40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55);
+                            updateProgressBar(progressStep);
+                            logToConsole(`Master Dataset Pipeline Stack #${idx + 1} synchronized.`, "success"); // 📊 Real-Time Logs Active Now!
                         }
-                    } catch(e) {}
+                    } catch(e) { logToConsole(`Pipe Block #${idx + 1} fault.`, "warn"); }
                 }
 
                 allTools = combinedTools.filter((v,i,a)=>a.findIndex(t=>(t.name.toLowerCase().trim()===v.name.toLowerCase().trim()))===i);
@@ -444,8 +449,9 @@
             try {
                 const res = await fetch(NEW_DASHBOARD_DB_URL);
                 dashboardDbList = await res.json();
+                logToConsole("Dashboard Cloud Database Stream online.", "success");
                 filterByRelease('featured');
-            } catch(e) { renderCarouselLayout(null); }
+            } catch(e) { logToConsole("Dashboard Stream offline.", "warn"); renderCarouselLayout(null); }
         }
 
         function filterByRelease(timeline) {
@@ -504,7 +510,6 @@
 
         searchInput.addEventListener('focus', () => { searchWrapper.classList.add('focused'); });
         
-        // Fix for blurring input smoothly without freezing buttons
         document.body.addEventListener('click', (e) => {
             if (!searchWrapper.contains(e.target) && searchInput.value.trim() === "") {
                 searchWrapper.classList.remove('focused');
@@ -547,8 +552,8 @@
             const state = document.getElementById('adminAccessState'); const lockMessage = document.getElementById('adminLockedState');
             if(!state.classList.contains('d-none')) return;
             const pin = prompt("Enter Master Admin Security Key [PIN]:");
-            if (pin === "2026") { state.classList.remove('d-none'); lockMessage.classList.add('d-none'); logToConsole("Admin terminal unlocked.", "success"); }
-            else { alert("🚨 Unauthorized Key."); bootstrap.Tab.getInstance(document.getElementById('dev-tab')).show(); }
+            if (pin === "2026") { state.classList.remove('d-none'); lockMessage.classList.add('d-none'); logToConsole("Admin terminal unlocked workspace safely.", "success"); }
+            else { alert("🚨 Unauthorized Key Pattern."); bootstrap.Tab.getInstance(document.getElementById('dev-tab')).show(); }
         }
 
         function generateAdminJson() {
@@ -559,14 +564,14 @@
             const masterOutput = { 
                 "name": document.getElementById('admName').value.toUpperCase(), "link": document.getElementById('admLink').value, "logo": "", "category": document.getElementById('admCat').value, "description": document.getElementById('admDesc').value, "releaseDate": new Date().toISOString().split('T')[0], "isFeatured": isFeatured, "expireTimestamp": calculatedExpiry, "badge": isFeatured ? "FEATURED" : "ACTIVE", "approvalStatus": document.getElementById('admStatus').value 
             };
-            alert("Generated! Object array compiled. Check terminal console."); console.log(masterOutput);
+            alert("Generated! Array Object compiled inside terminal logs."); console.log(masterOutput);
         }
 
         function clearAdminFields() { document.getElementById('admName').value = ''; document.getElementById('admLink').value = ''; document.getElementById('admDesc').value = ''; }
         function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎤"; }; }
         function openConsoleModal() { if(allTools.length > 0) document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes"; document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join(''); }
         
-        // 🧠 🚀 Pure vanilla triggers for Modal Overlay (Ensures Modals work flawlessly)
+        // 🧠 🚀 Fixed Pure vanilla triggers for Bootstrap Modal (Ensures 100% click-to-open efficiency)
         function openModal(id) { 
             document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details.'; 
             var myModal = new bootstrap.Modal(document.getElementById('modalOverlay')); 
@@ -574,10 +579,10 @@
         }
         
         const legalData = { 
-            aboutModal: `<h6>About allalo AI</h6><p>Smart AI directory designed to map 47,000+ framework nodes seamlessly.</p>`, 
-            privacyModal: `<h6>Privacy Operational Policy</h6><p>E2E encryption protocols active. Secure server architecture operational.</p>`, 
-            termsModal: `<h6>Terms of Indexing Service</h6><p>Validated indexing clusters only. Automated scraping limited.</p>`, 
-            contactModal: `<h6>System Operations Grid</h6><p>For immediate lease modifications or query adjustments, email:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>` 
+            aboutModal: `<h6>About allalo AI</h6><p>allalo AI is a high-speed smart directory designed to parse, aggregate, and index over 47,000+ verified artificial intelligence systems, autonomous agents, and next-gen frameworks seamlessly.</p>`, 
+            privacyModal: `<h6>Privacy Operational Policy</h6><p>We prioritize user privacy. E2E encryption protocols are active, and no client-side personal tokens tracking data is stored on our clusters.</p>`, 
+            termsModal: `<h6>Terms of Indexing Service</h6><p>Access is explicitly granted for validated indexing nodes. Automated repository crawling without authenticated API keys is limited to protect infrastructure bandwidth.</p>`, 
+            contactModal: `<h6>System Operations Grid</h6><p>For immediate campaign adjustments, premium lease extensions, or system maintenance nodes inquiries, contact the admin team via official email pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>` 
         };
         
         document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
