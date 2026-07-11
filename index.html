@@ -8,7 +8,7 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- 🌐 Premium UI Web Fonts (Inter & Plus Jakarta Sans Embedded Perfectly) -->
+    <!-- 🌐 Premium UI Web Fonts (Direct Embedded & Preloaded) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -38,9 +38,9 @@
             --tab-text: #64748b;
         }
 
-        /* 🧠 Highly-optimized Global CSS Font Architecture */
-        body { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        /* 🧠 Strict Global Font Locking Architecture */
+        body, p, input, button, select, textarea, span { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
@@ -49,8 +49,8 @@
 
         h1, h2, h3, h4, h5, h6, .site-title, .global-index-heading {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
-            color: var(--title-color);
-            font-weight: 800;
+            color: var(--title-color) !important;
+            font-weight: 800 !important;
         }
 
         .theme-toggle-btn {
@@ -60,65 +60,69 @@
         .site-title {
             font-size: clamp(2.2rem, 5vw + 1rem, 3.8rem) !important;
             letter-spacing: -0.04em;
-            font-weight: 800;
         }
         .site-subtitle {
-            font-size: clamp(10px, 1.5vw + 4px, 13px) !important;
+            font-size: clamp(11px, 1.5vw + 4px, 14px) !important;
             letter-spacing: 1px;
             font-weight: 700;
         }
 
-        /* 🔍 Responsive Search Box Architecture */
+        /* 🔍 Perfect Search Box Structural Architecture (No sliding outside!) */
         .search-root-container {
             position: relative;
             width: 100%;
-            max-width: 520px;
+            max-width: 540px;
             margin: 0 auto;
+            padding: 0 10px;
+        }
+
+        .main-input-wrapper {
+            position: relative;
+            width: 100%;
+            height: 54px;
         }
 
         .main-input {
             width: 100%;
-            height: clamp(48px, 5vw + 8px, 54px);
+            height: 100%;
             border: 2px solid var(--primary-two);
             background: var(--primary-one);
             border-radius: 50px;
-            padding-left: 48px;
-            padding-right: 75px;
-            font-size: 14px;
-            color: #111;
+            padding-left: 52px;
+            padding-right: 80px;
+            font-size: 15px;
+            color: #111 !important;
             font-weight: 600;
-            font-family: 'Inter', sans-serif;
             transition: all 0.3s ease;
         }
         .main-input:focus {
             outline: none; box-shadow: 0 0 20px rgba(95, 143, 164, 0.4); background: #ffffff;
         }
         
+        /* Fixed Absolute Alignment inside Wrapper */
         .searchicon {
-            position: absolute; height: 14px; width: 14px; background: transparent; border: 3px solid var(--primary-two); left: 20px; top: 50%; transform: translateY(-50%); border-radius: 100%; z-index: 5;
+            position: absolute; height: 16px; width: 16px; background: transparent; border: 3px solid var(--primary-two); left: 22px; top: 19px; border-radius: 100%; z-index: 5; pointer-events: none;
         }
         .searchicon:after {
-            content: ''; position: absolute; background: var(--primary-two); height: 7px; width: 3px; bottom: -5px; right: -3px; transform: rotate(-45deg);
+            content: ''; position: absolute; background: var(--primary-two); height: 8px; width: 3px; bottom: -6px; right: -4px; transform: rotate(-45deg);
         }
 
         .clear-search-btn {
-            position: absolute; right: 48px; top: 50%; transform: translateY(-50%); background: transparent; border: 0; color: #475569; font-size: 16px; font-weight: bold; cursor: pointer; z-index: 6; display: none;
+            position: absolute; right: 54px; top: 14px; background: transparent; border: 0; color: #475569; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 6; display: none;
         }
+        .clear-search-btn:hover { color: #ef4444; }
 
         .microphone {
-            position: absolute; height: 28px; width: 28px; background: var(--primary-three); right: 15px; top: 50%; transform: translateY(-50%); border-radius: 100%; box-shadow: 0px 1px 2px 0px #333; cursor: pointer; z-index: 5;
+            position: absolute; height: 30px; width: 38px; background: var(--primary-three); right: 12px; top: 12px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 14px;
         }
-        .microphone:after { content: ''; position: absolute; background: #ba1414; height: 13px; width: 8px; border-radius: 10px; left: 10px; top: 4px; }
-        .microphone:before { content: ''; position: absolute; border-bottom: 2px solid #ba1414; height: 11px; width: 12px; border-radius: 100%; top: 6px; left: 8px; }
-        .mic-stand { content: ''; position: absolute; height: 5px; width: 2px; background: #ba1414; bottom: 4px; left: 13px; }
 
-        /* 🎛️ Advanced Layout Shifter (0px height when hidden - ZERO WASTED SPACE) */
+        /* 🎛️ Advanced Layout Shifter (0px height when hidden - NO GAPS) */
         .icon-holder {
             display: none;
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 16px;
+            margin-top: 18px;
             width: 100%;
         }
         .search-root-container.focused .icon-holder,
@@ -127,21 +131,12 @@
         }
 
         .icon-text-tab {
-            background: var(--tab-bg); border: 1px solid var(--border-color); color: var(--tab-text); padding: 6px 14px; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
+            background: var(--tab-bg); border: 1px solid var(--border-color); color: var(--tab-text) !important; padding: 8px 16px; border-radius: 30px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease;
         }
         .icon-text-tab:hover, .icon-text-tab.active {
             background: #4f46e5; border-color: #6366f1; color: #fff !important; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
         .tab-counter-badge { font-size: 10px; opacity: 0.8; font-weight: 500; }
-
-        @media (max-width: 576px) {
-            .search-root-container { padding: 0 8px; }
-            .main-input { padding-left: 42px; padding-right: 68px; }
-            .searchicon { left: 20px; }
-            .clear-search-btn { right: 44px; }
-            .microphone { right: 15px; }
-            .icon-text-tab { padding: 6px 12px; font-size: 11px; }
-        }
 
         /* Carousel Panels */
         .carousel-container-block {
@@ -173,7 +168,6 @@
         .console-terminal {
             background-color: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; height: 140px; overflow-y: auto; font-family: monospace; font-size: 11px; line-height: 1.5; color: #cbd5e1;
         }
-        .form-control::placeholder, .form-select::placeholder, textarea::placeholder { color: #94a3b8 !important; opacity: 1 !important; }
     </style>
 </head>
 <body>
@@ -190,19 +184,17 @@
                 <p class="site-subtitle text-indigo-400 fw-bold uppercase m-0">The Ultimate Smart AI Directory</p>
             </div>
         </div>
-        <p class="text-light-muted small">Total AI Tools Indexed: <span class="fw-bold" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
+        <p class="text-light-muted small">Total AI Tools Indexed: <span class="fw-bold text-white" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
     </header>
 
     <!-- 🔍 ২. কাস্টম টেক্সটড ট্যাব সার্চ ইঞ্জিন সেকশন -->
     <section class="container text-center mb-5">
         <div class="search-root-container" id="searchWrapper">
-            <div class="searchicon"></div>
-            <input type="text" id="searchInput" placeholder="Search 47,000+ AI models, networks or tokens..." class="main-input">
-            
-            <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearchField()">✕</button>
-            
-            <div class="microphone" id="voiceBtn" onclick="startVoiceSearch()">
-                <div class="mic-stand"></div>
+            <div class="main-input-wrapper">
+                <div class="searchicon"></div>
+                <input type="text" id="searchInput" placeholder="Search 47,000+ AI models, networks or tokens..." class="main-input">
+                <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearchField()">✕</button>
+                <div class="microphone" id="voiceBtn" onclick="startVoiceSearch()">🎤</div>
             </div>
             
             <div class="icon-holder">
@@ -361,9 +353,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap 5 Official JS Bundled Cdn -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core Database Control Engine Script Nodes -->
     <script>
@@ -630,7 +619,7 @@
         }
 
         function clearAdminFields() { document.getElementById('admName').value = ''; document.getElementById('admLink').value = ''; document.getElementById('admDesc').value = ''; }
-        function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎙️"; }; recognition.onerror = function() { voiceBtn.innerText = "🎙️"; }; }
+        function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎤"; }; recognition.onerror = function() { voiceBtn.innerText = "🎤"; }; }
         function openConsoleModal() { document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join(''); }
         function openModal(id) { document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details.'; var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay')); legalModal.show(); }
         const legalData = { aboutModal: `<h6>About allalo AI</h6><p>Smart AI directory designed to map 47,000+ framework nodes seamlessly.</p>`, privacyModal: `<h6>Privacy Operational Policy</h6><p>E2E encryption protocols active.</p>`, termsModal: `<h6>Terms of Indexing Service</h6><p>Validated indexing clusters only.</p>`, contactModal: `<h6>System Operations Grid</h6><p>Email: contact.yourdomain@gmail.com</p>` };
