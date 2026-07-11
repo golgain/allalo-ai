@@ -8,7 +8,7 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    <!-- 🌐 Premium UI Web Fonts (Direct Embedded & Preloaded) -->
+    <!-- 🌐 Premium UI Web Fonts (Direct Linked & Preloaded) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
@@ -38,19 +38,21 @@
             --tab-text: #64748b;
         }
 
-        /* 🧠 Strict Global Font Locking Architecture */
-        body, p, input, button, select, textarea, span { 
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
+        /* 🧠 Absolute Font Force Locking */
+        body, p, input, button, select, textarea, span, div, a { 
+            font-family: 'Inter', sans-serif !important;
         }
 
         h1, h2, h3, h4, h5, h6, .site-title, .global-index-heading {
             font-family: 'Plus Jakarta Sans', sans-serif !important;
-            color: var(--title-color) !important;
             font-weight: 800 !important;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .theme-toggle-btn {
@@ -67,19 +69,18 @@
             font-weight: 700;
         }
 
-        /* 🔍 Perfect Search Box Structural Architecture (No sliding outside!) */
+        /* 🔍 Ultra-Stable Fixed Structural Input Framework (Prevents Breaking) */
         .search-root-container {
-            position: relative;
             width: 100%;
             max-width: 540px;
             margin: 0 auto;
-            padding: 0 10px;
+            padding: 0 15px;
         }
 
         .main-input-wrapper {
             position: relative;
             width: 100%;
-            height: 54px;
+            height: 54px; /* Hard-locked container height */
         }
 
         .main-input {
@@ -89,17 +90,19 @@
             background: var(--primary-one);
             border-radius: 50px;
             padding-left: 52px;
-            padding-right: 80px;
+            padding-right: 85px;
             font-size: 15px;
             color: #111 !important;
             font-weight: 600;
+            outline: none;
+            box-shadow: none;
             transition: all 0.3s ease;
         }
         .main-input:focus {
-            outline: none; box-shadow: 0 0 20px rgba(95, 143, 164, 0.4); background: #ffffff;
+            box-shadow: 0 0 20px rgba(95, 143, 164, 0.4); background: #ffffff;
         }
         
-        /* Fixed Absolute Alignment inside Wrapper */
+        /* Absolute Pinned Layout Nodes */
         .searchicon {
             position: absolute; height: 16px; width: 16px; background: transparent; border: 3px solid var(--primary-two); left: 22px; top: 19px; border-radius: 100%; z-index: 5; pointer-events: none;
         }
@@ -108,23 +111,24 @@
         }
 
         .clear-search-btn {
-            position: absolute; right: 54px; top: 14px; background: transparent; border: 0; color: #475569; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 6; display: none;
+            position: absolute; right: 58px; top: 15px; background: transparent; border: 0; color: #475569; font-size: 18px; font-weight: bold; cursor: pointer; z-index: 6; display: none; line-height: 1;
         }
         .clear-search-btn:hover { color: #ef4444; }
 
         .microphone {
-            position: absolute; height: 30px; width: 38px; background: var(--primary-three); right: 12px; top: 12px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 14px;
+            position: absolute; height: 32px; width: 38px; background: var(--primary-three); right: 12px; top: 11px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 14px;
         }
 
-        /* 🎛️ Advanced Layout Shifter (0px height when hidden - NO GAPS) */
+        /* 🎛️ Zero Wasted Space Category Tabs Layout Matrix */
         .icon-holder {
-            display: none;
+            display: none; /* Occupies exactly 0px when search is completely idle */
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
             margin-top: 18px;
             width: 100%;
         }
+        /* Strict element validation map prevents overlapping style breakage */
         .search-root-container.focused .icon-holder,
         .search-root-container.has-content .icon-holder {
             display: flex !important;
@@ -137,6 +141,15 @@
             background: #4f46e5; border-color: #6366f1; color: #fff !important; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
         .tab-counter-badge { font-size: 10px; opacity: 0.8; font-weight: 500; }
+
+        @media (max-width: 576px) {
+            .search-root-container { padding: 0 10px; }
+            .main-input { padding-left: 44px; padding-right: 78px; font-size: 14px; }
+            .searchicon { left: 18px; }
+            .clear-search-btn { right: 52px; }
+            .microphone { right: 10px; width: 34px; height: 30px; top: 12px; }
+            .icon-text-tab { padding: 6px 12px; font-size: 11px; }
+        }
 
         /* Carousel Panels */
         .carousel-container-block {
@@ -248,7 +261,7 @@
         <div id="toolsGrid" class="row g-3 d-none"></div>
         
         <div class="text-center mt-4 pb-5 d-none" id="loadMoreContainer">
-            <button id="loadMoreBtn" class="btn btn-sm btn-outline-secondary px-4 py-2 rounded-pill fw-bold" style="color: var(--title-color) !important; border-color: var(--border-color) !important;">Load Next Wave ⬇️</button>
+            <button id="loadMoreBtn" class="btn btn-sm btn-outline-secondary px-4 py-2 rounded-pill fw-bold" style="color: var(--title-color) !important; border-color: var(--border-color) !important;">Load Next Wave ⬇></button>
         </div>
     </main>
 
@@ -353,6 +366,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap 5 Official JS Bundled Cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core Database Control Engine Script Nodes -->
     <script>
