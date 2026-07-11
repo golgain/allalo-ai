@@ -59,20 +59,19 @@
             position: fixed; top: 20px; right: 20px; z-index: 999; background: var(--card-bg); border: 1px solid var(--border-color); color: var(--title-color); padding: 6px 14px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* 🎯 Fixed Small Professional Typography Matrix */
         .site-title {
-            font-size: 28px !important; /* Fixed compact premium size */
+            font-size: 28px !important;
             letter-spacing: -0.02em;
             color: var(--title-color) !important;
         }
         .site-subtitle {
-            font-size: 11px !important; /* Decreased size for better alignment */
+            font-size: 11px !important;
             letter-spacing: 1.2px;
             font-weight: 700;
             color: #818cf8 !important;
         }
         .global-index-heading {
-            font-size: 13px !important; /* Small smart fit */
+            font-size: 13px !important;
             letter-spacing: 0.5px;
             color: var(--title-color) !important;
         }
@@ -102,7 +101,7 @@
             position: absolute; height: 30px; width: 36px; background: var(--primary-three); right: 12px; top: 11px; border-radius: 20px; box-shadow: 0px 1px 3px rgba(0,0,0,0.3); cursor: pointer; z-index: 15; display: flex; align-items: center; justify-content: center; color: white !important; font-size: 13px;
         }
 
-        /* 🎛️ Category Tabs Layout Matrix (Zero Space Gaps) */
+        /* 🎛️ Category Tabs Layout Matrix */
         .icon-holder { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 18px; width: 100%; }
         .search-root-container.focused .icon-holder, .search-root-container.has-content .icon-holder { display: flex !important; }
 
@@ -166,7 +165,7 @@
         <p class="text-light-muted small m-0" style="font-size: 12px;">Total AI Tools Indexed: <span class="top-counter-txt" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
     </header>
 
-    <!-- 🔍 ২. কাস্টম টেক্সটড ট্যাব সার্চ ইঞ্জিন সেকশন -->
+    <!-- 🔍 ২. কাস্টম সার্চ ইঞ্জিন সেকশন -->
     <section class="container text-center mb-5">
         <div class="search-root-container" id="searchWrapper">
             <div class="main-input-wrapper">
@@ -190,14 +189,14 @@
                     🌟 Featured
                 </button>
                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="releaseDropdown">
-                    <li><button class="dropdown-item" onclick="filterByRelease('featured')">Featured</button></li>
-                    <li><button class="dropdown-item" onclick="filterByRelease('today')">Today</button></li>
-                    <li><button class="dropdown-item" onclick="filterByRelease('week')">This Week</button></li>
-                    <li><button class="dropdown-item" onclick="filterByRelease('month')">This Month</button></li>
-                    <li><button class="dropdown-item" onclick="filterByRelease('year')">This Year</button></li>
+                    <li><button type="button" class="dropdown-item" onclick="filterByRelease('featured')">Featured</button></li>
+                    <li><button type="button" class="dropdown-item" onclick="filterByRelease('today')">Today</button></li>
+                    <li><button type="button" class="dropdown-item" onclick="filterByRelease('week')">This Week</button></li>
+                    <li><button type="button" class="dropdown-item" onclick="filterByRelease('month')">This Month</button></li>
+                    <li><button type="button" class="dropdown-item" onclick="filterByRelease('year')">This Year</button></li>
                 </ul>
             </div>
-            <button class="btn btn-sm btn-dark border-secondary text-white rounded-pill px-3 fw-bold" data-bs-toggle="modal" data-bs-target="#consoleModalOverlay" onclick="openConsoleModal()">📊 Search Console</button>
+            <button type="button" class="btn btn-sm btn-dark border-secondary text-white rounded-pill px-3 fw-bold" data-bs-toggle="modal" data-bs-target="#consoleModalOverlay" onclick="openConsoleModal()">📊 Search Console</button>
         </div>
     </section>
 
@@ -271,7 +270,7 @@
                     <div class="tab-content text-xs" id="dashboardTabContent">
                         <div class="tab-pane fade show active" id="devPanel" role="tabpanel">
                             <div class="alert alert-info bg-opacity-10 border-info text-info p-2 mb-3" style="font-size: 11px; line-height: 1.4;">
-                                📢 <strong>Paid Featured Promo Campaign:</strong> আপনার টুলটি স্পনসরড ক্যাটাগরিতে প্রমোট করতে চান? নিচে থেকে প্ল্যান সিলেক্ট করে সাবমিট করুন। অ্যাডমিন টিম ইমেইলের মাধ্যমে সরাসরি যোগাযোগ করে পেমেন্ট ক্লিয়ার করে দেবে।
+                                📢 <strong>Paid Featured Promo Campaign:</strong> আপনারツールটি স্পনসরড ক্যাটাগরিতে প্রমোট করতে চান? নিচে থেকে প্ল্যান সিলেক্ট করে সাবমিট করুন। অ্যাডমিন টিম ইমেইলের মাধ্যমে সরাসরি যোগাযোগ করে পেমেন্ট ক্লিয়ার করে দেবে।
                             </div>
                             <form action="https://formspree.io/f/YOUR_FORM_ID_HERE" method="POST" class="row g-2">
                                 <div class="col-12 col-md-6"><input type="text" name="devName" placeholder="Your Name / Organization *" required class="form-control form-control-sm bg-black text-white border-secondary"></div>
@@ -340,6 +339,9 @@
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap 5 Bundle WITH Popper (Very Important for Modals & Dropdowns) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         const MASTER_URLS = [
@@ -447,7 +449,6 @@
         }
 
         function filterByRelease(timeline) {
-            document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
             const currentTimeStamp = new Date().getTime();
             let list = dashboardDbList.filter(tool => {
                 if (timeline === 'featured') {
@@ -497,13 +498,18 @@
             document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
         }
 
-        // Search inputs dynamic triggers setup
         const searchInput = document.getElementById('searchInput');
         const searchWrapper = document.getElementById('searchWrapper');
         const clearSearchBtn = document.getElementById('clearSearchBtn');
 
         searchInput.addEventListener('focus', () => { searchWrapper.classList.add('focused'); });
-        searchInput.addEventListener('blur', () => { if(searchInput.value.trim() === "") searchWrapper.classList.remove('focused'); });
+        
+        // Fix for blurring input smoothly without freezing buttons
+        document.body.addEventListener('click', (e) => {
+            if (!searchWrapper.contains(e.target) && searchInput.value.trim() === "") {
+                searchWrapper.classList.remove('focused');
+            }
+        });
 
         searchInput.addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase().trim();
@@ -560,6 +566,7 @@
         function startVoiceSearch() { const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition; if (!SpeechRecognition) return; const recognition = new SpeechRecognition(); const voiceBtn = document.getElementById('voiceBtn'); recognition.lang = 'en-US'; voiceBtn.innerText = "🛑"; recognition.start(); recognition.onresult = function(e) { document.getElementById('searchInput').value = e.results[0][0].transcript; document.getElementById('searchInput').dispatchEvent(new Event('input')); }; recognition.onspeechend = function() { recognition.stop(); voiceBtn.innerText = "🎤"; }; }
         function openConsoleModal() { if(allTools.length > 0) document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes"; document.getElementById('consoleLogs').innerHTML = consoleLogStorage.join(''); }
         
+        // 🧠 🚀 Pure vanilla triggers for Modal Overlay (Ensures Modals work flawlessly)
         function openModal(id) { 
             document.getElementById('modalContent').innerHTML = legalData[id] || 'Operational log details.'; 
             var myModal = new bootstrap.Modal(document.getElementById('modalOverlay')); 
