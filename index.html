@@ -23,6 +23,22 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             background-color: var(--bg-color);
             color: #cbd5e1;
+            overflow-x: hidden;
+        }
+
+        /* 📱 Fluid Responsive Typography Architecture */
+        .site-title {
+            font-size: clamp(2rem, 5vw + 1rem, 3.5rem) !important;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+        }
+        .site-subtitle {
+            font-size: clamp(10px, 2vw + 4px, 13px) !important;
+            letter-spacing: 1.5px;
+        }
+        .global-index-heading {
+            font-size: clamp(12px, 1.5vw + 2px, 15px) !important;
+            letter-spacing: 0.5px;
         }
 
         /* 🔍 Responsive Search Box Architecture */
@@ -35,13 +51,13 @@
 
         .main-input {
             width: 100%;
-            height: 52px;
+            height: clamp(46px, 5vw + 10px, 54px);
             border: 2px solid var(--primary-two);
             background: var(--primary-one);
             border-radius: 50px;
-            padding-left: 50px;
+            padding-left: 48px;
             padding-right: 75px;
-            font-size: 14px;
+            font-size: clamp(12px, 1vw + 10px, 14px);
             color: #111;
             font-weight: 600;
             font-family: 'Raleway', sans-serif;
@@ -59,8 +75,9 @@
             width: 14px;
             background: transparent;
             border: 3px solid var(--primary-two);
-            left: 22px;
-            top: 19px;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             border-radius: 100%;
             z-index: 5;
         }
@@ -72,14 +89,15 @@
             width: 3px;
             bottom: -5px;
             right: -3px;
-            transform: rotate(-45deg) ;
+            transform: rotate(-45deg);
         }
 
         /* ✕ Instant Input Clear Button */
         .clear-search-btn {
             position: absolute;
             right: 48px;
-            top: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             background: transparent;
             border: 0;
             color: #475569;
@@ -98,7 +116,8 @@
             width: 28px;
             background: var(--primary-three);
             right: 15px;
-            top: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             border-radius: 100%;
             box-shadow: 0px 1px 2px 0px #333;
             cursor: pointer;
@@ -120,7 +139,7 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             margin-top: 18px;
             width: 100%;
             opacity: 0;
@@ -137,14 +156,14 @@
             background: #1e293b;
             border: 1px solid #334155;
             color: #94a3b8;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 13px;
+            font-size: clamp(11px, 1vw + 2px, 13px);
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             transition: all 0.2s ease;
         }
         .icon-text-tab:hover, .icon-text-tab.active {
@@ -160,12 +179,12 @@
         }
 
         @media (max-width: 576px) {
-            .search-root-container { padding: 0 10px; }
-            .main-input { padding-left: 42px; padding-right: 68px; height: 48px; font-size: 13px; }
-            .searchicon { left: 24px; top: 17px; }
-            .clear-search-btn { right: 42px; top: 13px; }
-            .microphone { right: 15px; top: 10px; }
-            .icon-text-tab { padding: 6px 12px; font-size: 11px; }
+            .search-root-container { padding: 0 8px; }
+            .main-input { padding-left: 42px; padding-right: 68px; }
+            .searchicon { left: 20px; }
+            .clear-search-btn { right: 44px; }
+            .microphone { right: 15px; }
+            .icon-text-tab { padding: 6px 10px; gap: 3px; }
         }
 
         /* Carousel Panels */
@@ -173,10 +192,10 @@
             background: #0f172a;
             border: 1px solid #1e293b;
             border-radius: 16px;
-            padding: 20px;
+            padding: clamp(12px, 2vw, 20px);
         }
         .mini-release-circle {
-            width: 52px; height: 52px; border-radius: 50%; background: #1e293b; border: 2px solid #334155;
+            width: clamp(44px, 5vw, 52px); height: clamp(44px, 5vw, 52px); border-radius: 50%; background: #1e293b; border: 2px solid #334155;
             display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto; overflow: hidden; transition: all 0.2s ease;
         }
         .mini-release-circle:hover { transform: scale(1.1); border-color: #6366f1; }
@@ -200,7 +219,7 @@
 
         .border-indigo { border-color: #4f46e5 !important; }
         .text-light-muted { color: #94a3b8 !important; }
-        .footer-link-custom { color: #cbd5e1 !important; text-decoration: none; transition: color 0.2s ease; cursor: pointer; }
+        .footer-link-custom { color: #cbd5e1 !important; text-decoration: none; transition: color 0.2s ease; cursor: pointer; font-size: clamp(11px, 1vw, 13px); }
         .footer-link-custom:hover { color: #6366f1 !important; }
 
         .console-terminal {
@@ -215,10 +234,10 @@
             line-height: 1.5;
         }
 
-        /* 🎨 Form Placeholder Color Fix */
+        /* 🎨 Form Placeholder Global Dynamic visibility styling */
         .form-control::placeholder, .form-select::placeholder, textarea::placeholder {
             color: #94a3b8 !important;
-            opacity: 1;
+            opacity: 1 !important;
         }
         .form-control:-ms-input-placeholder, .form-select:-ms-input-placeholder, textarea:-ms-input-placeholder {
             color: #94a3b8 !important;
@@ -235,8 +254,8 @@
         <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
             <img src="favicon.svg" alt="allalo AI Logo" class="site-logo" style="width: 54px; height: 54px;" onerror="this.src='https://www.google.com/s2/favicons?sz=128&domain=ai.allalo.com'">
             <div class="text-start">
-                <h1 class="display-5 site-title fw-black text-white m-0 tracking-tight">allalo AI</h1>
-                <p class="site-subtitle text-indigo-400 fw-bold uppercase m-0" style="font-size: 11px; letter-spacing: 1.5px;">The Ultimate Smart AI Directory</p>
+                <h1 class="site-title text-white m-0 tracking-tight">allalo AI</h1>
+                <p class="site-subtitle text-indigo-400 fw-bold uppercase m-0">The Ultimate Smart AI Directory</p>
             </div>
         </div>
         <p class="text-light-muted small">Total AI Tools Indexed: <span class="text-white fw-bold">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
@@ -256,10 +275,10 @@
             </div>
             
             <div class="icon-holder">
-                <div class="icon-text-tab active" id="btn-All" onclick="filterByCategory('All')">📊 All Indexed <span class="tab-counter-badge" id="cnt-all">(...)</span></div>
-                <div class="icon-text-tab" id="btn-AI_Agent" onclick="filterByCategory('AI Agent')">🤖 AI Agents <span class="tab-counter-badge" id="cnt-agent">(...)</span></div>
-                <div class="icon-text-tab" id="btn-AI_Swarm" onclick="filterByCategory('AI Swarm')">👥 AI Swarms <span class="tab-counter-badge" id="cnt-swarm">(...)</span></div>
-                <div class="icon-text-tab" id="btn-Local_AI" onclick="filterByCategory('Local AI')">🔒 Local AI <span class="tab-counter-badge" id="cnt-local">(...)</span></div>
+                <div class="icon-text-tab active" id="btn-All" onclick="filterByCategory('All')">📊 All <span class="tab-counter-badge" id="cnt-all">(...)</span></div>
+                <div class="icon-text-tab" id="btn-AI_Agent" onclick="filterByCategory('AI Agent')">🤖 Agents <span class="tab-counter-badge" id="cnt-agent">(...)</span></div>
+                <div class="icon-text-tab" id="btn-AI_Swarm" onclick="filterByCategory('AI Swarm')">👥 Swarms <span class="tab-counter-badge" id="cnt-swarm">(...)</span></div>
+                <div class="icon-text-tab" id="btn-Local_AI" onclick="filterByCategory('Local AI')">🔒 Local <span class="tab-counter-badge" id="cnt-local">(...)</span></div>
             </div>
         </div>
 
@@ -297,7 +316,7 @@
     <!-- 📂 ৩. গলোবাল মাস্টার ডাটাবেজ ইনডেক্স গ্রিড -->
     <main class="container mb-5">
         <hr class="border-secondary my-4">
-        <h5 class="text-white mb-4 fw-bold" style="font-size: 14px; letter-spacing: 0.5px;">📂 GLOBAL MASTER PARAMETER INDEX</h5>
+        <h5 class="text-white mb-4 fw-bold global-index-heading">📂 GLOBAL MASTER PARAMETER INDEX</h5>
         
         <div id="loading" class="text-center text-muted font-mono py-5">
             [SYSTEM]: Syncing master distributed cluster databases, hold...
@@ -942,7 +961,7 @@
         }
 
         function startVoiceSearch() {
-            const SpeechRecognition = window.webkitSpeechRecognition || window.SearchRecognition;
+            const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
             if (!SpeechRecognition) return;
             const recognition = new SpeechRecognition();
             const voiceBtn = document.getElementById('voiceBtn');
