@@ -25,7 +25,7 @@
             color: #cbd5e1;
         }
 
-        /* 🔍 Responsive Search Box Architecture (Fixed Mobile Leaning) */
+        /* 🔍 Responsive Search Box Architecture */
         .search-root-container {
             position: relative;
             width: 100%;
@@ -40,7 +40,7 @@
             background: var(--primary-one);
             border-radius: 50px;
             padding-left: 50px;
-            padding-right: 55px;
+            padding-right: 75px;
             font-size: 14px;
             color: #111;
             font-weight: 600;
@@ -75,12 +75,29 @@
             transform: rotate(-45deg) ;
         }
 
+        /* ✕ Instant Input Clear Button */
+        .clear-search-btn {
+            position: absolute;
+            right: 48px;
+            top: 15px;
+            background: transparent;
+            border: 0;
+            color: #475569;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 6;
+            display: none;
+            transition: color 0.2s;
+        }
+        .clear-search-btn:hover { color: #ef4444; }
+
         .microphone {
             position: absolute;
             height: 28px;
             width: 28px;
             background: var(--primary-three);
-            right: 20px;
+            right: 15px;
             top: 12px;
             border-radius: 100%;
             box-shadow: 0px 1px 2px 0px #333;
@@ -110,7 +127,6 @@
             pointer-events: none;
             transition: all 0.3s ease;
         }
-        /* JS Trigger Class for Perfect Dynamic Show/Hide */
         .search-root-container.focused .icon-holder,
         .search-root-container.has-content .icon-holder {
             opacity: 1;
@@ -137,12 +153,18 @@
             color: #fff !important;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
+        .tab-counter-badge {
+            font-size: 10px;
+            opacity: 0.8;
+            font-weight: 500;
+        }
 
         @media (max-width: 576px) {
             .search-root-container { padding: 0 10px; }
-            .main-input { padding-left: 42px; padding-right: 48px; height: 48px; font-size: 13px; }
+            .main-input { padding-left: 42px; padding-right: 68px; height: 48px; font-size: 13px; }
             .searchicon { left: 24px; top: 17px; }
-            .microphone { right: 22px; top: 10px; }
+            .clear-search-btn { right: 42px; top: 13px; }
+            .microphone { right: 15px; top: 10px; }
             .icon-text-tab { padding: 6px 12px; font-size: 11px; }
         }
 
@@ -186,11 +208,23 @@
             border: 1px solid #1e293b;
             border-radius: 8px;
             padding: 12px;
-            height: 180px;
+            height: 140px;
             overflow-y: auto;
             font-family: monospace;
             font-size: 11px;
             line-height: 1.5;
+        }
+
+        /* 🎨 Form Placeholder Color Fix */
+        .form-control::placeholder, .form-select::placeholder, textarea::placeholder {
+            color: #94a3b8 !important;
+            opacity: 1;
+        }
+        .form-control:-ms-input-placeholder, .form-select:-ms-input-placeholder, textarea:-ms-input-placeholder {
+            color: #94a3b8 !important;
+        }
+        .form-control::-ms-input-placeholder, .form-select::-ms-input-placeholder, textarea::-ms-input-placeholder {
+            color: #94a3b8 !important;
         }
     </style>
 </head>
@@ -214,15 +248,18 @@
             <div class="searchicon"></div>
             <input type="text" id="searchInput" placeholder="Search 47,000+ AI models, networks or tokens..." class="main-input">
             
+            <!-- ✕ Instant Clear Button Node -->
+            <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearchField()">✕</button>
+            
             <div class="microphone" id="voiceBtn" onclick="startVoiceSearch()">
                 <div class="mic-stand"></div>
             </div>
             
             <div class="icon-holder">
-                <div class="icon-text-tab active" id="btn-All" onclick="filterByCategory('All')">📊 All Indexed</div>
-                <div class="icon-text-tab" id="btn-AI_Agent" onclick="filterByCategory('AI Agent')">🤖 AI Agents</div>
-                <div class="icon-text-tab" id="btn-AI_Swarm" onclick="filterByCategory('AI Swarm')">👥 AI Swarms</div>
-                <div class="icon-text-tab" id="btn-Local_AI" onclick="filterByCategory('Local AI')">🔒 Local AI</div>
+                <div class="icon-text-tab active" id="btn-All" onclick="filterByCategory('All')">📊 All Indexed <span class="tab-counter-badge" id="cnt-all">(...)</span></div>
+                <div class="icon-text-tab" id="btn-AI_Agent" onclick="filterByCategory('AI Agent')">🤖 AI Agents <span class="tab-counter-badge" id="cnt-agent">(...)</span></div>
+                <div class="icon-text-tab" id="btn-AI_Swarm" onclick="filterByCategory('AI Swarm')">👥 AI Swarms <span class="tab-counter-badge" id="cnt-swarm">(...)</span></div>
+                <div class="icon-text-tab" id="btn-Local_AI" onclick="filterByCategory('Local AI')">🔒 Local AI <span class="tab-counter-badge" id="cnt-local">(...)</span></div>
             </div>
         </div>
 
@@ -310,6 +347,17 @@
                 </div>
                 <div class="modal-body font-mono text-light" style="font-size: 12px;">
                     
+                    <!-- 📉 Indexing Live Progress Bar Widget -->
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between text-secondary mb-1" style="font-size: 10px;">
+                            <span>CLUSTER DATA SYNCHRONIZATION PROGRESS</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress bg-black border border-secondary" style="height: 6px;">
+                            <div id="indexingBar" class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+
                     <!-- 📦 রিয়েল-টাইম ইন্ডেক্সিং টাস্ক মনিটর এরিয়া -->
                     <div class="row g-2 mb-3 text-center text-xs">
                         <div class="col-4">
@@ -365,7 +413,7 @@
                         <div class="tab-pane fade" id="adminPanel" role="tabpanel" aria-labelledby="admin-tab">
                             <div id="adminAccessState" class="d-none">
                                 <div class="alert alert-warning bg-opacity-10 border-warning text-warning text-xs p-2 mb-3">
-                                    [AUTHORIZED]: Master Override Engine Active. Controls dynamic leases, time-locks and stream compilation blocks.
+                                    [AUTHORIZED]: Master Override Engine Active. Controls dynamic leases, time-locks and approval matrices.
                                 </div>
                                 <div class="row g-2 text-xs">
                                     <div class="col-12 col-md-6">
@@ -376,7 +424,7 @@
                                         <label class="text-secondary d-block mb-1">Target Endpoint Redirection URL</label>
                                         <input type="url" id="admLink" placeholder="https://..." class="form-control form-control-sm bg-black text-white border-secondary text-xs">
                                     </div>
-                                    <div class="col-12 col-md-6">
+                                    <div class="col-12 col-md-4">
                                         <label class="text-secondary d-block mb-1">Node Class Architecture</label>
                                         <select id="admCat" class="form-select form-select-sm bg-black text-white border-secondary text-xs">
                                             <option value="AI Agent">AI Agent</option>
@@ -385,8 +433,8 @@
                                             <option value="General AI">General AI</option>
                                         </select>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        <label class="text-secondary d-block mb-1">Featured Dynamic Time Lease Config</label>
+                                    <div class="col-12 col-md-4">
+                                        <label class="text-secondary d-block mb-1">Featured Time Lease Config</label>
                                         <select id="admLease" class="form-select form-select-sm bg-black text-white border-secondary text-xs">
                                             <option value="normal">None (Normal Permanent Release)</option>
                                             <option value="1">1 Hour (Featured Tier)</option>
@@ -400,6 +448,13 @@
                                             <option value="720">1 Month (Featured Tier)</option>
                                             <option value="4320">6 Months (Featured Tier)</option>
                                             <option value="8640">1 Year (Featured Tier)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="text-warning d-block mb-1">Approval Queue Status</label>
+                                        <select id="admStatus" class="form-select form-select-sm bg-black text-white border-warning text-xs">
+                                            <option value="Approved">Approved (Live Instantly)</option>
+                                            <option value="Pending">Pending (Review Grid Queue)</option>
                                         </select>
                                     </div>
                                     <div class="col-12">
@@ -422,7 +477,7 @@
         </div>
     </div>
 
-    <!-- 🛠— Bootstrap 5 Official JS Bundled Cdn -->
+    <!-- Bootstrap 5 Official JS Bundled Cdn -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core Database Control Engine Script Nodes -->
@@ -464,9 +519,9 @@
             "website builder": ["website", "build", "landing page", "wordpress", "framer", "v0", "bolt"]
         };
 
-        // 🧠 ১. সার্চ ইনপুট ফোকাস ইভেন্ট কন্ট্রোলার (ট্যাব হাইড/শো ফিক্সড)
         const searchInputEl = document.getElementById('searchInput');
         const searchWrapperEl = document.getElementById('searchWrapper');
+        const clearSearchBtnEl = document.getElementById('clearSearchBtn');
 
         searchInputEl.addEventListener('focus', () => {
             searchWrapperEl.classList.add('focused');
@@ -493,10 +548,21 @@
             }
         }
 
+        function updateProgressBar(percentage) {
+            const bar = document.getElementById('indexingBar');
+            const txt = document.getElementById('progressPercent');
+            if(bar && txt) {
+                bar.style.width = percentage + '%';
+                txt.innerText = percentage + '%';
+            }
+        }
+
         async function loadMegaDatabase() {
             try {
+                updateProgressBar(15);
                 logToConsole("Initializing Software Engine Core Panel...", "info");
                 await fetchDashboardDatabase();
+                updateProgressBar(40);
 
                 let combinedTools = [];
                 
@@ -505,6 +571,8 @@
                     if(tool.isFeatured && tool.expireTimestamp) {
                         isExpiredFeatured = new Date().getTime() >= tool.expireTimestamp;
                     }
+
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return;
 
                     combinedTools.push({
                         name: tool.name || 'AI Tool',
@@ -538,6 +606,8 @@
                                 };
                             });
                             combinedTools = combinedTools.concat(mapped);
+                            let progressStep = 40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55);
+                            updateProgressBar(progressStep);
                             logToConsole(`Master Dataset Pipe #${idx + 1} synchronized.`, "success");
                         }
                     } catch(e) { logToConsole(`Master Dataset Pipe #${idx + 1} bypassed structural fault.`, "warn"); }
@@ -554,13 +624,29 @@
                 document.getElementById('loading').classList.add('d-none');
                 document.getElementById('toolsGrid').classList.remove('d-none');
                 
+                calculateCategoryCounts();
+                
                 const countDiv = document.getElementById('consoleTotalCount');
                 if(countDiv) countDiv.innerText = allTools.length.toLocaleString() + " nodes";
                 
+                updateProgressBar(100);
                 renderNextBatch();
             } catch(err) {
                 document.getElementById('loading').innerText = "Critical operational runtime mapping error.";
             }
+        }
+
+        function calculateCategoryCounts() {
+            document.getElementById('cnt-all').innerText = `(${allTools.length.toLocaleString()})`;
+            
+            const agentCount = allTools.filter(t => t.task.toLowerCase().includes('agent')).length;
+            document.getElementById('cnt-agent').innerText = `(${agentCount.toLocaleString()})`;
+            
+            const swarmCount = allTools.filter(t => t.task.toLowerCase().includes('swarm')).length;
+            document.getElementById('cnt-swarm').innerText = `(${swarmCount.toLocaleString()})`;
+            
+            const localCount = allTools.filter(t => t.task.toLowerCase().includes('local')).length;
+            document.getElementById('cnt-local').innerText = `(${localCount.toLocaleString()})`;
         }
 
         async function fetchDashboardDatabase() {
@@ -582,6 +668,7 @@
             if (timeline === 'featured') {
                 let activeFeatured = dashboardDbList.filter(tool => {
                     if (!tool.isFeatured) return false;
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
                     if (!tool.expireTimestamp) return true;
                     return currentTime < tool.expireTimestamp;
                 });
@@ -589,6 +676,7 @@
             } else {
                 let activeReleases = dashboardDbList.filter(tool => {
                     if (!tool.releaseDate) return false;
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
                     const rDate = new Date(tool.releaseDate);
                     const diffDays = Math.ceil(Math.abs(new Date() - rDate) / (1000 * 60 * 60 * 24));
 
@@ -602,7 +690,6 @@
             }
         }
 
-        // 🧠 ২. কাস্টম ক্যারোসল রেন্ডারিং মেকানিজম (ট্যাব লজিক সলভড)
         function renderCarouselLayout(list, mode) {
             const inner = document.getElementById('unifiedCarouselInner');
             inner.innerHTML = '';
@@ -668,7 +755,6 @@
                 }
             }
             
-            // বুটস্ট্র্যাপ ক্যারোসল রিসেট নোড ট্রিগার
             const carouselEl = document.getElementById('unifiedCarousel');
             const carouselObj = bootstrap.Carousel.getOrCreateInstance(carouselEl);
             carouselObj.to(0);
@@ -724,12 +810,14 @@
             const carouselZone = document.getElementById('dynamicCarouselZone');
 
             if (query === "") {
+                clearSearchBtnEl.style.display = 'none';
                 searchWrapperEl.classList.remove('has-content');
                 carouselZone.classList.remove('d-none');
                 applyGlobalFilters();
                 return;
             }
 
+            clearSearchBtnEl.style.display = 'block';
             searchWrapperEl.classList.add('has-content');
             carouselZone.classList.add('d-none');
 
@@ -765,6 +853,16 @@
             }
             renderNextBatch();
         });
+
+        function clearSearchField() {
+            searchInputEl.value = "";
+            clearSearchBtnEl.style.display = 'none';
+            searchWrapperEl.classList.remove('has-content');
+            document.getElementById('dynamicCarouselZone').classList.remove('d-none');
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+            applyGlobalFilters();
+        }
 
         function filterByCategory(category) {
             currentCategory = category;
@@ -806,6 +904,7 @@
             const link = document.getElementById('admLink').value.trim();
             const category = document.getElementById('admCat').value;
             const lease = document.getElementById('admLease').value;
+            const status = document.getElementById('admStatus').value;
             const description = document.getElementById('admDesc').value.trim();
 
             if(!name || !link || !description) {
@@ -828,7 +927,8 @@
                 "releaseDate": new Date().toISOString().split('T')[0],
                 "isFeatured": isFeatured,
                 "expireTimestamp": expireTimestamp,
-                "badge": isFeatured ? "FEATURED" : "ACTIVE"
+                "badge": isFeatured ? "FEATURED" : "ACTIVE",
+                "approvalStatus": status
             };
 
             alert("Generated Admin Database Object:\n\n" + JSON.stringify(masterOutput, null, 2) + "\n\nCopy this block and commit safely inside your new_tools.json repository array stack.");
@@ -842,7 +942,7 @@
         }
 
         function startVoiceSearch() {
-            const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+            const SpeechRecognition = window.webkitSpeechRecognition || window.SearchRecognition;
             if (!SpeechRecognition) return;
             const recognition = new SpeechRecognition();
             const voiceBtn = document.getElementById('voiceBtn');
