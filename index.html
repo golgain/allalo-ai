@@ -500,14 +500,14 @@
 
     <!-- Core Database Control Engine Script Nodes -->
     <script>
-        const MASTER_URLS = [
-            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_ag_25k.json', 
-            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_3k.json', 
-            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_19k.json',
-        ];
+        // ✅ Corrected URLs with CDN Integration (Fixed .json.json Typo & CORS Issues)
+const MASTER_URLS = [
+    'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_ag_25k.json', 
+    'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_3k.json', 
+    'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_19k.json' // Fixed double .json
+];
 
-        const NEW_DASHBOARD_DB_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/new_tools.json';
-
+const NEW_DASHBOARD_DB_URL = 'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/new_tools.json';
         let allTools = [];
         let filteredTools = [];
         let dashboardDbList = [];
