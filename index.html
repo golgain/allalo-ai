@@ -967,24 +967,6 @@
             alert("Generated Admin Database Object:\n\n" + JSON.stringify(masterOutput, null, 2));
             console.log(masterOutput);
         }
-async function fetchDashboardDatabase() {
-    try {
-        // Force fresh load using cache buster query parameter
-        const forceFreshUrl = NEW_DASHBOARD_DB_URL.split('?')[0] + '?t=' + new Date().getTime();
-        const res = await fetch(forceFreshUrl);
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        
-        dashboardDbList = await res.json();
-        logToConsole("Dashboard Database Stream Online. Total records: " + dashboardDbList.length, "success");
-        
-        filterByRelease('featured');
-    } catch(e) { 
-        logToConsole("Dashboard Stream Offline. Rendering fallback featured.", "warn"); 
-        if(allTools && allTools.length > 0) {
-            renderCarouselLayout(allTools.slice(0, 6), 'featured');
-        }
-    }
-}
         
         function clearAdminFields() {
             document.getElementById('admName').value = '';
