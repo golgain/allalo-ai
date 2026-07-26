@@ -527,7 +527,7 @@
 
     <!-- Core Database Control Engine Script Nodes -->
     <script>
-    // ✅ Fast CDN Links with Typo Protection
+    // ✅ jsDelivr CDN link & fixed typos
     const MASTER_URLS = [
         'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_ag_25k.json', 
         'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_3k.json', 
@@ -596,14 +596,13 @@
         }
     }
 
-    // ⚡ Ultra Fast & Non-blocking 47k Data Fetch Engine
+    // ⚡ Fast & Non-Blocking Data Loader Engine
     async function loadMegaDatabase() {
         try {
-            updateProgressBar(10);
+            updateProgressBar(15);
             logToConsole("Initializing Software Engine Core Panel...", "info");
             
-            // Non-blocking fetch call for custom dashboard JSON
-            fetchDashboardDatabase(); 
+            fetchDashboardDatabase(); // Non-blocking async load
 
             let combinedTools = [];
 
@@ -628,23 +627,23 @@
                             });
                         }
                         
-                        let progressStep = 30 + Math.floor(((idx + 1) / MASTER_URLS.length) * 65);
+                        let progressStep = 40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55);
                         updateProgressBar(progressStep);
-                        logToConsole(`Dataset Stack ${idx + 1} (${jsonData.length.toLocaleString()} nodes) Loaded.`, "success");
+                        logToConsole(`Dataset Stack ${idx + 1} Synchronized.`, "success");
                     }
                 } catch(e) { 
-                    logToConsole(`Data Pipe ${idx + 1} Fault: ` + e.message, "warn"); 
+                    logToConsole(`Data Pipe ${idx + 1} fault: ` + e.message, "warn"); 
                 }
             }
 
-            // ⚡ Instant Deduplication Using High-Performance Map Logic
+            // Fast Map-based Deduplication (Removes Freezing Issue)
             const uniqueMap = new Map();
-            for (let i = 0; i < combinedTools.length; i++) {
-                const key = combinedTools[i].name.toLowerCase().trim();
+            combinedTools.forEach(item => {
+                const key = item.name.toLowerCase().trim();
                 if (!uniqueMap.has(key)) {
-                    uniqueMap.set(key, combinedTools[i]);
+                    uniqueMap.set(key, item);
                 }
-            }
+            });
 
             allTools = Array.from(uniqueMap.values());
             filteredTools = [...allTools];
@@ -659,11 +658,12 @@
             updateProgressBar(100);
             renderNextBatch();
             
-            setTimeout(calculateCategoryCounts, 50);
+            // Calculate counts in background
+            setTimeout(calculateCategoryCounts, 100);
 
         } catch(err) {
             logToConsole("Critical operational failure: " + err.message, "error");
-            document.getElementById('loading').innerHTML = `<span class="text-danger">[ERROR]: Data Indexing Fault. Reload page.</span>`;
+            document.getElementById('loading').innerHTML = `<span class="text-danger">[ERROR]: Operational Mapping Fault. Check console.</span>`;
         }
     }
 
@@ -688,11 +688,10 @@
             const res = await fetch(NEW_DASHBOARD_DB_URL);
             if (!res.ok) throw new Error('HTTP ' + res.status);
             dashboardDbList = await res.json();
-            logToConsole("Dashboard Database Stream Online.", "success");
+            logToConsole("Dashboard Database Online.", "success");
             filterByRelease('featured');
         } catch(e) { 
-            // Graceful fallback (No red blocking error)
-            logToConsole("Dashboard Stream bypass: Initializing local state.", "warn"); 
+            logToConsole("Dashboard Database Stream offline.", "warn"); 
             renderCarouselLayout([], 'featured');
         }
     }
@@ -712,10 +711,11 @@
     function renderCarouselLayout(list, mode) {
         const inner = document.getElementById('unifiedCarouselInner');
         if (!list || list.length === 0) {
-            inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: Standard Cluster Active.</div>`;
+            inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: No active parameters stored.</div>`;
             return;
         }
         inner.innerHTML = '';
+        // Carousel Render Code...
     }
 
     function renderNextBatch() {
@@ -739,7 +739,7 @@
                             <div class="text-start w-100">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <img src="${escapeHTML(primaryLogo)}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
-                                    <span class="badge bg-black text-indigo-400 border border-secondary uppercase badge-status-fix" style="font-size: 8px;">${escapeHTML(tool.status)}</span>
+                                    <span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${escapeHTML(tool.status)}</span>
                                 </div>
                                 <h6 class="font-bold text-truncate m-0" style="font-size:13px; color: var(--title-color);">${escapeHTML(tool.name)}</h6>
                                 <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${escapeHTML(tool.task)}</span>
@@ -819,7 +819,7 @@
 
     document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
 
-    // ✅ Safe DOM Loaded Event
+    // ✅ DOM Ready Call
     document.addEventListener("DOMContentLoaded", function() {
         loadMegaDatabase();
     });
