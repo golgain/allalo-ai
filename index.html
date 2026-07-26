@@ -475,7 +475,7 @@
 
     <!-- Core Database Control Engine Script Nodes -->
 <script>
-    // ✅ Updated CDN links with timestamp cache buster to force fresh data load
+    // 🔗 1. CDN Links with timestamp cache buster for ultra-fast data streaming
     const MASTER_URLS = [
         'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_ag_25k.json?v=' + Date.now(), 
         'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_3k.json?v=' + Date.now(), 
@@ -485,6 +485,7 @@
 
     const NEW_DASHBOARD_DB_URL = 'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/new_tools.json?v=' + Date.now();
 
+    // 🧠 Global Data State Managers
     let allTools = [];
     let filteredTools = [];
     let dashboardDbList = [];
@@ -497,10 +498,40 @@
 
     const superstarTools = ["chatgpt", "midjourney", "claude", "sora", "devin", "crewai", "bolt.new", "perplexity", "ollama", "lm studio", "autogen"];
 
+    // 🧠 2. Mega Long-Capacity Global Search Synonym Dictionary Matrix
+    const dictionary = {
+        "ai agent": ["devin", "bolt.new", "crewai", "autogen", "agentops", "agent", "autonomous", "swarm", "multi-agent"],
+        "ai swarm": ["crewai", "autogen", "swarm", "chatdev", "multi-agent", "coordination"],
+        "multi agent": ["crewai", "autogen", "swarm", "chatdev", "agents"],
+        "autonomous agent": ["devin", "crewai", "autogen", "agent", "autonomous"],
+        "local ai": ["ollama", "lm studio", "llama.cpp", "jan", "anythingllm", "offline", "private", "local", "edge"],
+        "offline ai": ["ollama", "lm studio", "offline", "private", "local", "no internet"],
+        "audio maker": ["audio", "music", "voice", "speech", "sound", "song", "suno", "udio", "vocal", "tts", "clone"],
+        "music generator": ["music", "song", "suno", "udio", "track", "beat", "instrumental", "melody"],
+        "voice generator": ["voice", "tts", "text to speech", "elevenlabs", "clone", "speech", "dubbing"],
+        "video maker": ["video", "anim", "movie", "clip", "sora", "runway", "pika", "avatar", "generator", "editing", "reel"],
+        "video generator": ["video", "generate", "sora", "runway", "pika", "luma", "kling", "text to video"],
+        "writer": ["write", "writer", "script", "content", "blog", "text", "scripai", "article", "copywriting", "seo", "essay"],
+        "image generator": ["image", "art", "photo", "midjourney", "dall-e", "stable diffusion", "flux", "generate", "picture"],
+        "logo maker": ["logo", "brand", "design", "vector", "icon", "favicon"],
+        "background remover": ["remove background", "bg", "remove bg", "transparent", "cutout"],
+        "coding": ["code", "coder", "programming", "github", "copilot", "developer", "html", "css", "js", "python"],
+        "website builder": ["website", "build", "landing page", "wordpress", "framer", "v0", "bolt"]
+    };
+
     const searchInputEl = document.getElementById('searchInput');
     const searchWrapperEl = document.getElementById('searchWrapper');
     const clearSearchBtnEl = document.getElementById('clearSearchBtn');
 
+    // 🗓️ 3. Dynamic Auto-Updating Monthly SEO Title Engine
+    function updateDynamicSEO() {
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const currentDate = new Date();
+        const seoTitle = `47,000+ New AI Tools & Apps Directory (${months[currentDate.getMonth()]} ${currentDate.getFullYear()}) - allalo AI`;
+        document.title = seoTitle;
+    }
+
+    // 🔒 Security Sanitizers
     function escapeHTML(str) {
         if (!str) return '';
         return str.replace(/[&<>"']/g, function(m) {
@@ -520,13 +551,15 @@
     function toggleThemeMode() {
         document.body.classList.toggle('light-mode');
         const btn = document.getElementById('themeToggleBtn');
-        btn.innerText = document.body.classList.contains('light-mode') ? "☀️ Light" : "🌙 Dark";
+        if (btn) btn.innerText = document.body.classList.contains('light-mode') ? "☀️ Light" : "🌙 Dark";
     }
 
-    searchInputEl.addEventListener('focus', () => searchWrapperEl.classList.add('focused'));
-    document.addEventListener('click', (e) => {
-        if (!searchWrapperEl.contains(e.target)) searchWrapperEl.classList.remove('focused');
-    });
+    if(searchInputEl && searchWrapperEl) {
+        searchInputEl.addEventListener('focus', () => searchWrapperEl.classList.add('focused'));
+        document.addEventListener('click', (e) => {
+            if (!searchWrapperEl.contains(e.target)) searchWrapperEl.classList.remove('focused');
+        });
+    }
 
     function logToConsole(message, type = 'info') {
         const timestamp = new Date().toLocaleTimeString();
@@ -552,13 +585,12 @@
         }
     }
 
-    // ⚡ Robust Universal Data Ingestion Engine
+    // ⚡ 4. Robust Universal Data Ingestion Engine
     async function loadMegaDatabase() {
         try {
+            updateDynamicSEO();
             updateProgressBar(10);
             logToConsole("Initializing Software Engine Core Panel...", "info");
-            
-            fetchDashboardDatabase();
 
             let combinedTools = [];
 
@@ -573,7 +605,6 @@
                             let tool = jsonData[i];
                             if (!tool) continue;
                             
-                            // Flexible Property Mapper
                             let nameVal = tool.name || tool.handle || tool.title || 'AI Tool';
                             if (tool.handle && !tool.name) nameVal = tool.handle.replace(/-/g, ' ').toUpperCase();
 
@@ -581,6 +612,17 @@
                             if (Array.isArray(taskVal)) taskVal = taskVal.join(', ');
 
                             let descVal = tool.shortDescription || tool.short_description || tool.description || tool.summary || 'Advanced System Node.';
+
+                            // Smart Auto Category Categorization Logic
+                            let nameLower = nameVal.toLowerCase();
+                            let descLower = String(descVal).toLowerCase();
+                            if (nameLower.includes('crewai') || nameLower.includes('autogen') || nameLower.includes('swarm')) {
+                                taskVal = 'AI Swarm';
+                            } else if (nameLower.includes('ollama') || nameLower.includes('lm studio') || nameLower.includes('local') || descLower.includes('offline')) {
+                                taskVal = 'Local AI';
+                            } else if (String(taskVal).toLowerCase().includes('agent') || nameLower.includes('agent')) {
+                                taskVal = 'AI Agent';
+                            }
 
                             combinedTools.push({
                                 name: nameVal,
@@ -600,7 +642,7 @@
                 }
             }
 
-            // High Performance Fast Deduplication
+            // High Performance Fast Deduplication with Map
             const uniqueMap = new Map();
             for (let i = 0; i < combinedTools.length; i++) {
                 const key = combinedTools[i].name.toLowerCase().trim();
@@ -611,6 +653,7 @@
 
             allTools = Array.from(uniqueMap.values());
 
+            // Superstar Sorting
             allTools.sort((a, b) => {
                 const bIsSuper = superstarTools.some(t => b.name.toLowerCase().includes(t)) ? 1 : 0;
                 const aIsSuper = superstarTools.some(t => a.name.toLowerCase().includes(t)) ? 1 : 0;
@@ -618,10 +661,14 @@
             });
 
             filteredTools = [...allTools];
-            document.getElementById('loading').classList.add('d-none');
-            document.getElementById('toolsGrid').classList.remove('d-none');
+            
+            const loadingEl = document.getElementById('loading');
+            const toolsGridEl = document.getElementById('toolsGrid');
+            if(loadingEl) loadingEl.classList.add('d-none');
+            if(toolsGridEl) toolsGridEl.classList.remove('d-none');
 
-            document.getElementById('topCounter').innerText = allTools.length.toLocaleString() + "+";
+            const topCounterEl = document.getElementById('topCounter');
+            if(topCounterEl) topCounterEl.innerText = allTools.length.toLocaleString() + "+";
             
             const countDiv = document.getElementById('consoleTotalCount');
             if(countDiv) countDiv.innerText = allTools.length.toLocaleString() + " nodes";
@@ -630,15 +677,21 @@
             renderNextBatch();
             calculateCategoryCounts();
 
+            // 🌟 Streamline Auto-Fetch Featured Carousel AFTER database load
+            await fetchDashboardDatabase();
+
         } catch(err) {
             logToConsole("Critical operational failure: " + err.message, "error");
-            document.getElementById('loading').innerHTML = `<span class="text-danger">[ERROR]: Operational Mapping Fault. Check console.</span>`;
+            const loadingEl = document.getElementById('loading');
+            if(loadingEl) loadingEl.innerHTML = `<span class="text-danger">[ERROR]: Operational Mapping Fault. Check console.</span>`;
         }
     }
 
     // 🧠 Flexible Smart Category Counter
     function calculateCategoryCounts() {
-        document.getElementById('cnt-all').innerText = `(${allTools.length.toLocaleString()})`;
+        const cntAll = document.getElementById('cnt-all');
+        if(cntAll) cntAll.innerText = `(${allTools.length.toLocaleString()})`;
+        
         let agent = 0, swarm = 0, local = 0;
 
         for (let i = 0; i < allTools.length; i++) {
@@ -648,43 +701,48 @@
             if (textToSearch.includes('local') || textToSearch.includes('offline') || textToSearch.includes('ollama') || textToSearch.includes('llama')) local++;
         }
 
-        document.getElementById('cnt-agent').innerText = `(${agent.toLocaleString()})`;
-        document.getElementById('cnt-swarm').innerText = `(${swarm.toLocaleString()})`;
-        document.getElementById('cnt-local').innerText = `(${local.toLocaleString()})`;
+        const cntAgent = document.getElementById('cnt-agent');
+        const cntSwarm = document.getElementById('cnt-swarm');
+        const cntLocal = document.getElementById('cnt-local');
+
+        if(cntAgent) cntAgent.innerText = `(${agent.toLocaleString()})`;
+        if(cntSwarm) cntSwarm.innerText = `(${swarm.toLocaleString()})`;
+        if(cntLocal) cntLocal.innerText = `(${local.toLocaleString()})`;
     }
 
+    // 🌟 5. Auto Load & Render Featured Carousel Slider
     async function fetchDashboardDatabase() {
         try {
-            const res = await fetch(NEW_DASHBOARD_DB_URL);
+            const forceFreshUrl = NEW_DASHBOARD_DB_URL.split('?')[0] + '?t=' + new Date().getTime();
+            const res = await fetch(forceFreshUrl);
             if (!res.ok) throw new Error('HTTP ' + res.status);
-            dashboardDbList = await res.json();
-            logToConsole("Dashboard Database Stream Online.", "success");
             
-            // If new_tools.json is empty, fallback to master tools for Featured Carousel
-            if(!dashboardDbList || dashboardDbList.length === 0) {
-                renderCarouselLayout(allTools.slice(0, 6), 'featured');
-            } else {
-                filterByRelease('featured');
-            }
+            dashboardDbList = await res.json();
+            logToConsole("Dashboard Stream Online. Total records: " + dashboardDbList.length, "success");
+            
+            filterByRelease('featured');
         } catch(e) { 
-            logToConsole("Dashboard Stream Offline. Rendering fallback featured.", "warn"); 
-            renderCarouselLayout(allTools.slice(0, 6), 'featured');
+            logToConsole("Dashboard Stream Offline. Rendering fallback featured carousel.", "warn"); 
+            if(allTools && allTools.length > 0) {
+                renderCarouselLayout(allTools.slice(0, 6), 'featured');
+            }
         }
     }
 
     function filterByRelease(timeline) {
-        document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
+        const relDropdown = document.getElementById('releaseDropdown');
+        if(relDropdown) relDropdown.innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
+        
         const currentTime = new Date().getTime();
 
         if (timeline === 'featured') {
             let activeFeatured = dashboardDbList.filter(tool => {
-                if (tool.isFeatured === false) return false;
+                if (tool.isFeatured !== true) return false;
                 if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
                 if (!tool.expireTimestamp) return true;
                 return currentTime < tool.expireTimestamp;
             });
             
-            // Fallback if no specific featured item found
             if(activeFeatured.length === 0 && allTools.length > 0) {
                 activeFeatured = allTools.slice(0, 6);
             }
@@ -696,6 +754,7 @@
 
     function renderCarouselLayout(list, mode) {
         const inner = document.getElementById('unifiedCarouselInner');
+        if(!inner) return;
         inner.innerHTML = '';
 
         if (!list || list.length === 0) {
@@ -719,7 +778,7 @@
                                     <span class="featured-badge-tag">${escapeHTML(tool.badge || 'PRO')}</span>
                                     <div class="text-start">
                                         <div class="d-flex align-items-center gap-2 mb-2">
-                                            <img src="${escapeHTML(logo)}" class="rounded bg-black p-1" style="width:28px; height:28px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                            <img src="${escapeHTML(logo)}" class="rounded bg-black p-1" style="width:28px; height:28px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}'">
                                             <h6 class="m-0 text-truncate font-bold" style="font-size:12px; color: var(--title-color);">${escapeHTML(tool.name)}</h6>
                                         </div>
                                         <p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${escapeHTML(tool.description || tool.short_description || 'Verified sponsor framework node.')}</p>
@@ -744,7 +803,7 @@
                         <div class="col-4 col-md-2 text-center">
                             <a href="${escapeHTML(targetLink)}" target="_blank" class="text-decoration-none d-block mx-auto" style="max-width:70px;">
                                 <div class="mini-release-circle">
-                                    <img src="${escapeHTML(logo)}" class="mini-release-img" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                    <img src="${escapeHTML(logo)}" class="mini-release-img" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}'">
                                 </div>
                                 <p class="carousel-tool-name text-center mt-1">${escapeHTML(tool.name)}</p>
                             </a>
@@ -768,6 +827,7 @@
 
     function renderNextBatch() {
         const grid = document.getElementById('toolsGrid');
+        if(!grid) return;
         const batch = filteredTools.slice(offset, offset + limit);
 
         if (batch.length === 0 && offset === 0) {
@@ -809,56 +869,92 @@
 
         grid.insertAdjacentHTML('beforeend', htmlChunk);
         offset += limit;
-        document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
+        
+        const loadMoreContainer = document.getElementById('loadMoreContainer');
+        if(loadMoreContainer) loadMoreContainer.classList.toggle('d-none', offset >= filteredTools.length);
     }
 
+    // 🔍 6. Advanced Smart Real-Time Search Engine
     function performSearch() {
         const query = currentSearchQuery;
         offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
+        const grid = document.getElementById('toolsGrid');
+        if(grid) grid.innerHTML = '';
         const carouselZone = document.getElementById('dynamicCarouselZone');
 
         if (query === "") {
-            clearSearchBtnEl.style.display = 'none';
-            searchWrapperEl.classList.remove('has-content');
-            carouselZone.classList.remove('d-none');
+            if(clearSearchBtnEl) clearSearchBtnEl.style.display = 'none';
+            if(searchWrapperEl) searchWrapperEl.classList.remove('has-content');
+            if(carouselZone) carouselZone.classList.remove('d-none');
             applyGlobalFilters();
             return;
         }
 
-        clearSearchBtnEl.style.display = 'block';
-        searchWrapperEl.classList.add('has-content');
-        carouselZone.classList.add('d-none');
+        if(clearSearchBtnEl) clearSearchBtnEl.style.display = 'block';
+        if(searchWrapperEl) searchWrapperEl.classList.add('has-content');
+        if(carouselZone) carouselZone.classList.add('d-none');
+
+        let dictionaryKeywords = [];
+        for (const key in dictionary) {
+            if (query.includes(key) || key.includes(query)) {
+                dictionaryKeywords = dictionaryKeywords.concat(dictionary[key]);
+            }
+        }
+
+        const queryWords = query.split(/\s+/);
 
         filteredTools = allTools.filter(tool => {
-            return tool.name.toLowerCase().includes(query) || 
-                   tool.short_description.toLowerCase().includes(query) || 
-                   tool.task.toLowerCase().includes(query);
+            const name = (tool.name || '').toLowerCase();
+            const desc = (tool.short_description || '').toLowerCase();
+            const task = (tool.task || '').toLowerCase();
+
+            // 1. Direct Search Match
+            let isMatch = name.includes(query) || desc.includes(query) || task.includes(query);
+
+            // 2. Dictionary Synonym Match
+            if (!isMatch && dictionaryKeywords.length > 0) {
+                isMatch = dictionaryKeywords.some(kw => name.includes(kw) || desc.includes(kw));
+            }
+
+            // 3. Multi-word Token Matching
+            if (!isMatch) {
+                isMatch = queryWords.every(word => name.includes(word) || desc.includes(word) || task.includes(word));
+            }
+
+            if (currentCategory === 'All') return isMatch;
+            return isMatch && task.toLowerCase().includes(currentCategory.replace('_', ' ').toLowerCase());
         });
 
         renderNextBatch();
     }
 
-    searchInputEl.addEventListener('input', function(e) {
-        currentSearchQuery = e.target.value.toLowerCase().trim();
-        performSearch();
-    });
+    if(searchInputEl) {
+        searchInputEl.addEventListener('input', function(e) {
+            currentSearchQuery = e.target.value.toLowerCase().trim();
+            performSearch();
+        });
+    }
 
     function clearSearchField() {
-        searchInputEl.value = "";
+        if(searchInputEl) searchInputEl.value = "";
         currentSearchQuery = "";
-        clearSearchBtnEl.style.display = 'none';
-        searchWrapperEl.classList.remove('has-content');
-        document.getElementById('dynamicCarouselZone').classList.remove('d-none');
+        if(clearSearchBtnEl) clearSearchBtnEl.style.display = 'none';
+        if(searchWrapperEl) searchWrapperEl.classList.remove('has-content');
+        
+        const carouselZone = document.getElementById('dynamicCarouselZone');
+        if(carouselZone) carouselZone.classList.remove('d-none');
+        
         offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
+        const grid = document.getElementById('toolsGrid');
+        if(grid) grid.innerHTML = '';
         applyGlobalFilters();
     }
 
     function filterByCategory(category) {
         currentCategory = category;
         offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
+        const grid = document.getElementById('toolsGrid');
+        if(grid) grid.innerHTML = '';
 
         ['All', 'AI_Agent', 'AI_Swarm', 'Local_AI'].forEach(cat => {
             const btn = document.getElementById(`btn-${cat}`);
@@ -878,24 +974,20 @@
         renderNextBatch();
     }
 
+    // 🔑 Admin Security Workspace Panel
     function unlockAdminPanel() {
         const state = document.getElementById('adminAccessState');
         const lockMessage = document.getElementById('adminLockedState');
 
-        if(!state.classList.contains('d-none')) return; 
+        if(state && !state.classList.contains('d-none')) return; 
 
         const pin = prompt("Enter Master Admin Security Key [PIN]:");
         if (pin === "2026") {
-            state.classList.remove('d-none');
-            lockMessage.classList.add('d-none');
+            if(state) state.classList.remove('d-none');
+            if(lockMessage) lockMessage.classList.add('d-none');
             logToConsole("Admin terminal workspace unlocked successfully.", "success");
         } else {
             alert("🚨 Access Violation: Security pin code mismatch!");
-            const devTab = document.getElementById('dev-tab');
-            if (devTab) {
-                const tabInstance = bootstrap.Tab.getInstance(devTab) || new bootstrap.Tab(devTab);
-                tabInstance.show();
-            }
         }
     }
 
@@ -932,15 +1024,15 @@
         };
 
         alert("Generated Admin Database Object:\n\n" + JSON.stringify(masterOutput, null, 2));
-        console.log(masterOutput);
     }
 
     function clearAdminFields() {
-        document.getElementById('admName').value = '';
-        document.getElementById('admLink').value = '';
-        document.getElementById('admDesc').value = '';
+        if(document.getElementById('admName')) document.getElementById('admName').value = '';
+        if(document.getElementById('admLink')) document.getElementById('admLink').value = '';
+        if(document.getElementById('admDesc')) document.getElementById('admDesc').value = '';
     }
 
+    // 🎤 Voice Search Engine
     function startVoiceSearch() {
         const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
         if (!SpeechRecognition) {
@@ -954,31 +1046,32 @@
         recognition.interimResults = false;
         recognition.maxAlternatives = 1;
 
-        voiceBtn.classList.add('recording');
+        if(voiceBtn) voiceBtn.classList.add('recording');
 
         recognition.start();
 
         recognition.onresult = function(e) {
             const transcript = e.results[0][0].transcript;
-            searchInputEl.value = transcript;
+            if(searchInputEl) searchInputEl.value = transcript;
             currentSearchQuery = transcript.toLowerCase().trim();
             performSearch();
         };
 
         recognition.onspeechend = function() { 
             recognition.stop(); 
-            voiceBtn.classList.remove('recording');
+            if(voiceBtn) voiceBtn.classList.remove('recording');
         };
 
         recognition.onerror = function(event) { 
-            voiceBtn.classList.remove('recording');
+            if(voiceBtn) voiceBtn.classList.remove('recording');
             logToConsole("Voice recognition error: " + event.error, "error");
         };
     }
 
     function openConsoleModal() {
         if(allTools.length > 0) {
-            document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes";
+            const consoleCnt = document.getElementById('consoleTotalCount');
+            if(consoleCnt) consoleCnt.innerText = allTools.length.toLocaleString() + " nodes";
         }
         const logDiv = document.getElementById('consoleLogs');
         if(logDiv) {
@@ -989,19 +1082,25 @@
 
     function openModal(id) {
         const content = legalData[id] || 'Operational log details online.';
-        document.getElementById('modalContent').innerHTML = content;
-        var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay'));
-        legalModal.show();
+        const mContent = document.getElementById('modalContent');
+        if(mContent) mContent.innerHTML = content;
+        
+        const overlay = document.getElementById('modalOverlay');
+        if(overlay && window.bootstrap) {
+            var legalModal = new bootstrap.Modal(overlay);
+            legalModal.show();
+        }
     }
 
     const legalData = {
-        aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 47,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide. Powered by structured data streaming architectures, we enable real-time discovery of next-gen AI swarms and frameworks effortlessly.</p>`,
+        aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 47,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide.</p>`,
         privacyModal: `<h6>Privacy Operational Policy</h6><p>allalo AI operates as an open decentralized directory. We do not aggregate user token trackers or cookies cache logs client-side. All pipeline request sequences secure end-to-end encryption protocols seamlessly.</p>`,
         termsModal: `<h6>Terms of Indexing Service</h6><p>Operational access granted specifically for validated indexing clusters. Unauthorized automated repository crawling vectors without secure endpoint keys are limited to structural bandwidth filters.</p>`,
         contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
     };
 
-    document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if(loadMoreBtn) loadMoreBtn.addEventListener('click', renderNextBatch);
 
     document.addEventListener("DOMContentLoaded", function() {
         loadMegaDatabase();
