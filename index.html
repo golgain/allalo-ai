@@ -249,34 +249,7 @@
         }
 
         .form-control::placeholder, .form-select::placeholder, textarea::placeholder { color: #94a3b8 !important; opacity: 1 !important; }
-    /* 📱 Mobile Console Responsive Fixes */
-.console-terminal {
-    background-color: #020617;
-    border: 1px solid #1e293b;
-    border-radius: 8px;
-    padding: 12px;
-    height: 140px;
-    overflow-y: auto;
-    font-family: monospace;
-    font-size: 11px;
-    line-height: 1.5;
-    color: #cbd5e1;
-    word-break: break-word; /* 🟢 Prevents long lines overflow */
-}
-
-.modal-body .bg-black {
-    overflow: hidden; /* 🟢 Prevents text bleeding out of boxes */
-}
-
-/* 🟢 Fixed badge text wrapping issue in mobile view */
-.badge-status-fix {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 100%;
-}
-	</style>
+    </style>
 <base target="_blank">
 </head>
 <body>
@@ -527,302 +500,603 @@
 
     <!-- Core Database Control Engine Script Nodes -->
     <script>
-    // ✅ jsDelivr CDN link & fixed typos
-    const MASTER_URLS = [
-        'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_ag_25k.json', 
-        'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_3k.json', 
-        'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/ai_to_19k.json'
-    ];
+        const MASTER_URLS = [
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_ag_25k.json', 
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/ai_to_3k.json', 
+            'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/AIToolsList.json'
+        ];
 
-    const NEW_DASHBOARD_DB_URL = 'https://cdn.jsdelivr.net/gh/golgain/allalo-ai@main/new_tools.json';
+        const NEW_DASHBOARD_DB_URL = 'https://raw.githubusercontent.com/golgain/allalo-ai/refs/heads/main/new_tools.json';
 
-    let allTools = [];
-    let filteredTools = [];
-    let dashboardDbList = [];
+        let allTools = [];
+        let filteredTools = [];
+        let dashboardDbList = [];
 
-    let currentCategory = 'All';
-    let currentSearchQuery = '';
-    let limit = 30;
-    let offset = 0;
-    let consoleLogStorage = [];
+        let currentCategory = 'All';
+        let currentSearchQuery = '';
+        let limit = 30;
+        let offset = 0;
+        let consoleLogStorage = [];
 
-    const searchInputEl = document.getElementById('searchInput');
-    const searchWrapperEl = document.getElementById('searchWrapper');
-    const clearSearchBtnEl = document.getElementById('clearSearchBtn');
+        const superstarTools = ["chatgpt", "midjourney", "claude", "sora", "devin", "crewai", "bolt.new", "perplexity", "ollama", "lm studio", "autogen"];
 
-    function escapeHTML(str) {
-        if (!str) return '';
-        return str.replace(/[&<>"']/g, function(m) {
-            return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+        const searchDictionary = {
+            "ai agent": ["devin", "bolt.new", "crewai", "autogen", "agentops", "agent", "autonomous", "swarm", "multi-agent"],
+            "ai swarm": ["crewai", "autogen", "swarm", "chatdev", "multi-agent", "coordination"],
+            "local ai": ["ollama", "lm studio", "llama.cpp", "jan", "anythingllm", "offline", "private", "local", "edge"],
+            "audio maker": ["audio", "music", "voice", "speech", "sound", "song", "suno", "udio", "tts", "clone"],
+            "audio generator": ["audio", "sound", "voice", "speech", "tts", "podcast"],
+            "music generator": ["music", "song", "suno", "udio", "track", "beat", "melody"],
+            "voice generator": ["voice", "tts", "text to speech", "elevenlabs", "clone"],
+            "video maker": ["video", "anim", "movie", "clip", "sora", "runway", "pika", "avatar", "generator"],
+            "video generator": ["video", "generate", "sora", "runway", "pika", "luma", "kling"],
+            "writer": ["write", "writer", "script", "content", "blog", "text", "article", "seo", "essay"],
+            "script writer": ["script", "youtube script", "video script", "viral", "hook"],
+            "image generator": ["image", "art", "photo", "midjourney", "dall-e", "stable diffusion", "flux", "draw"],
+            "logo maker": ["logo", "brand", "design", "vector", "icon"],
+            "coding": ["code", "coder", "programming", "github", "copilot", "html", "css", "js", "python"],
+            "website builder": ["website", "build", "landing page", "wordpress", "framer", "v0", "bolt"]
+        };
+
+        const searchInputEl = document.getElementById('searchInput');
+        const searchWrapperEl = document.getElementById('searchWrapper');
+        const clearSearchBtnEl = document.getElementById('clearSearchBtn');
+
+        // ✅ XSS Protection Utility
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>"']/g, function(m) {
+                return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m];
+            });
+        }
+
+        // ✅ URL Sanitizer — blocks javascript:, data:, vbscript: protocols
+        function sanitizeUrl(url) {
+            if (!url) return '';
+            const trimmed = url.trim();
+            if (!trimmed || trimmed === '#' || trimmed === 'https://aitoolbuzz.com' || trimmed === 'https://aitoolbuzz.com/') return '';
+            if (trimmed.includes('aitoolbuzz.com/assets')) return '';
+
+            const lower = trimmed.toLowerCase();
+            if (lower.startsWith('javascript:') || lower.startsWith('data:') || lower.startsWith('vbscript:') || lower.startsWith('file:')) {
+                return '';
+            }
+            return trimmed;
+        }
+
+        // ☀️ Theme Mode Toggle Controller
+        function toggleThemeMode() {
+            document.body.classList.toggle('light-mode');
+            const btn = document.getElementById('themeToggleBtn');
+            if(document.body.classList.contains('light-mode')) {
+                btn.innerText = "☀️ Light";
+            } else {
+                btn.innerText = "🌙 Dark";
+            }
+        }
+
+        searchInputEl.addEventListener('focus', () => {
+            searchWrapperEl.classList.add('focused');
         });
-    }
 
-    function sanitizeUrl(url) {
-        if (!url) return '';
-        const trimmed = url.trim();
-        if (!trimmed || trimmed === '#' || trimmed.includes('aitoolbuzz.com')) return '';
-        const lower = trimmed.toLowerCase();
-        if (lower.startsWith('javascript:') || lower.startsWith('data:')) return '';
-        return trimmed;
-    }
+        document.addEventListener('click', (e) => {
+            if (!searchWrapperEl.contains(e.target)) {
+                searchWrapperEl.classList.remove('focused');
+            }
+        });
 
-    function toggleThemeMode() {
-        document.body.classList.toggle('light-mode');
-        const btn = document.getElementById('themeToggleBtn');
-        btn.innerText = document.body.classList.contains('light-mode') ? "☀️ Light" : "🌙 Dark";
-    }
+        function logToConsole(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            let colorClass = 'text-secondary';
+            if (type === 'success') colorClass = 'text-success fw-bold';
+            if (type === 'warn') colorClass = 'text-warning';
+            if (type === 'error') colorClass = 'text-danger fw-bold';
+            consoleLogStorage.push(`<div class="${colorClass}">[${timestamp}] ${escapeHTML(message)}</div>`);
 
-    function logToConsole(message, type = 'info') {
-        const timestamp = new Date().toLocaleTimeString();
-        let colorClass = 'text-secondary';
-        if (type === 'success') colorClass = 'text-success fw-bold';
-        if (type === 'warn') colorClass = 'text-warning';
-        if (type === 'error') colorClass = 'text-danger fw-bold';
-        consoleLogStorage.push(`<div class="${colorClass}">[${timestamp}] ${escapeHTML(message)}</div>`);
-
-        const logDiv = document.getElementById('consoleLogs');
-        if(logDiv) {
-            logDiv.innerHTML = consoleLogStorage.join('');
-            logDiv.scrollTop = logDiv.scrollHeight;
+            const logDiv = document.getElementById('consoleLogs');
+            if(logDiv) {
+                logDiv.innerHTML = consoleLogStorage.join('');
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
         }
-    }
 
-    function updateProgressBar(percentage) {
-        const bar = document.getElementById('indexingBar');
-        const txt = document.getElementById('progressPercent');
-        if(bar && txt) {
-            bar.style.width = percentage + '%';
-            txt.innerText = percentage + '%';
+        function updateProgressBar(percentage) {
+            const bar = document.getElementById('indexingBar');
+            const txt = document.getElementById('progressPercent');
+            if(bar && txt) {
+                bar.style.width = percentage + '%';
+                txt.innerText = percentage + '%';
+            }
         }
-    }
 
-    // ⚡ Fast & Non-Blocking Data Loader Engine
-    async function loadMegaDatabase() {
-        try {
-            updateProgressBar(15);
-            logToConsole("Initializing Software Engine Core Panel...", "info");
-            
-            fetchDashboardDatabase(); // Non-blocking async load
+        async function loadMegaDatabase() {
+            try {
+                updateProgressBar(15);
+                logToConsole("Initializing Software Engine Core Panel...", "info");
+                await fetchDashboardDatabase();
+                updateProgressBar(40);
 
-            let combinedTools = [];
+                let combinedTools = [];
 
-            for (let idx = 0; idx < MASTER_URLS.length; idx++) {
-                try {
-                    const response = await fetch(MASTER_URLS[idx]);
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    const jsonData = await response.json();
-                    
-                    if (Array.isArray(jsonData)) {
-                        for (let i = 0; i < jsonData.length; i++) {
-                            let tool = jsonData[i];
-                            if (!tool) continue;
-                            
-                            combinedTools.push({
-                                name: tool.name || (tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool'),
-                                link: sanitizeUrl(tool.website || tool.link),
-                                logo: tool.logo || '',
-                                status: tool.status || 'Active',
-                                task: tool.task || tool.category || 'General AI',
-                                short_description: tool.shortDescription || tool.short_description || tool.description || 'Autonomous Framework Node.'
-                            });
-                        }
-                        
-                        let progressStep = 40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55);
-                        updateProgressBar(progressStep);
-                        logToConsole(`Dataset Stack ${idx + 1} Synchronized.`, "success");
+                dashboardDbList.forEach(tool => {
+                    let isExpiredFeatured = false;
+                    if(tool.isFeatured && tool.expireTimestamp) {
+                        isExpiredFeatured = new Date().getTime() >= tool.expireTimestamp;
                     }
-                } catch(e) { 
-                    logToConsole(`Data Pipe ${idx + 1} fault: ` + e.message, "warn"); 
+
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return;
+
+                    combinedTools.push({
+                        name: tool.name || 'AI Tool',
+                        link: sanitizeUrl(tool.link),
+                        logo: tool.logo || '',
+                        status: (tool.isFeatured && !isExpiredFeatured) ? 'Featured' : 'Active',
+                        task: tool.category || 'General AI',
+                        short_description: tool.description || 'Advanced AI Module.'
+                    });
+                });
+
+                for (let idx = 0; idx < MASTER_URLS.length; idx++) {
+                    try {
+                        const response = await fetch(MASTER_URLS[idx]);
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        const jsonData = await response.json();
+                        if (Array.isArray(jsonData)) {
+                            const mapped = jsonData.map(tool => {
+                                if (!tool) return null;
+                                if (tool.handle || (tool.description && !tool.name && !tool.shortDescription)) {
+                                    return {
+                                        name: tool.handle ? tool.handle.replace(/-/g, ' ').toUpperCase() : 'AI Tool',
+                                        link: sanitizeUrl(tool.website), logo: "", status: 'Active', task: 'General AI', short_description: tool.description || 'Advanced System Node.'
+                                    };
+                                }
+                                return {
+                                    name: tool.name || 'AI Tool',
+                                    link: sanitizeUrl(tool.website || tool.link),
+                                    logo: tool.logo || '', status: tool.status || 'Active',
+                                    task: tool.task || tool.category || 'General AI',
+                                    short_description: tool.shortDescription || tool.short_description || 'Autonomous Framework Node.'
+                                };
+                            });
+                            combinedTools = combinedTools.concat(mapped);
+                            let progressStep = 40 + Math.floor(((idx + 1) / MASTER_URLS.length) * 55);
+                            updateProgressBar(progressStep);
+                            logToConsole("Dataset Pipeline Stack Synchronized.", "success");
+                        }
+                    } catch(e) { 
+                        logToConsole("Data Pipe fault bypassed safely: " + e.message, "warn"); 
+                    }
+                }
+
+                // ✅ FIX: Null-safe duplicate removal — prevents crash on null entries
+                allTools = combinedTools.filter((v, i, a) => {
+                    if (!v || !v.name) return false;
+                    return a.findIndex(t => t && t.name && t.name.toLowerCase().trim() === v.name.toLowerCase().trim()) === i;
+                });
+
+                allTools.sort((a, b) => {
+                    const bIsSuper = superstarTools.some(t => b.name.toLowerCase().includes(t)) ? 1 : 0;
+                    const aIsSuper = superstarTools.some(t => a.name.toLowerCase().includes(t)) ? 1 : 0;
+                    return bIsSuper - aIsSuper;
+                });
+
+                filteredTools = [...allTools];
+                document.getElementById('loading').classList.add('d-none');
+                document.getElementById('toolsGrid').classList.remove('d-none');
+
+                document.getElementById('topCounter').innerText = allTools.length.toLocaleString() + "+";
+                calculateCategoryCounts();
+
+                const countDiv = document.getElementById('consoleTotalCount');
+                if(countDiv) countDiv.innerText = allTools.length.toLocaleString() + " nodes";
+
+                updateProgressBar(100);
+                renderNextBatch();
+            } catch(err) {
+                logToConsole("Critical operational failure: " + err.message, "error");
+                document.getElementById('loading').innerHTML = `<span class="text-danger">[ERROR]: Operational Mapping Fault. Check console.</span>`;
+            }
+        }
+
+        function calculateCategoryCounts() {
+            document.getElementById('cnt-all').innerText = `(${allTools.length.toLocaleString()})`;
+
+            const agentCount = allTools.filter(t => t.task.toLowerCase().includes('agent')).length;
+            document.getElementById('cnt-agent').innerText = `(${agentCount.toLocaleString()})`;
+
+            const swarmCount = allTools.filter(t => t.task.toLowerCase().includes('swarm')).length;
+            document.getElementById('cnt-swarm').innerText = `(${swarmCount.toLocaleString()})`;
+
+            const localCount = allTools.filter(t => t.task.toLowerCase().includes('local')).length;
+            document.getElementById('cnt-local').innerText = `(${localCount.toLocaleString()})`;
+        }
+
+        async function fetchDashboardDatabase() {
+            try {
+                const res = await fetch(NEW_DASHBOARD_DB_URL);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                dashboardDbList = await res.json();
+                logToConsole("Dashboard Database Online.", "success");
+                filterByRelease('featured');
+            } catch(e) { 
+                logToConsole("Dashboard Database Stream offline.", "warn"); 
+                renderCarouselLayout(null, 'featured');
+            }
+        }
+
+        function filterByRelease(timeline) {
+            document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
+            const currentTime = new Date().getTime();
+
+            if (timeline === 'featured') {
+                let activeFeatured = dashboardDbList.filter(tool => {
+                    if (!tool.isFeatured) return false;
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
+                    if (!tool.expireTimestamp) return true;
+                    return currentTime < tool.expireTimestamp;
+                });
+                renderCarouselLayout(activeFeatured, 'featured');
+            } else {
+                let activeReleases = dashboardDbList.filter(tool => {
+                    if (!tool.releaseDate) return false;
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
+                    const rDate = new Date(tool.releaseDate);
+                    const diffDays = Math.ceil(Math.abs(new Date() - rDate) / (1000 * 60 * 60 * 24));
+
+                    if (timeline === 'today') return diffDays <= 1;
+                    if (timeline === 'week') return diffDays <= 7;
+                    if (timeline === 'month') return diffDays <= 30;
+                    if (timeline === 'year') return diffDays <= 365;
+                    return true;
+                });
+                renderCarouselLayout(activeReleases, 'logos');
+            }
+        }
+
+        function renderCarouselLayout(list, mode) {
+            const inner = document.getElementById('unifiedCarouselInner');
+            inner.innerHTML = '';
+
+            if (!list || list.length === 0) {
+                inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: No active parameters stored.</div>`;
+                return;
+            }
+
+            if (mode === 'featured') {
+                for (let i = 0; i < list.length; i += 3) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 3);
+
+                    let cardsHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = sanitizeUrl(tool.link) || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        cardsHtml += `
+                            <div class="col-12 col-md-4">
+                                <a href="${escapeHTML(targetLink)}" target="_blank" class="app-card-anchor">
+                                    <div class="app-card featured-card-style">
+                                        <span class="featured-badge-tag">${escapeHTML(tool.badge || 'PRO')}</span>
+                                        <div class="text-start">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <img src="${escapeHTML(logo)}" class="rounded bg-black p-1" style="width:28px; height:28px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                                <h6 class="m-0 text-truncate font-bold" style="font-size:12px; color: var(--title-color);">${escapeHTML(tool.name)}</h6>
+                                            </div>
+                                            <p class="text-secondary line-clamp-2 m-0" style="font-size:11px;">${escapeHTML(tool.description || 'Verified sponsor framework node.')}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${activeClass}"><div class="row g-2">${cardsHtml}</div></div>`);
+                }
+            } else {
+                for (let i = 0; i < list.length; i += 6) {
+                    const activeClass = i === 0 ? 'active' : '';
+                    const chunk = list.slice(i, i + 6);
+
+                    let logosHtml = '';
+                    chunk.forEach(tool => {
+                        let targetLink = sanitizeUrl(tool.link) || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
+                        let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
+                        logosHtml += `
+                            <div class="col-4 col-md-2 text-center">
+                                <a href="${escapeHTML(targetLink)}" target="_blank" class="text-decoration-none d-block mx-auto" style="max-width:70px;">
+                                    <div class="mini-release-circle">
+                                        <img src="${escapeHTML(logo)}" class="mini-release-img" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=allalo.com'">
+                                    </div>
+                                    <p class="carousel-tool-name text-center mt-1">${escapeHTML(tool.name)}</p>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    inner.insertAdjacentHTML('beforeend', `
+                        <div class="carousel-item ${activeClass}">
+                            <div class="row g-2 align-items-center py-3 bg-dark bg-opacity-10 border border-secondary border-opacity-10 rounded-4">${logosHtml}</div>
+                        </div>`
+                    );
                 }
             }
 
-            // Fast Map-based Deduplication (Removes Freezing Issue)
-            const uniqueMap = new Map();
-            combinedTools.forEach(item => {
-                const key = item.name.toLowerCase().trim();
-                if (!uniqueMap.has(key)) {
-                    uniqueMap.set(key, item);
+            const carouselEl = document.getElementById('unifiedCarousel');
+            const carouselObj = bootstrap.Carousel.getOrCreateInstance(carouselEl);
+            carouselObj.to(0);
+        }
+
+        function renderNextBatch() {
+            const grid = document.getElementById('toolsGrid');
+            const batch = filteredTools.slice(offset, offset + limit);
+
+            if (batch.length === 0 && offset === 0) {
+                grid.innerHTML = `<div class="col-12 text-center text-muted font-mono py-5">No metrics matching query nodes found inside master matrix.</div>`;
+                return;
+            }
+
+            batch.forEach(tool => {
+                let toolUrl = tool.link ? tool.link.trim() : '';
+                if (!toolUrl) {
+                    toolUrl = `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
                 }
+
+                let primaryLogo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
+                let isFeaturedStyle = tool.status === 'Featured' ? 'featured-card-style' : '';
+                let isFeaturedBadge = tool.status === 'Featured' 
+                    ? `<span class="featured-badge-tag">FEATURED</span>` 
+                    : `<span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${escapeHTML(tool.status)}</span>`;
+
+                const card = `
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="${escapeHTML(toolUrl)}" target="_blank" class="app-card-anchor">
+                            <div class="app-card ${isFeaturedStyle}">
+                                <div class="text-start w-100">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <img src="${escapeHTML(primaryLogo)}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
+                                        ${isFeaturedBadge}
+                                    </div>
+                                    <h6 class="font-bold text-truncate m-0" style="font-size:13px; color: var(--title-color);">${escapeHTML(tool.name)}</h6>
+                                    <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${escapeHTML(tool.task)}</span>
+                                    <p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${escapeHTML(tool.short_description)}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', card);
             });
 
-            allTools = Array.from(uniqueMap.values());
-            filteredTools = [...allTools];
+            offset += limit;
+            document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
+        }
 
-            document.getElementById('loading').classList.add('d-none');
-            document.getElementById('toolsGrid').classList.remove('d-none');
-            document.getElementById('topCounter').innerText = allTools.length.toLocaleString() + "+";
+        // 🧠 Fixed Short Keyword Matrix Fallback + Category Sync
+        function performSearch() {
+            const query = currentSearchQuery;
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
+            const carouselZone = document.getElementById('dynamicCarouselZone');
 
-            const countDiv = document.getElementById('consoleTotalCount');
-            if(countDiv) countDiv.innerText = allTools.length.toLocaleString() + " nodes";
+            if (query === "") {
+                clearSearchBtnEl.style.display = 'none';
+                searchWrapperEl.classList.remove('has-content');
+                carouselZone.classList.remove('d-none');
+                applyGlobalFilters();
+                return;
+            }
 
-            updateProgressBar(100);
+            clearSearchBtnEl.style.display = 'block';
+            searchWrapperEl.classList.add('has-content');
+            carouselZone.classList.add('d-none');
+
+            let dictionaryKeywords = [];
+            // If user types exactly 'ai', bypass dictionary matrix mapping to protect index leakage
+            if (query !== "ai" && query.length > 2) {
+                for (const key in searchDictionary) {
+                    if (query.includes(key) || key.includes(query)) {
+                        dictionaryKeywords = dictionaryKeywords.concat(searchDictionary[key]);
+                    }
+                }
+            }
+
+            const queryWords = query.split(/\s+/).filter(w => w !== "");
+
+            filteredTools = allTools.filter(tool => {
+                const name = tool.name.toLowerCase();
+                const desc = tool.short_description.toLowerCase();
+                const task = tool.task.toLowerCase();
+
+                let isMatch = name.includes(query) || desc.includes(query) || task.includes(query);
+
+                if (!isMatch && dictionaryKeywords.length > 0) {
+                    isMatch = dictionaryKeywords.some(kw => name.includes(kw) || desc.includes(kw) || task.includes(kw));
+                }
+
+                if (!isMatch && queryWords.length > 0) {
+                    isMatch = queryWords.every(word => name.includes(word) || desc.includes(word) || task.includes(word));
+                }
+
+                return isMatch;
+            });
+
+            if (currentCategory !== 'All') {
+                filteredTools = filteredTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
+            }
             renderNextBatch();
-            
-            // Calculate counts in background
-            setTimeout(calculateCategoryCounts, 100);
-
-        } catch(err) {
-            logToConsole("Critical operational failure: " + err.message, "error");
-            document.getElementById('loading').innerHTML = `<span class="text-danger">[ERROR]: Operational Mapping Fault. Check console.</span>`;
-        }
-    }
-
-    function calculateCategoryCounts() {
-        document.getElementById('cnt-all').innerText = `(${allTools.length.toLocaleString()})`;
-        let agent = 0, swarm = 0, local = 0;
-
-        for (let i = 0; i < allTools.length; i++) {
-            let task = allTools[i].task.toLowerCase();
-            if (task.includes('agent')) agent++;
-            if (task.includes('swarm')) swarm++;
-            if (task.includes('local')) local++;
         }
 
-        document.getElementById('cnt-agent').innerText = `(${agent.toLocaleString()})`;
-        document.getElementById('cnt-swarm').innerText = `(${swarm.toLocaleString()})`;
-        document.getElementById('cnt-local').innerText = `(${local.toLocaleString()})`;
-    }
-
-    async function fetchDashboardDatabase() {
-        try {
-            const res = await fetch(NEW_DASHBOARD_DB_URL);
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            dashboardDbList = await res.json();
-            logToConsole("Dashboard Database Online.", "success");
-            filterByRelease('featured');
-        } catch(e) { 
-            logToConsole("Dashboard Database Stream offline.", "warn"); 
-            renderCarouselLayout([], 'featured');
-        }
-    }
-
-    function filterByRelease(timeline) {
-        document.getElementById('releaseDropdown').innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
-        const currentTime = new Date().getTime();
-
-        if (timeline === 'featured') {
-            let activeFeatured = dashboardDbList.filter(tool => tool.isFeatured && (!tool.expireTimestamp || currentTime < tool.expireTimestamp));
-            renderCarouselLayout(activeFeatured, 'featured');
-        } else {
-            renderCarouselLayout([], 'logos');
-        }
-    }
-
-    function renderCarouselLayout(list, mode) {
-        const inner = document.getElementById('unifiedCarouselInner');
-        if (!list || list.length === 0) {
-            inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: No active parameters stored.</div>`;
-            return;
-        }
-        inner.innerHTML = '';
-        // Carousel Render Code...
-    }
-
-    function renderNextBatch() {
-        const grid = document.getElementById('toolsGrid');
-        const batch = filteredTools.slice(offset, offset + limit);
-
-        if (batch.length === 0 && offset === 0) {
-            grid.innerHTML = `<div class="col-12 text-center text-muted font-mono py-5">No metrics matching query nodes found inside master matrix.</div>`;
-            return;
-        }
-
-        let htmlChunk = '';
-        batch.forEach(tool => {
-            let toolUrl = tool.link || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
-            let primaryLogo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}`;
-            
-            htmlChunk += `
-                <div class="col-12 col-sm-6 col-lg-4">
-                    <a href="${escapeHTML(toolUrl)}" target="_blank" class="app-card-anchor">
-                        <div class="app-card">
-                            <div class="text-start w-100">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <img src="${escapeHTML(primaryLogo)}" class="rounded-2 object-cover bg-black p-1" style="width: 32px; height: 32px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(toolUrl)}'">
-                                    <span class="badge bg-black text-indigo-400 border border-secondary uppercase" style="font-size: 8px;">${escapeHTML(tool.status)}</span>
-                                </div>
-                                <h6 class="font-bold text-truncate m-0" style="font-size:13px; color: var(--title-color);">${escapeHTML(tool.name)}</h6>
-                                <span class="text-secondary font-mono uppercase d-block" style="font-size: 9px;">${escapeHTML(tool.task)}</span>
-                                <p class="text-secondary line-clamp-2 mt-2 m-0" style="font-size: 11px;">${escapeHTML(tool.short_description)}</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            `;
+        searchInputEl.addEventListener('input', function(e) {
+            currentSearchQuery = e.target.value.toLowerCase().trim();
+            performSearch();
         });
 
-        grid.insertAdjacentHTML('beforeend', htmlChunk);
-        offset += limit;
-        document.getElementById('loadMoreContainer').classList.toggle('d-none', offset >= filteredTools.length);
-    }
-
-    function performSearch() {
-        const query = currentSearchQuery;
-        offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
-        const carouselZone = document.getElementById('dynamicCarouselZone');
-
-        if (query === "") {
+        function clearSearchField() {
+            searchInputEl.value = "";
+            currentSearchQuery = "";
             clearSearchBtnEl.style.display = 'none';
             searchWrapperEl.classList.remove('has-content');
-            carouselZone.classList.remove('d-none');
+            document.getElementById('dynamicCarouselZone').classList.remove('d-none');
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
             applyGlobalFilters();
-            return;
         }
 
-        clearSearchBtnEl.style.display = 'block';
-        searchWrapperEl.classList.add('has-content');
-        carouselZone.classList.add('d-none');
+        function filterByCategory(category) {
+            currentCategory = category;
+            offset = 0;
+            document.getElementById('toolsGrid').innerHTML = '';
 
-        filteredTools = allTools.filter(tool => {
-            return tool.name.toLowerCase().includes(query) || 
-                   tool.short_description.toLowerCase().includes(query) || 
-                   tool.task.toLowerCase().includes(query);
-        });
+            ['All', 'AI_Agent', 'AI_Swarm', 'Local_AI'].forEach(cat => {
+                const btn = document.getElementById(`btn-${cat}`);
+                if (btn) btn.classList.toggle('active', cat.replace('_', ' ') === category);
+            });
 
-        renderNextBatch();
-    }
+            // ✅ FIX: Re-apply search filter when category changes
+            if (currentSearchQuery) {
+                performSearch();
+            } else {
+                applyGlobalFilters();
+            }
+        }
 
-    searchInputEl.addEventListener('input', function(e) {
-        currentSearchQuery = e.target.value.toLowerCase().trim();
-        performSearch();
-    });
+        function applyGlobalFilters() {
+            filteredTools = currentCategory === 'All' ? [...allTools] : allTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
+            renderNextBatch();
+        }
 
-    function clearSearchField() {
-        searchInputEl.value = "";
-        currentSearchQuery = "";
-        clearSearchBtnEl.style.display = 'none';
-        searchWrapperEl.classList.remove('has-content');
-        document.getElementById('dynamicCarouselZone').classList.remove('d-none');
-        offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
-        applyGlobalFilters();
-    }
+        function unlockAdminPanel() {
+            const state = document.getElementById('adminAccessState');
+            const lockMessage = document.getElementById('adminLockedState');
 
-    function filterByCategory(category) {
-        currentCategory = category;
-        offset = 0;
-        document.getElementById('toolsGrid').innerHTML = '';
+            if(!state.classList.contains('d-none')) return; 
 
-        ['All', 'AI_Agent', 'AI_Swarm', 'Local_AI'].forEach(cat => {
-            const btn = document.getElementById(`btn-${cat}`);
-            if (btn) btn.classList.toggle('active', cat.replace('_', ' ') === category);
-        });
+            const pin = prompt("Enter Master Admin Security Key [PIN]:");
+            if (pin === "2026") {
+                state.classList.remove('d-none');
+                lockMessage.classList.add('d-none');
+                logToConsole("Admin terminal workspace unlocked successfully.", "success");
+            } else {
+                alert("🚨 Access Violation: Security pin code mismatch!");
+                // ✅ FIX: Safe null check before calling bootstrap.Tab
+                const devTab = document.getElementById('dev-tab');
+                if (devTab) {
+                    const tabInstance = bootstrap.Tab.getInstance(devTab);
+                    if (tabInstance) {
+                        tabInstance.show();
+                    } else {
+                        // Fallback if instance not created yet
+                        const bsTab = new bootstrap.Tab(devTab);
+                        bsTab.show();
+                    }
+                }
+            }
+        }
 
-        applyGlobalFilters();
-    }
+        function generateAdminJson() {
+            const name = document.getElementById('admName').value.trim();
+            const link = document.getElementById('admLink').value.trim();
+            const category = document.getElementById('admCat').value;
+            const lease = document.getElementById('admLease').value;
+            const status = document.getElementById('admStatus').value;
+            const description = document.getElementById('admDesc').value.trim();
 
-    function applyGlobalFilters() {
-        filteredTools = currentCategory === 'All' ? [...allTools] : allTools.filter(t => t.task.toLowerCase().includes(currentCategory.toLowerCase()));
-        renderNextBatch();
-    }
+            if(!name || !link || !description) {
+                alert("Please fill in Name, Link and Description fields before generation.");
+                return;
+            }
 
-    document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
+            let isFeatured = lease !== 'normal';
+            let expireTimestamp = null;
+            if(isFeatured) {
+                expireTimestamp = new Date().getTime() + (parseFloat(lease) * 60 * 60 * 1000);
+            }
 
-    // ✅ DOM Ready Call
-    document.addEventListener("DOMContentLoaded", function() {
+            const masterOutput = {
+                "name": name.toUpperCase(),
+                "link": link,
+                "logo": "",
+                "category": category,
+                "description": description,
+                "releaseDate": new Date().toISOString().split('T')[0],
+                "isFeatured": isFeatured,
+                "expireTimestamp": expireTimestamp,
+                "badge": isFeatured ? "FEATURED" : "ACTIVE",
+                "approvalStatus": status
+            };
+
+            alert("Generated Admin Database Object:\n\n" + JSON.stringify(masterOutput, null, 2));
+            console.log(masterOutput);
+        }
+
+        function clearAdminFields() {
+            document.getElementById('admName').value = '';
+            document.getElementById('admLink').value = '';
+            document.getElementById('admDesc').value = '';
+        }
+
+        function startVoiceSearch() {
+            const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Voice search is not supported in this browser.");
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            const voiceBtn = document.getElementById('voiceBtn');
+
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            // ✅ FIX: Add recording class instead of overwriting innerText (preserves CSS mic icon)
+            voiceBtn.classList.add('recording');
+
+            recognition.start();
+
+            recognition.onresult = function(e) {
+                const transcript = e.results[0][0].transcript;
+                searchInputEl.value = transcript;
+                currentSearchQuery = transcript.toLowerCase().trim();
+                performSearch();
+            };
+
+            recognition.onspeechend = function() { 
+                recognition.stop(); 
+                voiceBtn.classList.remove('recording');
+            };
+
+            recognition.onerror = function(event) { 
+                voiceBtn.classList.remove('recording');
+                logToConsole("Voice recognition error: " + event.error, "error");
+            };
+        }
+
+        function openConsoleModal() {
+            if(allTools.length > 0) {
+                document.getElementById('consoleTotalCount').innerText = allTools.length.toLocaleString() + " nodes";
+            }
+            const logDiv = document.getElementById('consoleLogs');
+            if(logDiv) {
+                logDiv.innerHTML = consoleLogStorage.join('');
+                logDiv.scrollTop = logDiv.scrollHeight;
+            }
+        }
+
+        function openModal(id) {
+            const content = legalData[id] || 'Operational log details online.';
+            document.getElementById('modalContent').innerHTML = content;
+            var legalModal = new bootstrap.Modal(document.getElementById('modalOverlay'));
+            legalModal.show();
+        }
+
+        const legalData = {
+            aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 47,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide. Powered by structured data streaming architectures, we enable real-time discovery of next-gen AI swarms and frameworks effortlessly.</p>`,
+            privacyModal: `<h6>Privacy Operational Policy</h6><p>allalo AI operates as an open decentralized directory. We do not aggregate user token trackers or cookies cache logs client-side. All pipeline request sequences secure end-to-end encryption protocols seamlessly.</p>`,
+            termsModal: `<h6>Terms of Indexing Service</h6><p>Operational access granted specifically for validated indexing clusters. Unauthorized automated repository crawling vectors without secure endpoint keys are limited to structural bandwidth filters.</p>`,
+            contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
+        };
+
+        document.getElementById('loadMoreBtn').addEventListener('click', renderNextBatch);
+
+        // Initialize
         loadMegaDatabase();
-    });
-</script>
+    </script>
 </body>
 </html>
