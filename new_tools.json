@@ -7,7 +7,7 @@
     "description": "Artlist AI is a browser-based creative suite that lets creators generate and edit images, videos, music, and voiceovers in one place.",
     "releaseDate": "2026-07-26",
     "isFeatured": true,
-    "expireTimestamp": 1785000000000,
+    "expireTimestamp": 2000000000000,
     "badge": "FEATURED",
     "approvalStatus": "Approved"
   },
