@@ -1,14 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>47000+ New AI Tools & Apps Today (Free AI Search Engine)</title>
+    <title>21,000+ New AI Tools & Apps Today - allalo AI Search Engine</title>
+    <meta name="description" content="Explore 21,000+ verified AI tools and autonomous agents instantly in our smart mega directory with Google-speed filtering.">
+    <meta name="keywords" content="ai tools list, free ai directory, artificial intelligence apps, ai agents, crewai, ollama, best ai websites, free chatgpt">
+    <meta name="author" content="Jasim Uddin">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#030712"> <!-- Mobile Address Bar Color -->
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://ai.allalo.com/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://ai.allalo.com/favicon.png">
+    <link rel="apple-touch-icon" href="https://ai.allalo.com/favicon.png">
+
+    <!-- Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Facebook / Open Graph Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="allalo AI">
+    <meta property="og:url" content="https://ai.allalo.com/">
+    <meta property="og:title" content="New AI Tools & Apps Today (Free AI Search Engine)">
+    <meta property="og:description" content="Find the best and latest AI tools instantly from our massive, updated database of 21,000+ tools.">
+    <meta property="og:image" content="https://ai.allalo.com/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://ai.allalo.com/">
+    <meta name="twitter:title" content="New AI Tools & Apps Directory - allalo AI">
+    <meta name="twitter:description" content="Search & discover 21,000+ AI tools, agents, and Edge models with lightning response speeds.">
+    <meta name="twitter:image" content="https://ai.allalo.com/og-image.jpg">
+
+    <!-- Advanced Google JSON-LD Schema (WebSite + DataCatalog) [FIXED 21,000+ DATA Sync] -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://ai.allalo.com/#website",
+          "url": "https://ai.allalo.com/",
+          "name": "allalo AI Mega Search Engine",
+          "description": "Explore 21,000+ verified AI tools and autonomous applications instantly.",
+          "potentialAction": [{
+            "@type": "SearchAction",
+            "target": {
+              "@type": "EntryPoint",
+              "urlTemplate": "https://ai.allalo.com/?search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+          }]
+        },
+        {
+          "@type": "DataCatalog",
+          "@id": "https://ai.allalo.com/#datacatalog",
+          "name": "allalo AI Tools Directory",
+          "description": "Comprehensive indexing catalog of 21,000+ AI applications, autonomous swarms, and local models.",
+          "url": "https://ai.allalo.com/"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Performance & CLS Fix CSS -->
+    <style>
+        .featured-carousel-container {
+            min-height: 280px;
+            contain-intrinsic-size: 280px;
+            content-visibility: auto;
+        }
+        .tool-card-grid {
+            min-height: 500px;
+        }
+    </style>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Premium Global Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -249,20 +325,20 @@
 
     <header class="container text-center pt-5 pb-4">
         <div class="d-flex align-items-center justify-content-center gap-3 mb-2">
-            <img src="favicon.svg" alt="allalo AI Logo" class="site-logo" style="width: 54px; height: 54px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=ai.allalo.com'">
+            <img src="favicon.png" alt="allalo AI Logo" class="site-logo" style="width: 54px; height: 54px;" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=ai.allalo.com'">
             <div class="text-start">
                 <h1 class="site-title m-0 tracking-tight">allalo AI</h1>
                 <p class="site-subtitle text-indigo-400 fs-6 font-monospace fw-lighter uppercase m-0">The Ultimate Smart AI Directory</p>
             </div>
         </div>
-        <p class="text-light-muted small">Total AI Tools Indexed: <span class="fw-bold" id="topCounter">47,000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
+        <p class="text-light-muted small">Total AI Tools Indexed: <span class="fw-bold" id="topCounter">21000+</span> | Status: <span class="text-info fw-bold">Live & Active</span></p>
     </header>
 
     <section class="container text-center mb-5">
         <div class="search-root-container" id="searchWrapper">
             <div class="search-input-box">
                 <div class="searchicon"></div>
-                <input type="text" id="searchInput" placeholder="Search 47,000+ AI models, networks or tokens..." class="main-input" autocomplete="off">
+                <input type="text" id="searchInput" placeholder="Search AI tools, agents, workflow or task, categories..." class="main-input" autocomplete="off">
 
                 <button type="button" id="clearSearchBtn" class="clear-search-btn" onclick="clearSearchField()" aria-label="Clear search">✕</button>
 
@@ -492,9 +568,11 @@
 
     let currentCategory = 'All';
     let currentSearchQuery = '';
+    let currentTimelineMode = 'featured'; 
     let limit = 30;
     let offset = 0;
     let consoleLogStorage = [];
+    let resizeTimer = null; // Debounce timer for smooth resize/rotate handling
 
     const superstarTools = ["chatgpt", "midjourney", "claude", "sora", "devin", "crewai", "bolt.new", "perplexity", "ollama", "lm studio", "autogen"];
 
@@ -527,7 +605,7 @@
     function updateDynamicSEO() {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const currentDate = new Date();
-        const seoTitle = `47,000+ New AI Tools & Apps Directory (${months[currentDate.getMonth()]} ${currentDate.getFullYear()}) - allalo AI`;
+        const seoTitle = `21,000+ New AI Tools & Apps Directory (${months[currentDate.getMonth()]} ${currentDate.getFullYear()}) - allalo AI`;
         document.title = seoTitle;
     }
 
@@ -557,7 +635,7 @@
     if(searchInputEl && searchWrapperEl) {
         searchInputEl.addEventListener('focus', () => searchWrapperEl.classList.add('focused'));
         document.addEventListener('click', (e) => {
-            if (!searchWrapperEl.contains(e.target)) searchWrapperEl.classList.remove('focused');
+            if (searchWrapperEl && !searchWrapperEl.contains(e.target)) searchWrapperEl.classList.remove('focused');
         });
     }
 
@@ -677,7 +755,7 @@
             renderNextBatch();
             calculateCategoryCounts();
 
-            // 🌟 Streamline Auto-Fetch Featured Carousel AFTER database load
+            // Streamline Auto-Fetch Featured Carousel AFTER database load
             await fetchDashboardDatabase();
 
         } catch(err) {
@@ -730,20 +808,24 @@
     }
 
     function filterByRelease(timeline) {
+        currentTimelineMode = timeline;
         const relDropdown = document.getElementById('releaseDropdown');
         if(relDropdown) relDropdown.innerHTML = `🌟 ${timeline.charAt(0).toUpperCase() + timeline.slice(1)}`;
         
         const currentTime = new Date().getTime();
 
         if (timeline === 'featured') {
-            let activeFeatured = dashboardDbList.filter(tool => {
-                if (tool.isFeatured !== true) return false;
-                if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
-                if (!tool.expireTimestamp) return true;
-                return currentTime < tool.expireTimestamp;
-            });
+            let activeFeatured = [];
+            if (Array.isArray(dashboardDbList) && dashboardDbList.length > 0) {
+                activeFeatured = dashboardDbList.filter(tool => {
+                    if (tool.isFeatured !== true) return false;
+                    if (tool.approvalStatus && tool.approvalStatus === "Pending") return false;
+                    if (!tool.expireTimestamp) return true;
+                    return currentTime < tool.expireTimestamp;
+                });
+            }
             
-            if(activeFeatured.length === 0 && allTools.length > 0) {
+            if((!activeFeatured || activeFeatured.length === 0) && allTools.length > 0) {
                 activeFeatured = allTools.slice(0, 6);
             }
             renderCarouselLayout(activeFeatured, 'featured');
@@ -752,20 +834,24 @@
         }
     }
 
+    // 🚀 STABLE CAROUSEL RENDER ENGINE (Prevents Layout Glitches on Resize)
     function renderCarouselLayout(list, mode) {
         const inner = document.getElementById('unifiedCarouselInner');
         if(!inner) return;
-        inner.innerHTML = '';
 
         if (!list || list.length === 0) {
             inner.innerHTML = `<div class="carousel-item active text-center text-secondary font-mono py-4 text-xs">[INFO]: Standard Active Cluster Nodes.</div>`;
             return;
         }
 
+        let fullCarouselHtml = '';
+
         if (mode === 'featured') {
-            for (let i = 0; i < list.length; i += 3) {
+            const itemsPerSlide = window.innerWidth <= 768 ? 1 : 3;
+
+            for (let i = 0; i < list.length; i += itemsPerSlide) {
                 const activeClass = i === 0 ? 'active' : '';
-                const chunk = list.slice(i, i + 3);
+                const chunk = list.slice(i, i + itemsPerSlide);
 
                 let cardsHtml = '';
                 chunk.forEach(tool => {
@@ -788,19 +874,21 @@
                         </div>
                     `;
                 });
-                inner.insertAdjacentHTML('beforeend', `<div class="carousel-item ${activeClass}"><div class="row g-2">${cardsHtml}</div></div>`);
+                fullCarouselHtml += `<div class="carousel-item ${activeClass}"><div class="row g-2">${cardsHtml}</div></div>`;
             }
         } else {
-            for (let i = 0; i < list.length; i += 6) {
+            const itemsPerSlide = window.innerWidth <= 768 ? 2 : 6;
+
+            for (let i = 0; i < list.length; i += itemsPerSlide) {
                 const activeClass = i === 0 ? 'active' : '';
-                const chunk = list.slice(i, i + 6);
+                const chunk = list.slice(i, i + itemsPerSlide);
 
                 let logosHtml = '';
                 chunk.forEach(tool => {
                     let targetLink = sanitizeUrl(tool.link) || `https://www.google.com/search?q=${encodeURIComponent(tool.name + ' AI Tool')}`;
                     let logo = tool.logo || `https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}`;
                     logosHtml += `
-                        <div class="col-4 col-md-2 text-center">
+                        <div class="col-6 col-md-2 text-center">
                             <a href="${escapeHTML(targetLink)}" target="_blank" class="text-decoration-none d-block mx-auto" style="max-width:70px;">
                                 <div class="mini-release-circle">
                                     <img src="${escapeHTML(logo)}" class="mini-release-img" onerror="this.onerror=null; this.src='https://www.google.com/s2/favicons?sz=128&domain=${encodeURIComponent(targetLink)}'">
@@ -810,13 +898,14 @@
                         </div>
                     `;
                 });
-                inner.insertAdjacentHTML('beforeend', `
+                fullCarouselHtml += `
                     <div class="carousel-item ${activeClass}">
                         <div class="row g-2 align-items-center py-3 bg-dark bg-opacity-10 border border-secondary border-opacity-10 rounded-4">${logosHtml}</div>
-                    </div>`
-                );
+                    </div>`;
             }
         }
+
+        inner.innerHTML = fullCarouselHtml;
 
         const carouselEl = document.getElementById('unifiedCarousel');
         if (carouselEl && window.bootstrap) {
@@ -1093,14 +1182,24 @@
     }
 
     const legalData = {
-        aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 47,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide.</p>`,
+        aboutModal: `<h6>About allalo AI</h6><p><strong>allalo AI</strong> is a cutting-edge mega search directory designed to parse, aggregate, and map over 21,000+ verified artificial intelligence systems, autonomous agents, and Edge models seamlessly. Built to ensure Google-speed query response times, our engine index channels unique server node configurations for researchers, developers, and creators worldwide.</p>`,
         privacyModal: `<h6>Privacy Operational Policy</h6><p>allalo AI operates as an open decentralized directory. We do not aggregate user token trackers or cookies cache logs client-side. All pipeline request sequences secure end-to-end encryption protocols seamlessly.</p>`,
         termsModal: `<h6>Terms of Indexing Service</h6><p>Operational access granted specifically for validated indexing clusters. Unauthorized automated repository crawling vectors without secure endpoint keys are limited to structural bandwidth filters.</p>`,
-        contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 contact.yourdomain@gmail.com</strong></p>`
+        contactModal: `<h6>System Operations & Support</h6><p>For custom promotive core matrices, sponsor verification approvals, or platform feature pipeline adjustments, contact the system maintenance grid node via official mail pipeline:<br><br><strong>📧 jasimubd3@gmail.com</strong></p>`
     };
 
     const loadMoreBtn = document.getElementById('loadMoreBtn');
     if(loadMoreBtn) loadMoreBtn.addEventListener('click', renderNextBatch);
+
+    // 🔄 Automatic Screen Resize & Device Orientation Adjuster Logic (with DEBOUNCE)
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if ((dashboardDbList && dashboardDbList.length > 0) || (allTools && allTools.length > 0)) {
+                filterByRelease(currentTimelineMode);
+            }
+        }, 150);
+    });
 
     document.addEventListener("DOMContentLoaded", function() {
         loadMegaDatabase();
